@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:AuditechMobile/TelaExemplo.dart';
+import 'package:AuditechMobile/telas/TelaExemplo.dart';
 
 void main() {
   runApp(StatefulDisplay());
