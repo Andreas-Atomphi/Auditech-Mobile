@@ -4,7 +4,7 @@ import 'package:AuditechMobile/telas/Telas.dart';
 void main() => setAppup();
 
 Map<String, Widget Function(BuildContext context)> routes = {
-  "exemploPrincipal": (context) => TelaExemplo(),
+  "principal": (context) => TelaLogin(),
   "exemplo2": (context) => TelaExemplo2()
 };
 
