@@ -6,11 +6,8 @@ class FormLogin extends StatelessWidget {
   FormLogin(this.components);
 
   Widget build(BuildContext context) {
-    return Container(
-      //decoration: BoxDecoration(color: Colors.white),
-      child: Stack(
-        children: components,
-      ),
+    return Column(
+      children: components,
     );
   }
 }
