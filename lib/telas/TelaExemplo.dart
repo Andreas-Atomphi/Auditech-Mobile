@@ -1,4 +1,3 @@
-import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/main.dart';
 
