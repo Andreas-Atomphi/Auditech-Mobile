@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 class TextFieldLogin extends StatelessWidget {
   final String dica;
   final bool obscure;
-  final Alignment alinhar;
-  final EdgeInsets margens;
 
-  TextFieldLogin(this.dica, this.obscure, this.alinhar, this.margens);
+  TextFieldLogin(this.dica, this.obscure);
 
   Widget build(BuildContext context) {
     return Center(
@@ -24,7 +22,6 @@ class TextFieldLogin extends StatelessWidget {
           ),
           obscureText: obscure,
         ),
-        margin: margens,
         width: (MediaQuery.of(context).size.width / 100) * 65,
       ),
     );
