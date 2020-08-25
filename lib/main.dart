@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/telas/Telas.dart';
+import 'package:AuditechMobile/telas/routes.dart';
 
+Color backgroundColor = Color.fromARGB(255, 0, 70, 100);
+Brightness theme = Brightness.light;
+Color primary = Colors.lightBlue;
+Color accent = Colors.cyan;
 void main() => setAppup();
-
-Map<String, Widget Function(BuildContext context)> routes = {
-  "principal": (context) => TelaLogin(),
-  "exemplo2": (context) => TelaExemplo2()
-};
-
 MaterialApp aplicativo = MaterialApp(
   initialRoute: "principal",
   routes: routes,
-  home: TelaExemplo(),
+  home: TelaLogin(),
+  theme: ThemeData(
+    brightness: theme,
+    primaryColor: primary,
+    accentColor: accent,
+    backgroundColor: backgroundColor,
+  ),
 );
 
 void setAppup() {
