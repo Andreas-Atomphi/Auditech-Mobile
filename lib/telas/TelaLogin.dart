@@ -1,39 +1,53 @@
+import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaLogin/components.dart';
+import 'package:AuditechMobile/telas/routes.dart';
+import 'package:AuditechMobile/main.dart';
 
 class _LoginState extends State {
   Widget build(BuildContext context) {
+    void entrar() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: routes["boas-vindas"]),
+      );
+    }
+
     return MaterialApp(
-      theme: ThemeData(
-          brightness: Brightness.light,
-          primaryColor: Colors.lightBlue,
-          accentColor: Colors.cyan),
       home: Scaffold(
-          backgroundColor: Color.fromARGB(255, 0, 70, 100),
-          body: Stack(
-            children: [
-              FormLogin(
-                [
-                  TextFieldLogin("Email", false, Alignment(0, 0),
-                      EdgeInsets.only(top: 0, bottom: 60.0)),
-                  TextFieldLogin("Senha", true, Alignment(0, 0),
-                      EdgeInsets.only(top: 60.0, bottom: 0)),
-                  ButtonLogin("Entrar", () {}, Alignment(0, 0),
-                      EdgeInsets.only(top: 200, bottom: 0), false),
-                  ButtonLogin("Registrar-se", () {}, Alignment(0, 0),
-                      EdgeInsets.only(top: 300.0), true),
-                  Container(
-                    child: Text(
-                      "developed by: H.A.W.Ga.M",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    alignment: Alignment(-1, 1),
-                  )
-                ],
+        appBar: AppBar(
+          title: Text(
+            "Bem-vindo!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          centerTitle: true,
+        ),
+        backgroundColor: backgroundColor,
+        body: FormLogin(
+          [
+            Spacer(flex: 7),
+            TextFieldLogin("Email", false),
+            Spacer(flex: 1),
+            TextFieldLogin("Senha", true),
+            Spacer(flex: 1),
+            ButtonLogin("Entrar", () => entrar(), false),
+            Spacer(flex: 1),
+            ButtonLogin("Registrar-se", entrar, true),
+            Spacer(flex: 1),
+            Container(
+              child: Text(
+                "developed by: H.A.W.Ga.M",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white),
               ),
-            ],
-          )),
+              alignment: Alignment(-1, 1),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
