@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 class ButtonLogin extends StatelessWidget {
   final void Function() aoPressionar;
   final String texto;
-  final Alignment alinhar;
-  final EdgeInsets margens;
   final bool isALink;
 
-  ButtonLogin(
-      this.texto, this.aoPressionar, this.alinhar, this.margens, this.isALink);
+  ButtonLogin(this.texto, this.aoPressionar, this.isALink);
 
   Widget build(BuildContext context) {
     return (isALink)
@@ -23,9 +20,7 @@ class ButtonLogin extends StatelessWidget {
                   ),
                 ),
               ),
-              margin: margens,
             ),
-            alignment: alinhar,
           )
         : Align(
             child: Container(
@@ -34,9 +29,7 @@ class ButtonLogin extends StatelessWidget {
                 child: Text(texto),
                 color: Colors.lightBlue,
               ),
-              margin: margens,
             ),
-            alignment: alinhar,
           );
   }
 }
