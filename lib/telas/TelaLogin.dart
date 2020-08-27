@@ -1,3 +1,4 @@
+import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaLogin/components.dart';
 import 'package:AuditechMobile/telas/routes.dart';
@@ -14,16 +15,7 @@ class _LoginState extends State {
 
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Bem-vindo!",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          centerTitle: true,
-        ),
+        appBar: CAppBar("Login"),
         backgroundColor: backgroundColor,
         body: FormLogin(
           [
