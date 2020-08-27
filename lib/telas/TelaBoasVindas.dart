@@ -1,7 +1,7 @@
 import 'package:AuditechMobile/main.dart';
+import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:flutter/material.dart';
 import 'CustomComponents/TelaBoasVindas/components.dart';
-import 'CustomComponents/TelaBoasVindas/Conjunct.dart';
 
 class _TelaBoasVindasState extends State {
   @override
@@ -20,10 +20,7 @@ class _TelaBoasVindasState extends State {
       home: Scaffold(
         backgroundColor: backgroundColor,
         drawer: DrawerWelcome(),
-        appBar: AppBar(
-          title: Text("Bem-vindo [Usuário]"),
-          centerTitle: true,
-        ),
+        appBar: CAppBar("Bem-vindo [Usuário]"),
         body: Column(
           children: components,
         ),
