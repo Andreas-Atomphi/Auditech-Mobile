@@ -8,7 +8,12 @@ class ListTileWelcome extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(texto),
+      title: Text(
+        texto,
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
       onTap: aoTocar,
     );
   }
