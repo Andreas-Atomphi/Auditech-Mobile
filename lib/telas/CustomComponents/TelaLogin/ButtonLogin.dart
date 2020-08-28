@@ -16,7 +16,7 @@ class ButtonLogin extends StatelessWidget {
                   text: texto,
                   style: TextStyle(
                     decoration: TextDecoration.underline,
-                    color: Colors.blueAccent,
+                    color: Colors.cyan[600],
                   ),
                 ),
               ),
@@ -26,8 +26,13 @@ class ButtonLogin extends StatelessWidget {
             child: Container(
               child: RaisedButton(
                 onPressed: aoPressionar,
-                child: Text(texto),
-                color: Colors.lightBlue,
+                child: Text(
+                  texto,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                color: Colors.lightBlue[600],
               ),
             ),
           );
