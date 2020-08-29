@@ -31,6 +31,12 @@ class _TreinamentoState extends State<TelaTreinamento> {
             Spacer(
               flex: 1,
             ),
+            LinearProgressIndicator(
+              value: 0.5,
+              backgroundColor: Colors.blue,
+              valueColor: AlwaysStoppedAnimation(Colors.orange),
+              minHeight: 7,
+            ),
           ],
         ),
       ),
