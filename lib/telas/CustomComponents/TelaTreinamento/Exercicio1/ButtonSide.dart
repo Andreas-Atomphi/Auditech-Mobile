@@ -15,14 +15,14 @@ class SideButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: RaisedButton(
+      child: FlatButton(
         child: Text(texto),
         onPressed: () {},
         color: cor["fundo"],
         textColor: cor["texto"],
       ),
       height: (MediaQuery.of(context).size.height / 100) * 50,
-      width: (MediaQuery.of(context).size.width / 100) * 45,
+      width: (MediaQuery.of(context).size.width / 100) * 49,
     );
   }
 }
