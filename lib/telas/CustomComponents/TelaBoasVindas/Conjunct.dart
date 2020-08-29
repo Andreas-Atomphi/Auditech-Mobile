@@ -1,5 +1,5 @@
 List<Map<String, dynamic>> ltwConjunct = [
-  {"texto": "Treinamentos", "metodo": () => null},
-  {"texto": "Estatísticas", "metodo": () => null},
+  {"texto": "Configurações", "metodo": () => null},
   {"texto": "Sobre DPAC", "metodo": () => null},
+  {"texto": "Sair", "metodo": () => null},
 ];
