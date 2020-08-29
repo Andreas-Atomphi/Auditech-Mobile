@@ -9,7 +9,7 @@ Color primary = Color.fromARGB(255, 0, 200, 190);
 Color accent = Color.fromARGB(255, 0, 150, 160);
 void main() => setAppup();
 MaterialApp aplicativo = MaterialApp(
-  initialRoute: "treinamento-aviso",
+  initialRoute: "principal",
   routes: routes,
   home: TelaLogin(),
   theme: ThemeData(
