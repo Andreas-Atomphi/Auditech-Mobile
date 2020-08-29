@@ -8,11 +8,19 @@ import 'package:flutter/material.dart';
 class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
   @override
   Widget build(BuildContext context) {
+    void _backPress() {
+      Navigator.pop(context);
+    }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: CAppBar("Treinamento[Num]"),
+        appBar: CAppBar(
+          "Treinamento[Num]",
+          backButton: true,
+          pressBack: _backPress,
+        ),
         body: Column(
           children: [
             Spacer(
