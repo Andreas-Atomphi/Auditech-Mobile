@@ -3,26 +3,48 @@ import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.da
 import 'package:flutter/material.dart';
 import 'CustomComponents/TelaBoasVindas/components.dart';
 
-class _TelaBoasVindasState extends State {
+class _TelaBoasVindasState extends State with SingleTickerProviderStateMixin {
+  TabController controller;
+  @override
+  void initState() {
+    super.initState();
+    controller = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<Widget> components = [
-      Spacer(
-        flex: 1,
-      ),
-      InstructAndGreetings(
-          "Aqui teremos mensagens de boas-vindas e instruções iniciais"),
-      Spacer(
-        flex: 1,
-      ),
-    ];
     return MaterialApp(
       home: Scaffold(
         backgroundColor: backgroundColor,
         drawer: DrawerWelcome(),
-        appBar: CAppBar("Bem-vindo [Usuário]"),
-        body: Column(
-          children: components,
+        appBar: CAppBar("Bem-vindo [Usuário]",
+            tab: TabBar(
+              controller: controller,
+              tabs: [
+                Tab(
+                  text: "Início",
+                ),
+                Tab(
+                  text: "Treinamentos",
+                ),
+                Tab(
+                  text: "Estatísticas",
+                ),
+              ],
+            )),
+        body: TabBarView(
+          controller: controller,
+          children: [
+            AbaBoasVindas(),
+            AbaTreinamento(),
+            AbaEstatisticas(),
+          ],
         ),
       ),
     );
