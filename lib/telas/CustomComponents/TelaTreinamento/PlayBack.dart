@@ -3,16 +3,25 @@ import 'package:audioplayers/audio_cache.dart';
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
-final List<String> paths = <String>[
+final List<String> examples = <String>[
   "assets/audios/file_example_MP3_2MG.mp3",
+]; // Áudios da pasta exemplos
+
+final List<String> exercicios = <String>[
+  "audios/Exercicios/10_sequencia_animais.mp3",
+  "audios/Exercicios/11_sequencia_instrumentos.mp3",
+  "audios/Exercicios/12_sequencia_natureza.mp3",
+  "audios/Exercicios/13_corpo_humano.mp3",
+  "audios/Exercicios/14_sequencia_transporte.mp3",
+  "audios/Exercicios/15_sequencia_casa.mp3",
 ];
 
-final List<Audio> audios = paths.map((e) => Audio(e)).toList();
+// final List<Audio> audios = examples.map((e) => Audio(e)).toList();
 
-class AudioTreinamento extends StatelessWidget {
+class Playback extends StatelessWidget {
   final String player;
 
-  AudioTreinamento(this.player);
+  Playback(this.player);
 
   void action(String path, [what = "play"]) {
     var selectedp;
