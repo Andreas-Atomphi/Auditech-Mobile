@@ -7,8 +7,14 @@ class AbaEstatisticas extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Spacer(
+          flex: 1,
+        ),
         InstructAndGreetings(
-            "Aqui teremos mensagens de boas-vindas e instruções iniciais"),
+            "Aqui será mostrado as estatísticas do Usuário (se está progredindo, regredindo ou estagnado)."),
+        Spacer(
+          flex: 2,
+        ),
       ],
     );
   }
