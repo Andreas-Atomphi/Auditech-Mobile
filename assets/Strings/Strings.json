@@ -1,0 +1,28 @@
+{
+    "appbar":[
+        "Login",
+        "Bem-vindo!",
+        "Treinamento"
+    ],
+    "boasvindas": "instruções e tralálá",
+    "instruçõesExercício": {
+        "Fase1":[
+            "Página 1"
+        ],
+        "Fase2":[
+            "Página1",
+            "Página2"
+        ],
+        "Fase3":[
+            "Página1",
+            "Página2",
+            "Página3"
+        ],
+        "Fase4":[
+            "Página1",
+            "Página2",
+            "Página3",
+            "Página4"
+        ]
+    }
+}
