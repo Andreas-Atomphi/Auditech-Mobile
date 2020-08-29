@@ -9,16 +9,37 @@ class DrawerWelcome extends StatelessWidget {
         color: Color.fromARGB(255, 0, 150, 140),
         child: ListView(
           children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                image: DecorationImage(
-                    image: AssetImage(
-                      'assets/images/Logo_02.jpg',
+            Stack(
+              children: [
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    image: DecorationImage(
+                        image: AssetImage(
+                          'assets/images/Logo_02.jpg',
+                        ),
+                        fit: BoxFit.cover),
+                  ),
+                  child: null,
+                ),
+                Container(
+                  padding: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.white,
+                  ),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    radius: 45,
+                    child: Text(
+                      "U",
+                      style: TextStyle(fontSize: 45),
                     ),
-                    fit: BoxFit.cover),
-              ),
-              child: null,
+                  ),
+                  margin: EdgeInsets.only(top: 60),
+                )
+              ],
             ),
             ...ltwConjunct.map((e) {
               return ListTileWelcome(e["texto"], () => e["aoTocar"]);
