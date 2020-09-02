@@ -1,3 +1,4 @@
+import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:AuditechMobile/telas/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -5,16 +6,34 @@ import '../components.dart';
 
 class AbaTreinamento extends StatelessWidget {
   Widget build(BuildContext context) {
-    void irParaTreino() {
+    void irParaTreino(String appbartext,
+        [String numtreino = "treinamento-exemplo"]) {
       Navigator.push(
-          context, MaterialPageRoute(builder: routes["treinamento-aviso"]));
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              TelaInstrucoesTreinamento(appbartext, numtreino),
+        ),
+      );
     }
 
     List<Map<String, dynamic>> components = [
-      {"texto": "Exercício 1", "método": irParaTreino},
-      {"texto": "Exercício 2", "método": irParaTreino},
-      {"texto": "Exercício 3", "método": irParaTreino},
-      {"texto": "Exercício 4", "método": irParaTreino},
+      {
+        "texto": "Exercício 1",
+        "método": () => irParaTreino("Exercicio 1"),
+      },
+      {
+        "texto": "Exercício 2",
+        "método": () => irParaTreino("Exercício 2", "treinamento-animais")
+      },
+      {
+        "texto": "Exercício 3",
+        "método": () => irParaTreino("Exercicio 3"),
+      },
+      {
+        "texto": "Exercício 4",
+        "método": () => irParaTreino("Exercicio 4"),
+      },
     ];
     double space = 30;
     return GridView.count(
@@ -24,7 +43,10 @@ class AbaTreinamento extends StatelessWidget {
       mainAxisSpacing: space,
       children: [
         ...components.map(
-          (e) => ButtonTreinamento(e["texto"], e["método"]),
+          (e) => ButtonTreinamento(
+            e["texto"],
+            e["método"],
+          ),
         ),
       ],
     );
