@@ -5,5 +5,6 @@ Map<String, Widget Function(BuildContext context)> routes = {
   "principal": (context) => TelaLogin(),
   "boas-vindas": (context) => TelaBoasVindas(),
   "treinamento-aviso": (context) => TelaInstrucoesTreinamento(),
-  "treinamento": (context) => TelaTreinamento(),
+  "treinamento-exemplo": (context) => TelaTreinamentoExemplo(),
+  "treinamento-animais": (context) => Exercicio3(),
 };
