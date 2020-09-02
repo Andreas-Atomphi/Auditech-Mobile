@@ -1,3 +1,4 @@
 export 'PlayBack.dart';
 export 'Instruções/CardInstruct.dart';
-export 'Exercicio1/ButtonSide.dart';
+export 'ComponentesDeExercício/ButtonSide.dart';
+export 'ComponentesDeExercício/ButtonSelect.dart';
