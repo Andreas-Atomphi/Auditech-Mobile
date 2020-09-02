@@ -23,7 +23,7 @@ class _TelaBoasVindasState extends State with SingleTickerProviderStateMixin {
       home: Scaffold(
         backgroundColor: backgroundColor,
         drawer: DrawerWelcome(),
-        appBar: CAppBar("Bem-vindo [Usuário]",
+        appBar: CAppBar("Auditech",
             tab: TabBar(
               controller: controller,
               tabs: [
