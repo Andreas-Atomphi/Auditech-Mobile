@@ -1,25 +1,46 @@
 import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
-import 'package:AuditechMobile/telas/Telas.dart';
 import 'routes.dart';
 import 'package:flutter/material.dart';
 
 class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
+  //Argumentos da clase
+  final String irpara;
+  final String appbartext;
+
+  //Chamando o construtor da classe
+  _TreinamentoInstrucoesState(
+      [this.appbartext, //texto da barra do app
+      this.irpara =
+          "treinamento-exemplo" //A tela que irá quando pressionar o botão de ir para exercício,
+      ]);
+
   @override
   Widget build(BuildContext context) {
+    //Método que será chamado quando o botão voltar for pressionado
     void _backPress() {
       Navigator.pop(context);
     }
 
+    //Método que será chamado quando o botão ir para o exercício for pressionado
+    void irParaTreino([treinamento]) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: routes[treinamento],
+        ),
+      );
+    }
+
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: backgroundColor, //define a cor de fundo
         appBar: CAppBar(
-          "Treinamento[Num]",
-          backButton: true,
-          pressBack: _backPress,
+          //Chama o componente CAppBar (para dúvidas: Ctrl+Click no nome da classe)
+          appbartext, //Texto da appbar
+          backButton: true, //Define se CAppBar terá ou não um botão voltar
+          pressBack: _backPress, //para quando o botão voltar for pressionado
         ),
         body: Column(
           children: [
@@ -34,7 +55,7 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
                 ),
                 Container(
                   child: RaisedButton(
-                    child: Text("Voltar"),
+                    child: Text("<-"),
                     color: Colors.white,
                     onPressed: () {},
                   ),
@@ -44,24 +65,7 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
                 ),
                 Container(
                   child: RaisedButton(
-                    child: Text("Pular"),
-                    color: Colors.white,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: routes["treinamento"],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                Spacer(
-                  flex: 1,
-                ),
-                Container(
-                  child: RaisedButton(
-                    child: Text("Próxima"),
+                    child: Text("->"),
                     color: Colors.white,
                     onPressed: () {},
                   ),
@@ -73,7 +77,22 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
             ),
             Spacer(
               flex: 1,
-            )
+            ),
+            Container(
+              width: 200,
+              height: 50,
+              child: RaisedButton(
+                child: Text(
+                  "Ir para o exercício",
+                  style: TextStyle(fontSize: 20),
+                ),
+                color: Colors.white,
+                onPressed: () => irParaTreino(irpara),
+              ),
+            ),
+            Spacer(
+              flex: 1,
+            ),
           ],
         ),
       ),
@@ -82,7 +101,17 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
 }
 
 class TelaInstrucoesTreinamento extends StatefulWidget {
+  //Argumentos da classe
+  final String appbartext;
+  final String irpara;
+
+  //Chama o construtor da classe
+  TelaInstrucoesTreinamento([
+    this.appbartext = "Exemplo", //Texto da Appbar
+    this.irpara = "treinamento-exemplo", //define qual tela que deve ir
+  ]);
+
   State<TelaInstrucoesTreinamento> createState() {
-    return _TreinamentoInstrucoesState();
+    return _TreinamentoInstrucoesState(appbartext, irpara);
   }
 }
