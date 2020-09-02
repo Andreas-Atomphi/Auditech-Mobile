@@ -15,7 +15,7 @@ class CAppBar extends AppBar {
     this.pressBack,
     this.tab,
   }) : super(
-          title: Text(texto),
+          title: (texto == null) ? null : Text(texto),
           centerTitle: centralizar,
           backgroundColor: primary,
           leading: (backButton)
