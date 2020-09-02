@@ -4,7 +4,7 @@ import 'package:AuditechMobile/telas/CustomComponents/TelaLogin/components.dart'
 import 'package:AuditechMobile/telas/routes.dart';
 import 'package:AuditechMobile/main.dart';
 
-class _LoginState extends State {
+class TelaLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     void entrar() {
       Navigator.push(
@@ -40,11 +40,5 @@ class _LoginState extends State {
         ),
       ),
     );
-  }
-}
-
-class TelaLogin extends StatefulWidget {
-  State createState() {
-    return _LoginState();
   }
 }
