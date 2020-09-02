@@ -1,4 +1,4 @@
 export 'TelaLogin.dart';
 export 'TelaBoasVindas.dart';
-export 'TelaTreinamento.dart';
+export 'Treinamentos/treinamentos.dart';
 export 'TelaTreinamentoInstrucoes.dart';
