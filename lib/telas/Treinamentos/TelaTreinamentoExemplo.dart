@@ -3,12 +3,7 @@ import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.da
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:flutter/material.dart';
 
-class TreinamentoStateExemplo extends State {
-  final List<Widget> componentes;
-  final String exercicio;
-
-  TreinamentoStateExemplo(this.componentes, this.exercicio);
-
+class TreinamentoState extends State {
   @override
   Widget build(BuildContext context) {
     void _backPress() {
@@ -20,13 +15,27 @@ class TreinamentoStateExemplo extends State {
       home: Scaffold(
         backgroundColor: backgroundColor,
         appBar: CAppBar(
-          exercicio,
+          "Exemplo",
           backButton: true,
           pressBack: _backPress,
         ),
         body: Column(
           children: [
-            ...componentes,
+            Spacer(
+              flex: 1,
+            ),
+            Row(
+              children: [
+                SideButton("Esquerda"),
+                Spacer(
+                  flex: 1,
+                ),
+                SideButton("Direita"),
+              ],
+            ),
+            Spacer(
+              flex: 1,
+            ),
             Spacer(
               flex: 1,
             ),
@@ -45,22 +54,6 @@ class TreinamentoStateExemplo extends State {
 
 class TelaTreinamentoExemplo extends StatefulWidget {
   State createState() {
-    return TreinamentoStateExemplo([
-      Spacer(
-        flex: 1,
-      ),
-      Row(
-        children: [
-          SideButton("Esquerda"),
-          Spacer(
-            flex: 1,
-          ),
-          SideButton("Direita"),
-        ],
-      ),
-      Spacer(
-        flex: 1,
-      ),
-    ], "Exercício Exemplo");
+    return TreinamentoState();
   }
 }
