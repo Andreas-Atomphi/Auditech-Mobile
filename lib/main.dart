@@ -9,7 +9,7 @@ Color accent = Color.fromARGB(255, 0, 150, 160); // Variável para cor secundár
 void main() => setAppup();
 MaterialApp aplicativo = MaterialApp(
   debugShowCheckedModeBanner: false,
-  initialRoute: "principal",
+  initialRoute: "resultados",
   routes: routes,
   home: TelaLogin(),
   theme: ThemeData(
