@@ -24,11 +24,11 @@ class AbaTreinamento extends StatelessWidget {
       },
       {
         "texto": "Exercício 2",
-        "método": () => irParaTreino("Exercício 2", "treinamento-animais")
+        "método": () => irParaTreino("Exercício 2"),
       },
       {
         "texto": "Exercício 3",
-        "método": () => irParaTreino("Exercicio 3"),
+        "método": () => irParaTreino("Exercicio 3", "treinamento-3"),
       },
       {
         "texto": "Exercício 4",
