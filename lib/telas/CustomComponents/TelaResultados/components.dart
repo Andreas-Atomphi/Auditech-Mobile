@@ -1,3 +1,3 @@
-library componentesResult;
+library componentes_resultados;
 
-export 'RGráficos.dart';
+export '../Global/RGráfico.dart';
