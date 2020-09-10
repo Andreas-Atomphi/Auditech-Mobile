@@ -1,3 +1,5 @@
+library componentes_tela_boas_vindas;
+
 export 'ButtonWelcome.dart';
 export 'Warnings.dart';
 export 'ListTileWelcome.dart';
