@@ -1,5 +1,4 @@
 import 'package:AuditechMobile/telas/Telas.dart';
-import 'package:AuditechMobile/telas/routes.dart';
 import 'package:flutter/material.dart';
 
 import '../components.dart';

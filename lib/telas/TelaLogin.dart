@@ -1,7 +1,6 @@
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaLogin/components.dart';
-import 'package:AuditechMobile/telas/routes.dart';
 import 'package:AuditechMobile/main.dart';
 
 class TelaLogin extends StatelessWidget {

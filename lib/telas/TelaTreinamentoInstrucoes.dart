@@ -1,7 +1,6 @@
 import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
-import 'routes.dart';
 import 'package:flutter/material.dart';
 
 class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
