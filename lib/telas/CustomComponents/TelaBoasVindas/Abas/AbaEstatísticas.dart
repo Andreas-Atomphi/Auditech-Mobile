@@ -1,48 +1,38 @@
-import 'package:AuditechMobile/telas/CustomComponents/Global/Gr%C3%A1ficoPizza.dart';
-import 'package:AuditechMobile/telas/CustomComponents/Global/RGr%C3%A1fico.dart';
-import 'package:fl_animated_linechart/common/dates.dart';
+import 'package:AuditechMobile/telas/CustomComponents/Global/GCartesiano.dart';
+
+//import 'package:fl_animated_linechart/common/dates.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 import '../components.dart';
+import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 
 class AbaEstatisticas extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          GraficoPizza(
-            data: [
-              {
-                "rankkey": "issae",
-                "fatias": [
-                  {"n": 500, "cor": Colors.yellow[500], "chave": "q1"},
-                  {"n": 500, "cor": Colors.red[500], "chave": "q2"},
-                  {"n": 300, "cor": Colors.green[500], "chave": "q3"},
-                ],
+          Container(
+            width: 500,
+            height: 400,
+            child: PieChart(
+              dataMap: {
+                "Progredindo": 5,
+                "Regredindo": 6,
+                "Estagnado": 3,
               },
-            ],
+              legendOptions: LegendOptions(
+                legendPosition: LegendPosition.bottom,
+                showLegendsInRow: true,
+                legendTextStyle: TextStyle(color: Colors.white),
+              ),
+              colorList: [
+                Colors.green,
+                Colors.red,
+                Colors.yellow,
+              ],
+            ),
           ),
-          RGrafico(
-            width: 300.0,
-            height: 300.0,
-            bgcolor: Colors.white,
-            lines: [
-              {
-                "nome": "fase",
-                "cor": Colors.red,
-                "pontos": [
-                  {"x": 0, "y": 0},
-                  {"x": 1, "y": 1},
-                  {"x": 2, "y": 4}
-                ]
-              },
-            ],
-            gradients: [
-              [Colors.blue, Colors.transparent],
-            ],
-            fromTo: Dates(DateTime(2000), DateTime(2001)),
-          )
         ],
       ),
     );
