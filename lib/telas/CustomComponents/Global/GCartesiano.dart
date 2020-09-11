@@ -30,18 +30,18 @@ class GCartesiano extends StatelessWidget {
         "data: [{}]"}
       ]
     */
-    return new charts.LineChart(
-      [
+    return charts.LineChart(
+      <charts.Series<dynamic, num>>[
         ...lines.map(
           (lins) => charts.Series(
             id: lins["id"],
-            colorFn: lins["color"],
-            areaColorFn: lins["aColor"],
-            measureFn: lins["mfn"],
-            domainFn: lins["dfn"],
+            colorFn: (_, __) => lins["color"],
+            areaColorFn: (_, __) => lins["aColor"],
+            measureFn: (s, __) => lins["mfn"],
+            domainFn: (s, __) => lins["dfn"],
             data: [
               ...lins["data"].map(
-                (points) => LinearSales(
+                (Map<String, int> points) => LinearSale(
                   points["x"],
                   points["y"],
                 ),
@@ -62,19 +62,19 @@ class GCartesiano extends StatelessWidget {
   /// Create one series with sample hard coded data.
   static List<Map<String, dynamic>> _createSampleData() {
     final data = [
-      {"x": 0, "y": 0},
-      {"x": 2, "y": 5},
-      {"x": 3, "y": 10},
-      {"x": 4, "y": 0}
+      {"x": 0.0, "y": 0.0},
+      {"x": 2.0, "y": 5.0},
+      {"x": 3.0, "y": 10.0},
+      {"x": 4.0, "y": 0.0},
     ];
 
     return <Map<String, dynamic>>[
       {
         "id": 'Sales',
-        "color": (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        "acolor"
-            "dfn": (LinearSales sales, _) => sales.year,
-        "mfn": (LinearSales sales, _) => sales.sales,
+        "color": charts.MaterialPalette.blue.shadeDefault,
+        "aColor": Colors.red,
+        "dfn": LinearSale(0, 1).year,
+        "mfn": LinearSale(0, 1).sales,
         "data": data,
       }
     ];
@@ -82,9 +82,9 @@ class GCartesiano extends StatelessWidget {
 }
 
 /// Sample linear data type.
-class LinearSales {
+class LinearSale {
   final int year;
   final int sales;
 
-  LinearSales(this.year, this.sales);
+  LinearSale(this.year, this.sales);
 }
