@@ -1,89 +1,164 @@
+import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
-import 'package:AuditechMobile/telas/CustomComponents/TelaResultados/components.dart';
-import 'package:fl_animated_linechart/common/dates.dart';
 import 'package:flutter/material.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 class _SResultados extends State {
   Widget build(BuildContext context) {
+    List<Color> graf = [
+      //cores dos gráficos
+      Colors.red[400],
+      Colors.cyan[400],
+      Colors.grey[400],
+    ]; // graf;
+
+    void _backXTimes(int x) {
+      for (int i = 0; i < x; i++) {
+        Navigator.pop(context);
+      }
+    }
+
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: backgroundColor,
         appBar: CAppBar(
           "Resultados",
           centralizar: true,
         ),
-        body: Column(
-          children: [
-            Spacer(
-              flex: 1,
-            ),
-            Row(
-              children: [
-                Spacer(
-                  flex: 1,
+        //Rolável
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                //Espaçamento entre o texto e a AppBar
+                height: 50,
+              ),
+              Text(
+                //Muda de acordo com os resultados
+                "Você está: Progredindo/Estagnado/Regredindo",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  backgroundColor: Colors.yellow[900],
                 ),
-                RGrafico(
-                  width: ((MediaQuery.of(context).size.width - 10) > 300)
-                      ? 300
-                      : MediaQuery.of(context).size.width - 10,
-                  height: ((MediaQuery.of(context).size.width - 10) > 300)
-                      ? 300
-                      : MediaQuery.of(context).size.width,
-                  filled: false,
-                  fromTo: Dates(
-                    DateTime(1),
-                    DateTime(2),
+              ),
+              Row(
+                // O Gráfico principal fica aqui
+                children: [
+                  Spacer(
+                    flex: 1,
                   ),
-                  gradients: [
-                    [
-                      Colors.red[900],
-                      Color.fromRGBO(0, 100, 200, 0),
-                    ],
-                  ],
-                  lines: [
-                    {
-                      "nome": "Desempenho",
-                      "cor": Colors.blue,
-                      "pontos": [
-                        {"x": 0.0, "y": 0.0},
-                        {"x": 1.0, "y": 1.0},
-                        {"x": 2.0, "y": 2.0},
-                        {"x": 3.0, "y": 1.0},
-                        {"x": 4.0, "y": 2.0},
-                        {"x": 5.0, "y": 3.0},
-                        {"x": 6.0, "y": 4.0},
-                      ]
-                    },
-                  ],
+                  Container(
+                    margin: EdgeInsets.only(bottom: 0),
+                    width: tamanhoRelativo(500.0, context),
+                    height: tamanhoRelativo(500.0, context),
+                    child: PieChart(
+                      dataMap: {
+                        "Acertos": 5,
+                        "Erros": 4,
+                        "Não respondeu": 1,
+                      },
+                      legendOptions: LegendOptions(
+                        legendTextStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      colorList: [
+                        graf[1],
+                        graf[0],
+                        graf[2],
+                      ],
+                    ),
+                  ),
+                  Spacer(
+                    flex: 1,
+                  ),
+                ],
+              ),
+              Text(
+                "Tentativas anteriores:",
+                style: TextStyle(
+                  color: Colors.white,
                 ),
-                Spacer(
-                  flex: 1,
-                ),
-              ],
-            ),
-            Spacer(
-              flex: 1,
-            ),
-            FlatButton(
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-              child: Text("Voltar a tela principal"),
-              color: Colors.grey[300],
-            ),
-            FlatButton(
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-              child: Text("Tentar de novo"),
-              color: Colors.grey[300],
-            ),
-            Spacer(
-              flex: 1,
-            ),
-          ],
+              ),
+              Row(
+                // Terá gráficos de duas tentativas anteriores
+                children: [
+                  Spacer(flex: 1),
+                  Container(
+                    width: tamanhoRelativo(150.0, context),
+                    height: tamanhoRelativo(150.0, context),
+                    child: PieChart(
+                      dataMap: {
+                        "Acertos": 3,
+                        "Erros": 5,
+                        "Não respondeu": 0,
+                      },
+                      legendOptions: LegendOptions(
+                        legendTextStyle:
+                            TextStyle(color: Colors.white, fontSize: 10),
+                        legendPosition: LegendPosition.bottom,
+                        showLegendsInRow: true,
+                        showLegends: false,
+                      ),
+                      colorList: [
+                        graf[1],
+                        graf[0],
+                        graf[2],
+                      ],
+                    ),
+                  ),
+                  Spacer(
+                    flex: 1,
+                  ),
+                  Container(
+                    width: tamanhoRelativo(150, context),
+                    height: tamanhoRelativo(150, context),
+                    child: PieChart(
+                      dataMap: {
+                        "Acertos": 2,
+                        "Erros": 7,
+                        "Não respondeu": 0,
+                      },
+                      legendOptions: LegendOptions(
+                        legendTextStyle:
+                            TextStyle(color: Colors.white, fontSize: 10),
+                        legendPosition: LegendPosition.bottom,
+                        showLegendsInRow: true,
+                        showLegends: false,
+                      ),
+                      colorList: [
+                        graf[1],
+                        graf[0],
+                        graf[2],
+                      ],
+                    ),
+                  ),
+                  Spacer(
+                    flex: 1,
+                  ),
+                ],
+              ),
+              SizedBox(
+                child: null,
+                height: 100,
+              ),
+              FlatButton(
+                onPressed: () => _backXTimes(3),
+                child: Text("Voltar a tela principal"),
+                color: Colors.grey[300],
+              ),
+              FlatButton(
+                onPressed: () => _backXTimes(2),
+                child: Text("Tentar de novo"),
+                color: Colors.grey[300],
+              ),
+              Container(
+                child: null,
+                height: 30,
+              ),
+            ],
+          ),
         ),
       ),
     );
