@@ -29,6 +29,16 @@ MaterialApp aplicativo = MaterialApp(
   ),
 );
 
+/*
+      Verifica se o tamanho da tela - 30 é menor do que a do que o valor
+      Caso verdadeiro, o valor retornado se adapta à tela
+      Caso falso, retorna o valor recebido
+    */
+double tamanhoRelativo(double valor, BuildContext context) {
+  double relativoATela = MediaQuery.of(context).size.width - 30;
+  return (relativoATela < valor) ? relativoATela : valor;
+}
+
 void setAppup() {
   runApp(aplicativo);
 }
