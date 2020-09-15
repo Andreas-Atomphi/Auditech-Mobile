@@ -3,6 +3,8 @@ import 'Conjunct.dart';
 import 'ListTileWelcome.dart';
 
 class DrawerWelcome extends StatelessWidget {
+  final List<Map<String, dynamic>> mapDados;
+  DrawerWelcome({this.mapDados});
   Widget build(BuildContext context) {
     return Drawer(
       child: Ink(
@@ -41,8 +43,8 @@ class DrawerWelcome extends StatelessWidget {
                 )
               ],
             ),
-            ...ltwConjunct.map((e) {
-              return ListTileWelcome(e["texto"], () => e["aoTocar"]);
+            ...mapDados.map((e) {
+              return ListTileWelcome(e["texto"], e["metodo"]);
             }).toList(),
           ],
         ),
