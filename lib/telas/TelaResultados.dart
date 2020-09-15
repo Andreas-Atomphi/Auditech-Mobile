@@ -50,8 +50,8 @@ class _SResultados extends State {
                   ),
                   Container(
                     margin: EdgeInsets.only(bottom: 0),
-                    width: tamanhoRelativo(500.0, context),
-                    height: tamanhoRelativo(500.0, context),
+                    width: tamanhoRelativoL(500.0, context),
+                    height: tamanhoRelativoL(500.0, context),
                     child: PieChart(
                       dataMap: {
                         "Acertos": 5,
@@ -86,8 +86,8 @@ class _SResultados extends State {
                 children: [
                   Spacer(flex: 1),
                   Container(
-                    width: tamanhoRelativo(150.0, context),
-                    height: tamanhoRelativo(150.0, context),
+                    width: tamanhoRelativoL(150.0, context),
+                    height: tamanhoRelativoL(150.0, context),
                     child: PieChart(
                       dataMap: {
                         "Acertos": 3,
@@ -112,8 +112,8 @@ class _SResultados extends State {
                     flex: 1,
                   ),
                   Container(
-                    width: tamanhoRelativo(150, context),
-                    height: tamanhoRelativo(150, context),
+                    width: tamanhoRelativoL(150, context),
+                    height: tamanhoRelativoL(150, context),
                     child: PieChart(
                       dataMap: {
                         "Acertos": 2,
