@@ -19,10 +19,20 @@ class _TelaBoasVindasState extends State with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    void sair() {
+      Navigator.pop(context);
+    }
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: backgroundColor,
-        drawer: DrawerWelcome(),
+        drawer: DrawerWelcome(
+          mapDados: [
+            {"texto": "Configurações", "metodo": () => null},
+            {"texto": "Sobre DPAC", "metodo": () => null},
+            {"texto": "Sair", "metodo": sair},
+          ],
+        ),
         appBar: CAppBar("Auditech",
             tab: TabBar(
               controller: controller,
