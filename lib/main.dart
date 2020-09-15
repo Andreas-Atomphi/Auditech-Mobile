@@ -11,7 +11,10 @@ Map<String, Widget Function(BuildContext context)> routes = {
   "boas-vindas": (context) => TelaBoasVindas(),
   "treinamento-aviso": (context) => TelaInstrucoesTreinamento(),
   "treinamento-exemplo": (context) => TelaTreinamentoExemplo(),
+  "treinamento-1": (context) => TelaTreinamentoExemplo(),
+  "treinamento-2": (context) => Exercicio2(),
   "treinamento-3": (context) => Exercicio3(),
+  "treinamento-4": (context) => TelaTreinamentoExemplo(),
   "resultados": (context) => Resultados(),
 };
 
@@ -30,12 +33,17 @@ MaterialApp aplicativo = MaterialApp(
 );
 
 /*
-      Verifica se o tamanho da tela - 30 é menor do que a do que o valor
-      Caso verdadeiro, o valor retornado se adapta à tela
-      Caso falso, retorna o valor recebido
-    */
-double tamanhoRelativo(double valor, BuildContext context) {
-  double relativoATela = MediaQuery.of(context).size.width - 30;
+  Verifica se o tamanho da tela - 30 é menor do que a do que o valor de entrada
+  Caso verdadeiro, retorna o tamanho da tela - 30
+  Caso falso, retorna o valor de entrada
+*/
+double tamanhoRelativoL(double valor, BuildContext context) {
+  double relativoATela = (MediaQuery.of(context).size.width - 30);
+  return (relativoATela < valor) ? relativoATela : valor;
+}
+
+double tamanhoRelativoA(double valor, BuildContext context) {
+  double relativoATela = (MediaQuery.of(context).size.height - 30);
   return (relativoATela < valor) ? relativoATela : valor;
 }
 
