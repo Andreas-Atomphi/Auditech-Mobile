@@ -5,13 +5,25 @@ import '../components.dart';
 
 class AbaBoasVindas extends StatelessWidget {
   Widget build(BuildContext context) {
+    const title =
+        TextStyle(color: Colors.black, fontSize: 40, fontFamily: "OpenSans");
     return Column(
       children: [
         Spacer(
           flex: 1,
         ),
         InstructAndGreetings(
-            "Aqui teremos mensagens de boas-vindas e instruções iniciais"),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: "Bem-vindo!",
+                  style: title,
+                ),
+              ],
+            ),
+          ),
+        ),
         Spacer(
           flex: 2,
         )
