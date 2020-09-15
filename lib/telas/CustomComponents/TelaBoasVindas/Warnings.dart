@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class InstructAndGreetings extends StatelessWidget {
-  final String texto;
+  final RichText texto;
 
   InstructAndGreetings(this.texto);
 
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: (MediaQuery.of(context).size.height / 100) * 60,
+      height: (MediaQuery.of(context).size.height * 0.80),
       child: Card(
-        child: Text(texto),
+        child: (texto != null) ? texto : null,
       ),
     );
   }
