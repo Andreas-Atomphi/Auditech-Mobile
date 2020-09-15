@@ -26,11 +26,11 @@ class TreinamentoState extends State {
             ),
             Row(
               children: [
-                SideButton("Esquerda"),
+                SideButton("Esquerda", () => null),
                 Spacer(
                   flex: 1,
                 ),
-                SideButton("Direita"),
+                SideButton("Direita", () => null),
               ],
             ),
             Spacer(
