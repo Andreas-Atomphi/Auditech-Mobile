@@ -23,7 +23,7 @@ class AbaTreinamento extends StatelessWidget {
       },
       {
         "texto": "Exercício 2",
-        "método": () => irParaTreino("Exercício 2"),
+        "método": () => irParaTreino("Exercício 2", "treinamento-2"),
       },
       {
         "texto": "Exercício 3",
@@ -34,6 +34,7 @@ class AbaTreinamento extends StatelessWidget {
         "método": () => irParaTreino("Exercicio 4"),
       },
     ];
+
     double space = 30;
     return GridView.count(
       padding: EdgeInsets.all(space),
