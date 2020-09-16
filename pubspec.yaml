@@ -53,11 +53,11 @@ flutter:
       - assets/audios/
       - assets/strings/
       - assets/fonts/
-  #fonts:
-  # - family: OpenSans
-  #    fonts:
-  #      - asset: fonts/OpenSans/OpenSans-Regular.ttf
-  #      - asset: fonts/OpenSans/OpenSans-Bold.ttf
+  fonts:
+    - family: OpenSans
+      fonts:
+        - asset: assets/fonts/OpenSans/OpenSans-Regular.ttf
+        - asset: assets/fonts/OpenSans/OpenSans-Bold.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
