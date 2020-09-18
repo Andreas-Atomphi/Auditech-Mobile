@@ -11,14 +11,15 @@ class ButtonLogin extends StatelessWidget {
     return (isALink)
         ? Align(
             child: Container(
-              child: RichText(
-                text: TextSpan(
-                  text: texto,
+              child: FlatButton(
+                child: Text(
+                  texto,
                   style: TextStyle(
+                    color: Colors.lightBlue[600],
                     decoration: TextDecoration.underline,
-                    color: Colors.cyan[600],
                   ),
                 ),
+                onPressed: aoPressionar,
               ),
             ),
           )
