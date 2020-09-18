@@ -1,6 +1,7 @@
 import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../main.dart';
 import '../components.dart';
 
 class AbaTreinamento extends StatelessWidget {
@@ -31,14 +32,18 @@ class AbaTreinamento extends StatelessWidget {
       },
       {
         "texto": "Exercício 4",
-        "método": () => irParaTreino("Exercicio 4"),
+        "método": () => irParaTreino("Exercicio 4", "treinamento-4"),
+      },
+      {
+        "texto": "Exercício 5",
+        "método": () => irParaTreino("Exercicio 5", "treinamento-5"),
       },
     ];
 
     double space = 30;
     return GridView.count(
       padding: EdgeInsets.all(space),
-      crossAxisCount: 2,
+      crossAxisCount: (MediaQuery.of(context).size.width * 0.0075).toInt(),
       crossAxisSpacing: space,
       mainAxisSpacing: space,
       children: [
