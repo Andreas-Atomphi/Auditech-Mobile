@@ -24,9 +24,8 @@ class TelaLogin extends StatelessWidget {
             TextFieldLogin("Senha", true),
             Spacer(flex: 1),
             ButtonLogin("Entrar", () => entrar(), false),
-            Spacer(flex: 1),
-            ButtonLogin("Registrar-se", entrar, true),
-            Spacer(flex: 1),
+            ButtonLogin("Registrar-se", () {}, true),
+            Spacer(flex: 2),
             Container(
               child: Text(
                 "developed by: H.A.W.Ga.M",
