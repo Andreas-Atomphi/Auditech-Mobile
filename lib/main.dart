@@ -14,7 +14,9 @@ Map<String, Widget Function(BuildContext context)> routes = {
   "treinamento-1": (context) => TelaTreinamentoExemplo(),
   "treinamento-2": (context) => Exercicio2(),
   "treinamento-3": (context) => Exercicio3(),
-  "treinamento-4": (context) => TelaTreinamentoExemplo(),
+  "treinamento-4": (context) => Exercicio4(),
+  "treinamento-5": (context) => Exercicio5(),
+  "treinamento-6": (context) => Exercicio4(),
   "resultados": (context) => Resultados(),
 };
 
