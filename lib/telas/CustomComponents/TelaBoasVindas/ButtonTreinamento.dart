@@ -1,3 +1,4 @@
+import 'package:AuditechMobile/main.dart';
 import 'package:flutter/material.dart';
 
 class ButtonTreinamento extends StatelessWidget {
@@ -23,8 +24,6 @@ class ButtonTreinamento extends StatelessWidget {
         ),
         color: Colors.orange,
       ),
-      width: 130,
-      height: 130,
     );
   }
 }
