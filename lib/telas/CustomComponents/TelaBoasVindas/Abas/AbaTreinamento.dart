@@ -41,9 +41,9 @@ class AbaTreinamento extends StatelessWidget {
     ];
 
     double space = 30;
-    return GridView.count(
+    return GridView.extent(
       padding: EdgeInsets.all(space),
-      crossAxisCount: (MediaQuery.of(context).size.width * 0.0075).toInt(),
+      maxCrossAxisExtent: 130,
       crossAxisSpacing: space,
       mainAxisSpacing: space,
       children: [
