@@ -38,13 +38,10 @@ class AbaBoasVindas extends StatelessWidget {
                     text: "Estatísticas\n",
                     style: FormatoTexto.subtitulo(weight: FontWeight.bold),
                     children: [
-                      WidgetSpan(
-                        child: SizedBox(
-                          child: Text(
-                            "Nessa aba fica registrado sua pontuação, e te informa se você está progredindo, regredindo ou parado. Esta aba é dividida em duas seções, sendo:\n",
-                            style: FormatoTexto.corpo(),
-                          ),
-                        ),
+                      TextSpan(
+                        text:
+                            "Nessa aba fica registrado sua pontuação, e te informa se você está progredindo, regredindo ou parado. Esta aba é dividida em duas seções, sendo:\n\n",
+                        style: FormatoTexto.corpo(),
                       ),
                       TextSpan(
                         text: "Estatística global\n",
