@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 class GraficoPizza extends StatelessWidget {
