@@ -1,27 +1,32 @@
 import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 
-class _STreinamento2 extends State {
+class _STreinamento2 extends STreinamentoBase {
   int selecionado = 0;
+  //final Playback pbackTest = Playback();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     List<List<Map<String, dynamic>>> selecoes;
+
     void avancar() {
       setState(
         () {
-          selecionado += (selecionado < selecoes.length) ? 1 : 0;
+          if (selecionado < selecoes.length - 1) {
+            selecionado++;
+          } else {
+            irParaResultados(null, context);
+          }
         },
       );
-      if (selecionado >= selecoes.length)
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: routes["resultados"],
-          ),
-        );
       print(selecionado);
     }
 
@@ -36,19 +41,11 @@ class _STreinamento2 extends State {
       ],
     ];
 
-    void _backPress() {
-      Navigator.pop(context);
-    }
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: CAppBar(
-          "Exemplo",
-          backButton: true,
-          pressBack: _backPress,
-        ),
+        appBar: stbAppBar(context),
         body: Column(
           children: [
             Spacer(
@@ -77,13 +74,7 @@ class _STreinamento2 extends State {
             Spacer(
               flex: 1,
             ),
-            LinearProgressIndicator(
-              value: 0.5,
-              backgroundColor: Colors.blue,
-              valueColor: AlwaysStoppedAnimation(Colors.orange),
-              minHeight: 7,
-            ),
-          ]..removeWhere((widget) => widget == null),
+          ]..removeWhere((w) => w == null),
         ),
       ),
     );

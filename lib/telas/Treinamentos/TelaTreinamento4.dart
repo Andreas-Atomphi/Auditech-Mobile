@@ -4,45 +4,41 @@ import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 
-class _STreinamento4 extends State {
+class _STreinamento4 extends STreinamentoBase {
   int questaoSelecionada = 0;
 
   List<List<Widget>> respostas;
 
-  void avancar() {
-    setState(() {
-      questaoSelecionada += 1;
-      if (questaoSelecionada >= respostas.length) {
-        Navigator.of(context).push(
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                Resultados(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              var begin = Offset(1.0, 0.0);
-              var end = Offset.zero;
-              var curve = Curves.ease;
-              var tween =
-                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-              var offsetAnimation = animation.drive(tween);
-              return SlideTransition(
-                position: offsetAnimation,
-                child: child,
-              );
-            },
-          ),
-        );
-      }
-      print(questaoSelecionada);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    void _backPress() {
-      Navigator.pop(context);
-    }
-
+    avancar = () {
+      setState(() {
+        questaoSelecionada += 1;
+        if (questaoSelecionada >= respostas.length) {
+          Navigator.of(context).push(
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  Resultados(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                var begin = Offset(1.0, 0.0);
+                var end = Offset.zero;
+                var curve = Curves.ease;
+                var tween = Tween(begin: begin, end: end)
+                    .chain(CurveTween(curve: curve));
+                var offsetAnimation = animation.drive(tween);
+                return SlideTransition(
+                  position: offsetAnimation,
+                  child: child,
+                );
+              },
+            ),
+          );
+        }
+        print(questaoSelecionada);
+      });
+    };
+    
     respostas = [
       //Ser humano
       [
@@ -154,7 +150,7 @@ class _STreinamento4 extends State {
         appBar: CAppBar(
           "Exercício 4",
           backButton: true,
-          pressBack: _backPress,
+          pressBack: () => voltar(context),
         ),
         body: Column(
           children: [
