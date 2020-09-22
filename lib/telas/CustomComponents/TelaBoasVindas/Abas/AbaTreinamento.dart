@@ -1,7 +1,6 @@
 import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../main.dart';
 import '../components.dart';
 
 class AbaTreinamento extends StatelessWidget {

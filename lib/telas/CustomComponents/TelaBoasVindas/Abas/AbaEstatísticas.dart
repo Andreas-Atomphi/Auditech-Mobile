@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:AuditechMobile/main.dart';
 import '../components.dart';
-import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 
 class AbaEstatisticas extends StatelessWidget {
   Widget build(BuildContext context) {
