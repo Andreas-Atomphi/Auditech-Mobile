@@ -23,7 +23,7 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
     }
 
     //Método que será chamado quando o botão ir para o exercício for pressionado
-    void irParaTreino([treinamento]) {
+    void irParaTreino([String treinamento]) {
       Navigator.push(
         context,
         MaterialPageRoute(
