@@ -42,7 +42,7 @@ class AbaTreinamento extends StatelessWidget {
     double space = 30;
     return GridView.extent(
       padding: EdgeInsets.all(space),
-      maxCrossAxisExtent: 130,
+      maxCrossAxisExtent: 200,
       crossAxisSpacing: space,
       mainAxisSpacing: space,
       children: [
