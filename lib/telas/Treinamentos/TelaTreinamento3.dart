@@ -4,23 +4,26 @@ import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 
-class _STreinamento3 extends STreinamentoBase {
+class _STreinamento3 extends STreinamentoBase<Exercicio3> {
   int questaoSelecionada = 0;
 
   List<List<Widget>> respostas;
 
-  @override
-  Widget build(BuildContext context) {
-    avancar = () {
-      setState(() {
+  void avancar() {
+    setState(
+      () {
         questaoSelecionada += 1;
         if (questaoSelecionada >= respostas.length) {
-          irParaResultados(null, context);
+          irParaResultados(context);
         }
         print(questaoSelecionada);
-      });
-    };
+      },
+    );
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    //ToDo: Trocar componentes chapados para informações a serem convertidas em componentes.
     respostas = [
       //Animais
       [
@@ -183,10 +186,16 @@ class _STreinamento3 extends STreinamentoBase {
       ],
     ];
 
+    CAppBar myab = CAppBar(
+      "Exemplo",
+      backButton: true,
+      pressBack: () => voltar(context),
+    );
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: stbAppBar(context),
+        appBar: myab,
         body: Column(
           children: [
             if (questaoSelecionada < respostas.length)
@@ -202,10 +211,14 @@ class _STreinamento3 extends STreinamentoBase {
       ),
     );
   }
+
+  void iniciarExercicio() {
+    // TODO: implement iniciarExercicio
+  }
 }
 
 class Exercicio3 extends StatefulWidget {
-  State createState() {
+  STreinamentoBase<Exercicio3> createState() {
     return _STreinamento3();
   }
 }

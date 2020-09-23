@@ -4,14 +4,13 @@ import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 
-class _STreinamento4 extends STreinamentoBase {
+class _STreinamento4 extends STreinamentoBase<Exercicio4> {
   int questaoSelecionada = 0;
-
   List<List<Widget>> respostas;
 
   @override
   Widget build(BuildContext context) {
-    avancar = () {
+    void avancar() {
       setState(() {
         questaoSelecionada += 1;
         if (questaoSelecionada >= respostas.length) {
@@ -37,8 +36,9 @@ class _STreinamento4 extends STreinamentoBase {
         }
         print(questaoSelecionada);
       });
-    };
-    
+    }
+
+    //ToDo: Trocar componentes chapados para informações a serem convertidas em componentes.
     respostas = [
       //Ser humano
       [
@@ -148,7 +148,7 @@ class _STreinamento4 extends STreinamentoBase {
       home: Scaffold(
         backgroundColor: backgroundColor,
         appBar: CAppBar(
-          "Exercício 4",
+          "Exemplo",
           backButton: true,
           pressBack: () => voltar(context),
         ),
@@ -167,10 +167,14 @@ class _STreinamento4 extends STreinamentoBase {
       ),
     );
   }
+
+  void iniciarExercicio() {
+    // TODO: implement iniciarExercicio
+  }
 }
 
 class Exercicio4 extends StatefulWidget {
-  State createState() {
+  STreinamentoBase<Exercicio4> createState() {
     return _STreinamento4();
   }
 }

@@ -4,35 +4,26 @@ import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 
-class _STreinamento5 extends State {
+class _STreinamento5 extends STreinamentoBase<Exercicio5> {
   List<String> respostasDadas = List<String>(4);
-  List<int> respostasCertas = [0, 6, 7, 5];
+  int resp = 0;
   int selec = 0;
+  int subselec = 0;
 
   void avancar(String txt) {
-    if (selec < respostasCertas.length - 1) {
-      setState(() {
-        respostasDadas[selec] = txt;
-        selec++;
-      });
-    } else {
-      Navigator.of(context).push(
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => Resultados(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            var begin = Offset(1.0, 0.0);
-            var end = Offset.zero;
-            var curve = Curves.ease;
-            var tween =
-                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var offsetAnimation = animation.drive(tween);
-            return SlideTransition(
-              position: offsetAnimation,
-              child: child,
-            );
-          },
-        ),
+    if (selec < respostasDadas.length - 1) {
+      setState(
+        () {
+          resp++;
+          selec = resp ~/ 3;
+          subselec = resp % 2;
+          print(resp);
+          print(selec);
+          print(subselec);
+        },
       );
+    } else {
+      irParaResultados(context);
       print(respostasDadas.length);
     }
   }
@@ -100,10 +91,14 @@ class _STreinamento5 extends State {
       ),
     );
   }
+
+  void iniciarExercicio() {
+    // TODO: implement iniciarExercicio
+  }
 }
 
 class Exercicio5 extends StatefulWidget {
-  State createState() {
+  STreinamentoBase<Exercicio5> createState() {
     return _STreinamento5();
   }
 }
