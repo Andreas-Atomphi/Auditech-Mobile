@@ -14,7 +14,7 @@ class TecladoNumerico extends StatelessWidget {
   });
 
   Widget build(BuildContext context) {
-    double btnSqr = width * 0.15;
+    double btnSqr = (width * 0.15 >= 70) ? 70 : width * 0.15;
     List<List<Widget>> myChildren = [[], [], [], []];
     //Diz quantas colunas já foram adicionadas
     int actualColumns = 1;
@@ -40,7 +40,7 @@ class TecladoNumerico extends StatelessWidget {
         );
         selectedRow.add(
           Container(
-            width: btnSqr + 30,
+            width: btnSqr + (width / 15),
             height: btnSqr,
             child: btnNum,
           ),
@@ -57,7 +57,7 @@ class TecladoNumerico extends StatelessWidget {
       flex: 1,
     ));
     myChildren[3].add(Container(
-      width: btnSqr + 30,
+      width: btnSqr + (width / 15),
       height: btnSqr,
       child: FlatButton(
         onPressed: () => aoPressionar("0"),
