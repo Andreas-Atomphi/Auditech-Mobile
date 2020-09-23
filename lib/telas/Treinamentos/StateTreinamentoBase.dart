@@ -2,35 +2,37 @@ import 'dart:async';
 
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:audioplayers/audioplayers.dart';
-
-import '../TelaResultados.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-abstract class STreinamentoBase extends State {
-  CAppBar stbAppBar(context) => CAppBar(
-        "Exemplo",
+import '../Telas.dart';
+
+abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
+    with Diagnosticable {
+  CAppBar stbAppBar(BuildContext context, {String texto}) => CAppBar(
+        texto,
         backButton: true,
-        pressBack: voltar(context),
+        pressBack: () => voltar(context),
       );
-  AssetsAudioPlayer playback = AssetsAudioPlayer();
 
-  void initState() {
-    super.initState();
-  }
-
-  startTimeout([int milliseconds = 1]) {
+  @protected
+  Timer startTimeout([int milliseconds = 1]) {
+    assert(milliseconds != null);
     Duration ms = const Duration(milliseconds: 1);
     var duration = ms * milliseconds;
     return new Timer(duration, iniciarExercicio);
   }
 
-  void iniciarExercicio() {}
-  voltar(BuildContext context) => Navigator.pop(context);
+  @protected
+  void iniciarExercicio();
 
-  void Function() avancar;
+  @protected
+  void voltar(BuildContext context) {
+    Navigator.pop(context);
+  }
 
-  irParaResultados(List respostas, BuildContext context) {
+  @protected
+  void irParaResultados(BuildContext context, {List respostas}) {
     Navigator.of(context).push(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => Resultados(),
@@ -38,8 +40,9 @@ abstract class STreinamentoBase extends State {
           var begin = Offset(1.0, 0.0);
           var end = Offset.zero;
           var curve = Curves.ease;
-          var tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          var tween = Tween(begin: begin, end: end).chain(
+            CurveTween(curve: curve),
+          );
           var offsetAnimation = animation.drive(tween);
           return SlideTransition(
             position: offsetAnimation,
