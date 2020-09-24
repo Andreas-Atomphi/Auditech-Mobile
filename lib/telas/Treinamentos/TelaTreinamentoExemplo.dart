@@ -1,9 +1,10 @@
 import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 
-class TreinamentoState extends State {
+class _STreinamento extends STreinamentoBase<TelaTreinamentoExemplo> {
   @override
   Widget build(BuildContext context) {
     void _backPress() {
@@ -11,7 +12,6 @@ class TreinamentoState extends State {
     }
 
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: backgroundColor,
         appBar: CAppBar(
@@ -50,10 +50,15 @@ class TreinamentoState extends State {
       ),
     );
   }
+
+  @override
+  void iniciarExercicio() {
+    // TODO: implement iniciarExercicio
+  }
 }
 
 class TelaTreinamentoExemplo extends StatefulWidget {
-  State createState() {
-    return TreinamentoState();
+  STreinamentoBase<TelaTreinamentoExemplo> createState() {
+    return _STreinamento();
   }
 }
