@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
+import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,10 @@ import '../Telas.dart';
 
 abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     with Diagnosticable {
-  CAppBar stbAppBar(BuildContext context, {String texto}) => CAppBar(
+  Playback playBack;
+
+  CAppBar stbAppBar(BuildContext context, {String texto = "exemplo"}) =>
+      CAppBar(
         texto,
         backButton: true,
         pressBack: () => voltar(context),
@@ -20,7 +24,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     assert(milliseconds != null);
     Duration ms = const Duration(milliseconds: 1);
     var duration = ms * milliseconds;
-    return new Timer(duration, iniciarExercicio);
+    return Timer(duration, iniciarExercicio);
   }
 
   @protected
