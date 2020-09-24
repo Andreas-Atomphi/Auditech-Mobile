@@ -2,12 +2,11 @@ import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
-import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 
 class _STreinamento3 extends STreinamentoBase<Exercicio3> {
   int questaoSelecionada = 0;
 
-  List<List<Widget>> respostas;
+  List<List<dynamic>> respostas;
 
   void avancar() {
     setState(
@@ -23,183 +22,110 @@ class _STreinamento3 extends STreinamentoBase<Exercicio3> {
 
   @override
   Widget build(BuildContext context) {
-    //ToDo: Trocar componentes chapados para informações a serem convertidas em componentes.
     respostas = [
       //Animais
       [
+        "s1",
         //Lista de Widgets
-        Spacer(
-          flex: 1,
-        ),
-        Row(
-          children: [
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Pássaro", avancar),
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Gato", avancar),
-            Spacer(
-              flex: 1,
-            ),
-          ],
-        ),
-        Spacer(
-          flex: 1,
-        ),
-        Row(
-          children: [
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Cavalo", avancar),
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Bode", avancar),
-            Spacer(
-              flex: 1,
-            ),
-          ],
-        ),
-        Spacer(
-          flex: 5,
-        ),
+        [
+          "s1",
+          {"nome": "Pássaro", "método": avancar},
+          "s1",
+          {"nome": "Gato", "método": avancar},
+          "s1",
+        ],
+        "s1",
+        [
+          "s1",
+          {"nome": "Cavalo", "método": avancar},
+          "s1",
+          {"nome": "Bode", "método": avancar},
+          "s1",
+        ],
+        "s5",
       ],
 
       //Instrumentos
       [
         //Lista de Widgets
-        Spacer(
-          flex: 1,
-        ),
-        Row(
-          children: [
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Tambor", avancar),
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Piano", avancar),
-            Spacer(
-              flex: 1,
-            ),
-          ],
-        ),
-        Spacer(
-          flex: 1,
-        ),
-        Row(
-          children: [
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Gaita", avancar),
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Flauta", avancar),
-            Spacer(
-              flex: 1,
-            ),
-          ],
-        ),
-        Spacer(
-          flex: 1,
-        ),
-        Row(
-          children: [
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Violão", avancar),
-            Spacer(
-              flex: 1,
-            ),
-          ],
-        ),
-        Spacer(
-          flex: 5,
-        ),
+        "s1",
+        [
+          "s1",
+          {"nome": "Tambor", "método": avancar},
+          "s1",
+          {"nome": "Piano", "método": avancar},
+          "s1",
+        ],
+        "s1",
+        [
+          "s1",
+          {"nome": "Gaita", "método": avancar},
+          "s1",
+          {"nome": "Flauta", "método": avancar},
+          "s1",
+        ],
+        "s1",
+
+        [
+          "s1",
+          {"nome": "Violão", "método": avancar},
+          "s1",
+        ],
+        "s5",
       ],
 
       //Automóveis
       [
+        "s1",
         //Lista de Widgets
-        Spacer(
-          flex: 1,
-        ),
-        Row(
-          children: [
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Trem", avancar),
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Fórmula 1", avancar),
-            Spacer(
-              flex: 1,
-            ),
-          ],
-        ),
-        Spacer(
-          flex: 1,
-        ),
-        Row(
-          children: [
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Carro", avancar),
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Helicóptero", avancar),
-            Spacer(
-              flex: 1,
-            ),
-          ],
-        ),
-        Spacer(
-          flex: 1,
-        ),
-        Row(
-          children: [
-            Spacer(
-              flex: 1,
-            ),
-            SelectButton("Ambulância", avancar),
-            Spacer(
-              flex: 1,
-            ),
-          ],
-        ),
-        Spacer(
-          flex: 5,
-        ),
+        [
+          "s1",
+          {"nome": "Trem", "método": avancar},
+          "s1",
+          {"nome": "Fórmula 1", "método": avancar},
+          "s1",
+        ],
+        "s1",
+        [
+          "s1",
+          {"nome": "Carro", "método": avancar},
+          "s1",
+          {"nome": "Helicóptero", "método": avancar},
+          "s1",
+        ],
+        "s1",
+        [
+          "s1",
+          {"nome": "Ambulância", "método": avancar},
+          "s1",
+        ],
+        "s5",
       ],
     ];
-
-    CAppBar myab = CAppBar(
-      "Exemplo",
-      backButton: true,
-      pressBack: () => voltar(context),
-    );
 
     return MaterialApp(
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: myab,
+        appBar: stbAppBar(context, texto: "Exemplo 3"),
         body: Column(
           children: [
             if (questaoSelecionada < respostas.length)
-              ...respostas[questaoSelecionada],
+              // * Adiciona os componentes de forma dinâmica
+              ...respostas[questaoSelecionada].map(
+                (lay) => (lay.runtimeType == String)
+                    ? Spacer(flex: int.parse(lay[1]))
+                    : Row(
+                        children: [
+                          ...lay.map(
+                            (com) => (com.runtimeType == String)
+                                ? (com.toString() == "s1")
+                                    ? Spacer(flex: 1)
+                                    : Spacer(flex: 5)
+                                : SelectButton(com["nome"], com["método"]),
+                          )
+                        ],
+                      ),
+              ),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,
