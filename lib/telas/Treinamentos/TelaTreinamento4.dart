@@ -147,11 +147,7 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: CAppBar(
-          "Exemplo",
-          backButton: true,
-          pressBack: () => voltar(context),
-        ),
+        appBar: stbAppBar(context, texto: "Exercício 4"),
         body: Column(
           children: [
             if (questaoSelecionada < respostas.length)

@@ -30,19 +30,11 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
 
   @override
   Widget build(BuildContext context) {
-    void _backPress() {
-      Navigator.pop(context);
-    }
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: CAppBar(
-          "Exercício 5",
-          backButton: true,
-          pressBack: _backPress,
-        ),
+        appBar: stbAppBar(context, texto: "Exemplo 5"),
         body: Column(
           children: [
             Spacer(

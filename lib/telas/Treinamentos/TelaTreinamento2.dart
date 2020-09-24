@@ -44,11 +44,7 @@ class _STreinamento2 extends STreinamentoBase<Exercicio2> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: CAppBar(
-          "Exemplo",
-          backButton: true,
-          pressBack: () => voltar(context),
-        ),
+        appBar: stbAppBar(context, texto: "Exercicio 2"),
         body: Column(
           children: [
             Spacer(
