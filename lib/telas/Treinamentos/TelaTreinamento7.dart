@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 
-class _STreinamento4 extends STreinamentoBase<Exercicio4> {
+class _STreinamento7 extends STreinamentoBase<Exercicio7> {
   int questaoSelecionada = 0;
 
   List<dynamic> respostas;
@@ -24,27 +24,26 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
   @override
   Widget build(BuildContext context) {
     respostas = [
+      "s1",
       //Lista de Widgets
-      "s1",
       [
         "s1",
-        {"nome": "Tambor", "método": avancar},
+        {"nome": "Vento", "método": avancar},
         "s1",
-        {"nome": "Piano", "método": avancar},
+        {"nome": "Água", "método": avancar},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Gaita", "método": avancar},
+        {"nome": "Ondas do mar", "método": avancar},
         "s1",
-        {"nome": "Flauta", "método": avancar},
+        {"nome": "Trovão", "método": avancar},
         "s1",
       ],
-      "s1",
       [
         "s1",
-        {"nome": "Violão", "método": avancar},
+        {"nome": "Chuva com trovão", "método": avancar},
         "s1",
       ],
       "s5",
@@ -58,7 +57,21 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
           children: [
             if (questaoSelecionada < respostas.length)
               // * Adiciona os componentes de forma dinâmica
-              ...addDynamicComponents(respostas),
+              ...respostas[questaoSelecionada].map(
+                (lay) => (lay.runtimeType == String)
+                    ? Spacer(flex: int.parse(lay[1]))
+                    : Row(
+                        children: [
+                          ...lay.map(
+                            (com) => (com.runtimeType == String)
+                                ? (com.toString() == "s1")
+                                    ? Spacer(flex: 1)
+                                    : Spacer(flex: 5)
+                                : SelectButton(com["nome"], com["método"]),
+                          )
+                        ],
+                      ),
+              ),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,
@@ -76,8 +89,8 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
   }
 }
 
-class Exercicio4 extends StatefulWidget {
-  STreinamentoBase<Exercicio4> createState() {
-    return _STreinamento4();
+class Exercicio7 extends StatefulWidget {
+  STreinamentoBase<Exercicio7> createState() {
+    return _STreinamento7();
   }
 }

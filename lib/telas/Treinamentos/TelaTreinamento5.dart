@@ -1,77 +1,65 @@
-import 'package:AuditechMobile/telas/Telas.dart';
+import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
-import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 
 class _STreinamento5 extends STreinamentoBase<Exercicio5> {
-  List<String> respostasDadas = List<String>(4);
-  int resp = 0;
-  int selec = 0;
-  int subselec = 0;
+  int questaoSelecionada = 0;
 
-  void avancar(String txt) {
-    if (selec < respostasDadas.length - 1) {
-      setState(
-        () {
-          resp++;
-          selec = resp ~/ 3;
-          subselec = resp % 2;
-          print(resp);
-          print(selec);
-          print(subselec);
-        },
-      );
-    } else {
-      irParaResultados(context);
-      print(respostasDadas.length);
-    }
+  List<dynamic> respostas;
+
+  void avancar() {
+    setState(
+      () {
+        questaoSelecionada += 1;
+        if (questaoSelecionada >= respostas.length) {
+          playBack.stop();
+          irParaResultados(context);
+        }
+        print(questaoSelecionada);
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    respostas = //Automóveis
+        [
+      "s1",
+      //Lista de Widgets
+      [
+        "s1",
+        {"nome": "Trem", "método": avancar},
+        "s1",
+        {"nome": "Fórmula 1", "método": avancar},
+        "s1",
+      ],
+      "s1",
+      [
+        "s1",
+        {"nome": "Carro", "método": avancar},
+        "s1",
+        {"nome": "Helicóptero", "método": avancar},
+        "s1",
+      ],
+      "s1",
+      [
+        "s1",
+        {"nome": "Ambulância", "método": avancar},
+        "s1",
+      ],
+      "s5",
+    ];
+
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: stbAppBar(context, texto: "Exemplo 5"),
+        appBar: stbAppBar(context, texto: "Exemplo 3"),
         body: Column(
           children: [
-            Spacer(
-              flex: 1,
-            ),
-            Text(
-              "Digite os números que você ouvir no lado {valor}",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
-            ),
-            Spacer(
-              flex: 1,
-            ),
-            Row(
-              children: [
-                ...respostasDadas.map(
-                  (e) => Text(
-                    (e.toString() != "null") ? e.toString() : "",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            TecladoNumerico(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.5,
-              aoPressionar: avancar,
-              textColor: Colors.white,
-              backgroundColor: accent,
-              buttonsColor: primary,
-            ),
+            if (questaoSelecionada < respostas.length)
+              // * Adiciona os componentes de forma dinâmica
+              ...addDynamicComponents(respostas),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,
@@ -85,7 +73,7 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
   }
 
   void iniciarExercicio() {
-    // TODO: implement iniciarExercicio
+    playBack.play(exercicios[0]);
   }
 }
 
