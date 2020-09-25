@@ -3,4 +3,7 @@ export 'TelaTreinamento2.dart';
 export 'TelaTreinamento3.dart';
 export 'TelaTreinamento4.dart';
 export 'TelaTreinamento5.dart';
+export 'TelaTreinamento6.dart';
+export 'TelaTreinamento7.dart';
+export 'TelaTreinamento8.dart';
 export 'StateTreinamentoBase.dart';
