@@ -1,4 +1,4 @@
-import 'package:AuditechMobile/telas/Telas.dart';
+import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
@@ -6,15 +6,16 @@ import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components
 class _STreinamento3 extends STreinamentoBase<Exercicio3> {
   int questaoSelecionada = 0;
 
-  List<List<dynamic>> respostas;
+  List<dynamic> respostas;
 
   void avancar() {
     setState(
       () {
         questaoSelecionada += 1;
-        if (questaoSelecionada >= respostas.length) {
+        /*if (questaoSelecionada >= respostas.length) {
+          playBack.stop();
           irParaResultados(context);
-        }
+        }*/
         print(questaoSelecionada);
       },
     );
@@ -23,84 +24,24 @@ class _STreinamento3 extends STreinamentoBase<Exercicio3> {
   @override
   Widget build(BuildContext context) {
     respostas = [
-      //Animais
+      //Lista de Widgets
+      "s1",
       [
         "s1",
-        //Lista de Widgets
-        [
-          "s1",
-          {"nome": "Pássaro", "método": avancar},
-          "s1",
-          {"nome": "Gato", "método": avancar},
-          "s1",
-        ],
+        {"nome": "Pássaro", "método": avancar},
         "s1",
-        [
-          "s1",
-          {"nome": "Cavalo", "método": avancar},
-          "s1",
-          {"nome": "Bode", "método": avancar},
-          "s1",
-        ],
-        "s5",
+        {"nome": "Gato", "método": avancar},
+        "s1",
       ],
-
-      //Instrumentos
-      [
-        //Lista de Widgets
-        "s1",
-        [
-          "s1",
-          {"nome": "Tambor", "método": avancar},
-          "s1",
-          {"nome": "Piano", "método": avancar},
-          "s1",
-        ],
-        "s1",
-        [
-          "s1",
-          {"nome": "Gaita", "método": avancar},
-          "s1",
-          {"nome": "Flauta", "método": avancar},
-          "s1",
-        ],
-        "s1",
-
-        [
-          "s1",
-          {"nome": "Violão", "método": avancar},
-          "s1",
-        ],
-        "s5",
-      ],
-
-      //Automóveis
+      "s1",
       [
         "s1",
-        //Lista de Widgets
-        [
-          "s1",
-          {"nome": "Trem", "método": avancar},
-          "s1",
-          {"nome": "Fórmula 1", "método": avancar},
-          "s1",
-        ],
+        {"nome": "Cavalo", "método": avancar},
         "s1",
-        [
-          "s1",
-          {"nome": "Carro", "método": avancar},
-          "s1",
-          {"nome": "Helicóptero", "método": avancar},
-          "s1",
-        ],
+        {"nome": "Bode", "método": avancar},
         "s1",
-        [
-          "s1",
-          {"nome": "Ambulância", "método": avancar},
-          "s1",
-        ],
-        "s5",
       ],
+      "s5",
     ];
 
     return MaterialApp(
@@ -111,21 +52,7 @@ class _STreinamento3 extends STreinamentoBase<Exercicio3> {
           children: [
             if (questaoSelecionada < respostas.length)
               // * Adiciona os componentes de forma dinâmica
-              ...respostas[questaoSelecionada].map(
-                (lay) => (lay.runtimeType == String)
-                    ? Spacer(flex: int.parse(lay[1]))
-                    : Row(
-                        children: [
-                          ...lay.map(
-                            (com) => (com.runtimeType == String)
-                                ? (com.toString() == "s1")
-                                    ? Spacer(flex: 1)
-                                    : Spacer(flex: 5)
-                                : SelectButton(com["nome"], com["método"]),
-                          )
-                        ],
-                      ),
-              ),
+              ...addDynamicComponents(respostas),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,
@@ -139,7 +66,7 @@ class _STreinamento3 extends STreinamentoBase<Exercicio3> {
   }
 
   void iniciarExercicio() {
-    // TODO: implement iniciarExercicio
+    playBack.play(exercicios[0]);
   }
 }
 
