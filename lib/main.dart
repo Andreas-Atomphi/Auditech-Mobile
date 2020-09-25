@@ -9,14 +9,16 @@ Color accent = Color.fromARGB(255, 0, 150, 160); // Variável para cor secundár
 Map<String, Widget Function(BuildContext context)> routes = {
   "principal": (context) => TelaLogin(),
   "boas-vindas": (context) => TelaBoasVindas(),
-  "treinamento-aviso": (context) => TelaInstrucoesTreinamento(),
-  "treinamento-exemplo": (context) => TelaTreinamentoExemplo(),
+  "aviso-tr": (context) => TelaInstrucoesTreinamento(),
+  "exemplo-tr": (context) => TelaTreinamentoExemplo(),
   "treinamento-1": (context) => TelaTreinamentoExemplo(),
   "treinamento-2": (context) => Exercicio2(),
   "treinamento-3": (context) => Exercicio3(),
   "treinamento-4": (context) => Exercicio4(),
   "treinamento-5": (context) => Exercicio5(),
-  "treinamento-6": (context) => Exercicio4(),
+  "treinamento-6": (context) => Exercicio6(),
+  "treinamento-7": (context) => Exercicio7(),
+  "treinamento-8": (context) => Exercicio8(),
   "resultados": (context) => Resultados(),
 };
 
