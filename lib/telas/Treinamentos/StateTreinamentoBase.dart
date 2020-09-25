@@ -10,7 +10,13 @@ import '../Telas.dart';
 
 abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     with Diagnosticable {
-  Playback playBack;
+  Playback playBack = Playback();
+
+  @override
+  void initState() {
+    super.initState();
+    startTimeout(1000);
+  }
 
   CAppBar stbAppBar(BuildContext context, {String texto = "exemplo"}) =>
       CAppBar(
@@ -32,11 +38,29 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
 
   @protected
   void voltar(BuildContext context) {
+    playBack.stop();
     Navigator.pop(context);
+  }
+
+  Iterable<Widget> addDynamicComponents(List<dynamic> respostas) {
+    return respostas.map(
+      (lay) => (lay.runtimeType == String)
+          ? Spacer(flex: int.parse(lay[1]))
+          : Row(
+              children: [
+                ...lay.map(
+                  (com) => (com.runtimeType == String)
+                      ? Spacer(flex: int.parse(com[1]))
+                      : SelectButton(com["nome"], com["método"]),
+                )
+              ],
+            ),
+    );
   }
 
   @protected
   void irParaResultados(BuildContext context, {List respostas}) {
+    playBack.stop();
     Navigator.of(context).push(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => Resultados(),
