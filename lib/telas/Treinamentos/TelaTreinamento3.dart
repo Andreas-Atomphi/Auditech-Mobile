@@ -1,4 +1,7 @@
 import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/main.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
@@ -47,7 +50,7 @@ class _STreinamento3 extends STreinamentoBase<Exercicio3> {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: stbAppBar(context, texto: "Exemplo 3"),
+        appBar: stbAppBar(context, texto: "Exercicio 3"),
         body: Column(
           children: [
             if (questaoSelecionada < respostas.length)
@@ -65,8 +68,12 @@ class _STreinamento3 extends STreinamentoBase<Exercicio3> {
     );
   }
 
-  void iniciarExercicio() {
-    playBack.play(exercicios[0]);
+  void iniciarExercicio() async {
+    try {
+      playBack.play(exercicios[0]);
+    } catch (e) {
+      print(e);
+    }
   }
 }
 
