@@ -1,6 +1,7 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:union/union.dart';
 // import 'package:audioplayers/audioplayers.dart';
 
 final List<String> examples = <String>[
@@ -39,14 +40,14 @@ extension PlayersComponents on Players {
 }
 
 class Playback {
-  final AudioPlayer audioPlayer = new AudioPlayer();
-  Playback();
-  play(String path) async {
-    int result = await audioPlayer.play(path, isLocal: true);
-    return result;
+  AudioPlayer player = AudioPlayer();
+  AudioCache loader;
+  play(String path) {
+    loader = AudioCache(prefix: "", fixedPlayer: player);
+    loader.play(path);
   }
 
-  stop() async {
-    audioPlayer.stop();
+  stop() {
+    player.stop();
   }
 }
