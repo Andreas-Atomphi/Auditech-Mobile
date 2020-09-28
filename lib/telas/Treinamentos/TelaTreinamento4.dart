@@ -53,7 +53,7 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: stbAppBar(context, texto: "Exemplo 3"),
+        appBar: stbAppBar(context, texto: "Exercicio 4"),
         body: Column(
           children: [
             if (questaoSelecionada < respostas.length)
@@ -72,7 +72,7 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
   }
 
   void iniciarExercicio() {
-    playBack.play(exercicios[0]);
+    //playBack.play(exercicios[0]);
   }
 }
 

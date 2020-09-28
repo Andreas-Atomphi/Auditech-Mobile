@@ -23,7 +23,8 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
 
   @override
   Widget build(BuildContext context) {
-    respostas = //Automóveis
+    respostas =
+        //Automóveis
         [
       "s1",
       //Lista de Widgets
@@ -54,7 +55,7 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: stbAppBar(context, texto: "Exemplo 3"),
+        appBar: stbAppBar(context, texto: "Exercicio 5"),
         body: Column(
           children: [
             if (questaoSelecionada < respostas.length)
@@ -73,7 +74,7 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
   }
 
   void iniciarExercicio() {
-    playBack.play(exercicios[0]);
+    //playBack.play(exercicios[0]);
   }
 }
 
