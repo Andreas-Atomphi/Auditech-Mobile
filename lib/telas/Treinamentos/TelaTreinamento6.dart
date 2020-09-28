@@ -47,26 +47,12 @@ class _STreinamento6 extends STreinamentoBase<Exercicio6> {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: stbAppBar(context, texto: "Exemplo 3"),
+        appBar: stbAppBar(context, texto: "Exercicio 6"),
         body: Column(
           children: [
             if (questaoSelecionada < respostas.length)
               // * Adiciona os componentes de forma dinâmica
-              ...respostas[questaoSelecionada].map(
-                (lay) => (lay.runtimeType == String)
-                    ? Spacer(flex: int.parse(lay[1]))
-                    : Row(
-                        children: [
-                          ...lay.map(
-                            (com) => (com.runtimeType == String)
-                                ? (com.toString() == "s1")
-                                    ? Spacer(flex: 1)
-                                    : Spacer(flex: 5)
-                                : SelectButton(com["nome"], com["método"]),
-                          )
-                        ],
-                      ),
-              ),
+              ...addDynamicComponents(respostas),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,

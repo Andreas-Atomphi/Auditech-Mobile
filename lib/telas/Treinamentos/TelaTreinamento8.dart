@@ -34,7 +34,7 @@ class _STreinamento8 extends STreinamentoBase<Exercicio8> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: stbAppBar(context, texto: "Exemplo 8"),
+        appBar: stbAppBar(context, texto: "Exercicio 8"),
         body: Column(
           children: [
             Spacer(

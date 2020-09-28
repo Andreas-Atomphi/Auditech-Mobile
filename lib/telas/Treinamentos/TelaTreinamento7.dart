@@ -41,6 +41,7 @@ class _STreinamento7 extends STreinamentoBase<Exercicio7> {
         {"nome": "Trovão", "método": avancar},
         "s1",
       ],
+      "s1",
       [
         "s1",
         {"nome": "Chuva com trovão", "método": avancar},
@@ -52,26 +53,12 @@ class _STreinamento7 extends STreinamentoBase<Exercicio7> {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: stbAppBar(context, texto: "Exemplo 3"),
+        appBar: stbAppBar(context, texto: "Exercicio 7"),
         body: Column(
           children: [
             if (questaoSelecionada < respostas.length)
               // * Adiciona os componentes de forma dinâmica
-              ...respostas[questaoSelecionada].map(
-                (lay) => (lay.runtimeType == String)
-                    ? Spacer(flex: int.parse(lay[1]))
-                    : Row(
-                        children: [
-                          ...lay.map(
-                            (com) => (com.runtimeType == String)
-                                ? (com.toString() == "s1")
-                                    ? Spacer(flex: 1)
-                                    : Spacer(flex: 5)
-                                : SelectButton(com["nome"], com["método"]),
-                          )
-                        ],
-                      ),
-              ),
+              ...addDynamicComponents(respostas),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,
