@@ -15,7 +15,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
   @override
   void initState() {
     super.initState();
-    startTimeout(1000);
+    iniciarExercicio();
   }
 
   CAppBar stbAppBar(BuildContext context, {String texto = "exemplo"}) =>
