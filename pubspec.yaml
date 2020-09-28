@@ -50,7 +50,7 @@ dev_dependencies:
 flutter:
   assets: 
       - assets/images/
-      - assets/audios/
+      - assets/audios/Exercicios/
       - assets/strings/
       - assets/fonts/
   fonts:
