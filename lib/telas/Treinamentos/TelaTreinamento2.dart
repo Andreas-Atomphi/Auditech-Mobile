@@ -1,4 +1,4 @@
-import 'package:AuditechMobile/main.dart';
+import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
@@ -6,14 +6,9 @@ import 'package:flutter/material.dart';
 
 class _STreinamento2 extends STreinamentoBase<Exercicio2> {
   int selecionado = 0;
-  //final Playback pbackTest = Playback();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  List<List<Map<String, dynamic>>> selecoes;
+  List<List<String>> respostasDadas = List(10);
+  List<Map<String, dynamic>> selecoes;
 
   void avancar() {
     setState(
@@ -31,14 +26,8 @@ class _STreinamento2 extends STreinamentoBase<Exercicio2> {
   @override
   Widget build(BuildContext context) {
     selecoes = [
-      [
-        {"texto": "Tom longo", "método": avancar},
-        {"texto": "Tom curto", "método": avancar},
-      ],
-      [
-        {"texto": "Tom grave", "método": avancar},
-        {"texto": "Tom agudo", "método": avancar},
-      ],
+      {"texto": "Tom grave", "método": avancar},
+      {"texto": "Tom agudo", "método": avancar},
     ];
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -80,7 +69,8 @@ class _STreinamento2 extends STreinamentoBase<Exercicio2> {
   }
 
   void iniciarExercicio() {
-    // TODO: implement iniciarExercicio
+    respostasDadas.fillRange(1, 10, List(3));
+    playBack.play(exercicios[1]);
   }
 }
 
