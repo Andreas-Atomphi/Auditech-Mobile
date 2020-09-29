@@ -1,6 +1,6 @@
 import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
 import 'package:flutter/material.dart';
-import 'package:AuditechMobile/main.dart';
+import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 
 class _STreinamento6 extends STreinamentoBase<Exercicio6> {
@@ -66,7 +66,7 @@ class _STreinamento6 extends STreinamentoBase<Exercicio6> {
   }
 
   void iniciarExercicio() {
-    playBack.play(exercicios[0]);
+    playBack.play(exercicios[5]);
   }
 }
 
