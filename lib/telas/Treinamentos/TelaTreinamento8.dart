@@ -1,6 +1,6 @@
 import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
-import 'package:AuditechMobile/main.dart';
+import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 
