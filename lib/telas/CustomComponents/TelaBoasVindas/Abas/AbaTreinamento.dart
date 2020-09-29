@@ -1,7 +1,7 @@
 import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../main.dart';
+import 'package:AuditechMobile/mainData.dart';
 import '../components.dart';
 
 class AbaTreinamento extends StatelessWidget {
@@ -24,13 +24,19 @@ class AbaTreinamento extends StatelessWidget {
       crossAxisSpacing: space,
       mainAxisSpacing: space,
       children: [
-        ...<dynamic>[1, 2, 3, 4, 5, 6, 7, 8].map(
+        //Adiciona os componentes de forma dinâmica através das chaves de routesExercicios
+        ...routesExercicios.keys.map(
+          //Retorna ButtonTreinamento
           (e) => ButtonTreinamento(
-            model[0] + e.toString(),
-            () =>
-                irParaTreino(model[0] + e.toString(), model[1] + e.toString()),
+            //Concatena model com o último dígito da chave (treinamento-n)
+            model[0] + e[e.length - 1],
+            //Adiciona o método para ButtonTreinamento
+            () => irParaTreino(
+              model[0] + e[e.length - 1],
+              e,
+            ),
           ),
-        ),
+        )
       ],
     );
   }
