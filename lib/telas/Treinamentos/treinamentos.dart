@@ -1,4 +1,5 @@
 export 'TelaTreinamentoExemplo.dart';
+export 'TelaTreinamento1.dart';
 export 'TelaTreinamento2.dart';
 export 'TelaTreinamento3.dart';
 export 'TelaTreinamento4.dart';
