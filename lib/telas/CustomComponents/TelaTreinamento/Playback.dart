@@ -1,25 +1,18 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:union/union.dart';
-// import 'package:audioplayers/audioplayers.dart';
-
-final List<String> examples = <String>[
-  "assets/audios/file_example_MP3_2MG.mp3",
-]; // Áudios da pasta exemplos
 
 final List<String> exercicios = <String>[
-  "assets/audios/Exercicios/10_sequencia_animais.mp3",
-  "assets/audios/Exercicios/11_sequencia_instrumentos.mp3",
-  "assets/audios/Exercicios/12_sequencia_natureza.mp3",
-  "assets/audios/Exercicios/13_corpo_humano.mp3",
-  "assets/audios/Exercicios/14_sequencia_transporte.mp3",
-  "assets/audios/Exercicios/15_sequencia_casa.mp3",
-];
+  "8_TomLongo_TomCurto.mp3",
+  "9_TomFino_TomGrosso.mp3",
+  "10_sequencia_animais.mp3",
+  "11_sequencia_instrumentos.mp3",
+  "12_sequencia_natureza.mp3",
+  "13_corpo_humano.mp3",
+  "14_sequencia_transporte.mp3",
+  "15_sequencia_casa.mp3",
+]; //Exercícios
 
-// final List<Audio> audios = examples.map((e) => Audio(e)).toList();
-
-enum Players {
+/*enum Players {
   AAP,
   AC,
 }
@@ -37,17 +30,41 @@ extension PlayersComponents on Players {
         return null;
     }
   }
-}
+}*/
 
 class Playback {
-  AudioPlayer player = AudioPlayer();
-  AudioCache loader;
+  AudioPlayer _player = AudioPlayer();
+  AudioCache _loader;
+
+  String get player {
+    return _player.toString();
+  }
+
+  String get loader {
+    return _loader.toString();
+  }
+
+  String toString() {
+    return "{player: $_player, loader: $_loader, play: $play(path), pause: $pause(), stop: $stop()}";
+  }
+
   play(String path) {
-    loader = AudioCache(prefix: "", fixedPlayer: player);
-    loader.play(path);
+    _loader = AudioCache(
+      prefix: "assets/audios/Exercicios/",
+      fixedPlayer: _player,
+    );
+    _loader.play(path);
+  }
+
+  pause() {
+    _player.pause();
   }
 
   stop() {
-    player.stop();
+    _player.stop();
+  }
+
+  get currentPosition {
+    _player.getCurrentPosition().toString();
   }
 }
