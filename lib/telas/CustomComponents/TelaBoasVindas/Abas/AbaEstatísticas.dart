@@ -1,7 +1,7 @@
 //import 'package:fl_animated_linechart/common/dates.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'package:AuditechMobile/main.dart';
+import 'package:AuditechMobile/mainData.dart';
 import '../components.dart';
 
 class AbaEstatisticas extends StatelessWidget {

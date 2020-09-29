@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:AuditechMobile/main.dart';
+import 'package:AuditechMobile/mainData.dart';
 
 class CAppBar extends AppBar {
   final String texto;
@@ -15,7 +15,11 @@ class CAppBar extends AppBar {
     this.pressBack,
     this.tab,
   }) : super(
-          title: (texto == null) ? null : Text(texto),
+          title: (texto == null)
+              ? null
+              : Text(
+                  texto,
+                ),
           centerTitle: centralizar,
           backgroundColor: primary,
           leading: (backButton)
