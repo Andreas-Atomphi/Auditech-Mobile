@@ -1,15 +1,13 @@
 import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:AuditechMobile/main.dart';
+import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 
 class _STreinamento3 extends STreinamentoBase<Exercicio3> {
   int questaoSelecionada = 0;
 
   List<dynamic> respostas;
+  List<List<String>> respostasDadas = List(2);
 
   void avancar() {
     setState(
@@ -69,8 +67,9 @@ class _STreinamento3 extends STreinamentoBase<Exercicio3> {
   }
 
   void iniciarExercicio() async {
+    respostasDadas.fillRange(1, 2, List(4));
     try {
-      playBack.play(exercicios[0]);
+      playBack.play(exercicios[2]);
     } catch (e) {
       print(e);
     }
