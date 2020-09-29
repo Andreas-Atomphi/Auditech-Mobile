@@ -1,6 +1,7 @@
-import 'package:AuditechMobile/main.dart';
+import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'CustomComponents/TelaBoasVindas/components.dart';
 
 class _TelaBoasVindasState extends State with SingleTickerProviderStateMixin {
@@ -23,38 +24,62 @@ class _TelaBoasVindasState extends State with SingleTickerProviderStateMixin {
       Navigator.pop(context);
     }
 
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: backgroundColor,
-        drawer: DrawerWelcome(
-          mapDados: [
-            {"texto": "Configurações", "metodo": () => null},
-            {"texto": "Sobre DPAC", "metodo": () => null},
-            {"texto": "Sair", "metodo": sair},
-          ],
-        ),
-        appBar: CAppBar("Auditech",
-            tab: TabBar(
-              controller: controller,
-              tabs: [
-                Tab(
-                  text: "Início",
+    return WillPopScope(
+      onWillPop: () {
+        return showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Tem certeza de que deseja sair?"),
+              actions: [
+                FlatButton(
+                  child: Text("Não"),
+                  onPressed: () => Navigator.pop(context),
                 ),
-                Tab(
-                  text: "Treinamentos",
-                ),
-                Tab(
-                  text: "Estatísticas",
-                ),
+                FlatButton(
+                  child: Text("Sim"),
+                  onPressed: () {
+                    SystemNavigator.pop(animated: true);
+                  },
+                )
               ],
-            )),
-        body: TabBarView(
-          controller: controller,
-          children: [
-            AbaBoasVindas(),
-            AbaTreinamento(),
-            AbaEstatisticas(),
-          ],
+            );
+          },
+        );
+      },
+      child: MaterialApp(
+        home: Scaffold(
+          backgroundColor: backgroundColor,
+          drawer: DrawerWelcome(
+            mapDados: [
+              {"texto": "Configurações", "metodo": () => null},
+              {"texto": "Sobre DPAC", "metodo": () => null},
+              {"texto": "Sair", "metodo": sair},
+            ],
+          ),
+          appBar: CAppBar("Auditech",
+              tab: TabBar(
+                controller: controller,
+                tabs: [
+                  Tab(
+                    text: "Início",
+                  ),
+                  Tab(
+                    text: "Treinamentos",
+                  ),
+                  Tab(
+                    text: "Estatísticas",
+                  ),
+                ],
+              )),
+          body: TabBarView(
+            controller: controller,
+            children: [
+              AbaBoasVindas(),
+              AbaTreinamento(),
+              AbaEstatisticas(),
+            ],
+          ),
         ),
       ),
     );
