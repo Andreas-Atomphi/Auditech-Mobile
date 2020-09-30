@@ -14,81 +14,58 @@ class TecladoNumerico extends StatelessWidget {
   });
 
   Widget build(BuildContext context) {
+    //Informações dos componentes
     double btnSqr = (width * 0.15 >= 70) ? 70 : width * 0.15;
-    List<List<Widget>> myChildren = [[], [], [], []];
-    //Diz quantas colunas já foram adicionadas
-    int actualColumns = 1;
+    List<dynamic> myChildren = [
+      "s1",
+      ["s1", 1, "s1", 2, "s1", 3, "s1"],
+      "s1",
+      ["s1", 4, "s1", 5, "s1", 6, "s1"],
+      "s1",
+      ["s1", 7, "s1", 8, "s1", 9, "s1"],
+      "s1",
+      ["s1", 0, "s1"],
+      "s1",
+    ];
+    //Componentes
+    List<Widget> rSpacers = [];
 
-    FlatButton btnNum;
-
-    //Seleciona uma Row
-    for (int r = 0; r < 3; r++) {
-      //
-      int staticAc = actualColumns;
-      List<Widget> selectedRow = myChildren[r];
-      selectedRow.add(Spacer(flex: 1));
-      //Adiciona botôes + Spacer's na coluna
-      for (int c = actualColumns; c < staticAc + 3; c++) {
-        btnNum = FlatButton(
-          child: Text("$c"),
-          color: buttonsColor,
-          textColor: textColor,
-          onPressed: () {
-            aoPressionar("$c");
-            return "$c";
-          },
-        );
-        selectedRow.add(
-          Container(
-            width: btnSqr + (width / 15),
-            height: btnSqr,
-            child: btnNum,
-          ),
-        );
-        selectedRow.add(
-          Spacer(
-            flex: 1,
-          ),
-        );
-        actualColumns += 1;
-      }
-    }
-    myChildren[3].add(Spacer(
-      flex: 1,
-    ));
-    myChildren[3].add(Container(
-      width: btnSqr + (width / 15),
-      height: btnSqr,
-      child: FlatButton(
-        onPressed: () => aoPressionar("0"),
-        child: Text("0"),
-        color: buttonsColor,
-        textColor: textColor,
-      ),
-    ));
-    myChildren[3].add(Spacer(
-      flex: 1,
-    ));
-
-    List<Widget> rSpacers = [
-      Spacer(
-        flex: 1,
-      ),
-      Row(children: myChildren[0]),
-      Spacer(
-        flex: 1,
-      ),
-      Row(children: myChildren[1]),
-      Spacer(
-        flex: 1,
-      ),
-      Row(children: myChildren[2]),
-      Spacer(
-        flex: 1,
-      ),
-      Row(children: myChildren[3]),
-      Spacer(
-        flex: 1,
+    //Componentes adicionados durante a runTime
+    rSpacers = [
+      ...myChildren.map(
+        //Adiciona uma linha para cada List
+        (rows) => (rows.runtimeType == String)
+            ? Spacer(
+                flex: int.parse(rows[1]),
+              )
+            : Row(
+                children: [
+                  ...rows.map(
+                    //Adiciona um Spacer se for uma String ou um Container+FlatButton se for inteiro e null se não for nenhum dos 2
+                    (e) => (e.runtimeType == String)
+                        //Spacer com o flex alterando de acordo com o segundo dígito da String
+                        ? Spacer(
+                            flex: int.parse(e[1]),
+                          )
+                        : (e.runtimeType == int)
+                            //Botão do teclado numérico
+                            ? Container(
+                                width: btnSqr + (width / 15),
+                                height: btnSqr,
+                                child: FlatButton(
+                                  child: Text("$e"),
+                                  color: buttonsColor,
+                                  textColor: textColor,
+                                  onPressed: () {
+                                    aoPressionar("$e");
+                                    return "$e";
+                                  },
+                                ),
+                              )
+                            : null,
+                  ),
+                ]..removeWhere((w) => w == null),
+              ),
       )
     ];
 
