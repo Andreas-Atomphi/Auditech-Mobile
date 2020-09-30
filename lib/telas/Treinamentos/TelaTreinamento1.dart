@@ -16,7 +16,7 @@ class _STreinamento1 extends STreinamentoBase<Exercicio1> {
   );
 
   List<dynamic> selecoes;
-  String respostasDadas = "%s|%s|%s|%s|%s|%s|%s|%s|%s|%s";
+  String respostasDadas = gerarStringRespostas(10);
 
   void avancar(String resp) {
     setState(
@@ -31,8 +31,8 @@ class _STreinamento1 extends STreinamentoBase<Exercicio1> {
           respostas++;
           arr = respostas ~/ 3;
           subarr = respostas % 3;
+          print(respostasDadasL);
         }
-        print(respostasDadasL);
       },
     );
   }
