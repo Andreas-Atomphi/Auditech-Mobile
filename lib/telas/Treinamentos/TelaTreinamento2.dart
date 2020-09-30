@@ -43,15 +43,15 @@ class _STreinamento2 extends STreinamentoBase<Exercicio2> {
                 ? Row(
                     children: [
                       SideButton(
-                        selecoes[selecionado][0]["texto"],
-                        selecoes[selecionado][0]["método"],
+                        selecoes[selecionado]["texto"],
+                        selecoes[selecionado]["método"],
                       ),
                       Spacer(
                         flex: 1,
                       ),
                       SideButton(
-                        selecoes[selecionado][1]["texto"],
-                        selecoes[selecionado][1]["método"],
+                        selecoes[selecionado]["texto"],
+                        selecoes[selecionado]["método"],
                       ),
                     ],
                   )
