@@ -8,6 +8,14 @@ import 'package:flutter/material.dart';
 
 import '../Telas.dart';
 
+String gerarStringRespostas(int qtdRespostas) {
+  String resps = "";
+  for (int i = 0; i < qtdRespostas - 1; i++) {
+    resps += "%s|";
+  }
+  return (resps + "%s");
+}
+
 abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     with Diagnosticable {
   Playback playBack = Playback();
