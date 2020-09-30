@@ -12,26 +12,6 @@ final List<String> exercicios = <String>[
   "15_sequencia_casa.mp3",
 ]; //Exercícios
 
-/*enum Players {
-  AAP,
-  AC,
-}
-
-extension PlayersComponents on Players {
-  dynamic get playerComponent {
-    switch (this) {
-      case Players.AAP:
-        return AssetsAudioPlayer();
-        break;
-      case Players.AC:
-        return AudioCache();
-        break;
-      default:
-        return null;
-    }
-  }
-}*/
-
 class Playback {
   AudioPlayer _player = AudioPlayer();
   AudioCache _loader;
