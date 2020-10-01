@@ -2,28 +2,43 @@ import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'package:sprintf/sprintf.dart';
 
 class _STreinamento4 extends STreinamentoBase<Exercicio4> {
-  int questaoSelecionada = 0;
+  int respostas = 0;
+  int arr = 0;
+  int subarr = 0;
 
-  List<dynamic> respostas;
+  List<String> respostasDadasL = List.generate(
+    10,
+    (i) => "",
+  );
 
-  void avancar() {
+  List<dynamic> selecoes;
+  String respostasDadas = gerarStringRespostas(8);
+
+  void avancar(String resp) {
     setState(
       () {
-        questaoSelecionada += 1;
-        if (questaoSelecionada >= respostas.length) {
-          playBack.stop();
-          irParaResultados(context);
+        if (arr < respostasDadasL.length) {
+          respostasDadasL[arr] += (subarr < 2) ? "$resp-" : resp;
+        } else {
+          print(sprintf(respostasDadas, respostasDadasL));
         }
-        print(questaoSelecionada);
+
+        if (arr <= respostasDadasL.length) {
+          respostas++;
+          arr = respostas ~/ 3;
+          subarr = respostas % 3;
+          print(respostasDadasL);
+        }
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    respostas = [
+    selecoes = [
       //Lista de Widgets
       "s1",
       [
@@ -56,9 +71,9 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
         appBar: stbAppBar(context, texto: "Exercicio 4"),
         body: Column(
           children: [
-            if (questaoSelecionada < respostas.length)
+            if (arr < selecoes.length)
               // * Adiciona os componentes de forma dinâmica
-              ...addDynamicComponents(respostas),
+              ...addDynamicComponents(selecoes),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,

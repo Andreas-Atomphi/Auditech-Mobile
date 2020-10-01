@@ -3,31 +3,46 @@ import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.da
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
 import 'package:flutter/material.dart';
+import 'package:sprintf/sprintf.dart';
 
 class _STreinamento2 extends STreinamentoBase<Exercicio2> {
-  int selecionado = 0;
+  int respostas = 0;
+  int arr = 0;
+  int subarr = 0;
 
-  List<List<String>> respostasDadas = List(10);
-  List<Map<String, dynamic>> selecoes;
+  List<String> respostasDadasL = List.generate(
+    10,
+    (i) => "",
+  );
 
-  void avancar() {
+  List<dynamic> selecoes;
+  String respostasDadas = gerarStringRespostas(10);
+
+  void avancar(String resp) {
     setState(
       () {
-        if (selecionado < selecoes.length - 1) {
-          selecionado++;
+        if (arr < respostasDadasL.length) {
+          respostasDadasL[arr] += (subarr < 2) ? "$resp-" : resp;
         } else {
-          irParaResultados(context);
+          print(sprintf(respostasDadas, respostasDadasL));
+        }
+
+        if (arr <= respostasDadasL.length) {
+          respostas++;
+          arr = respostas ~/ 3;
+          subarr = respostas % 3;
+          print(respostasDadasL);
         }
       },
     );
-    print(selecionado);
   }
 
   @override
   Widget build(BuildContext context) {
     selecoes = [
-      {"texto": "Tom grave", "método": avancar},
-      {"texto": "Tom agudo", "método": avancar},
+      {"texto": "Tom fino", "método": () => avancar("tf")},
+      "s1",
+      {"texto": "Tom grosso", "método": () => avancar("tg")},
     ];
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -39,23 +54,18 @@ class _STreinamento2 extends STreinamentoBase<Exercicio2> {
             Spacer(
               flex: 1,
             ),
-            (selecionado < selecoes.length)
-                ? Row(
-                    children: [
-                      SideButton(
-                        selecoes[selecionado]["texto"],
-                        selecoes[selecionado]["método"],
-                      ),
-                      Spacer(
-                        flex: 1,
-                      ),
-                      SideButton(
-                        selecoes[selecionado]["texto"],
-                        selecoes[selecionado]["método"],
-                      ),
-                    ],
-                  )
-                : null,
+            Row(
+              children: [
+                ...selecoes.map(
+                  (e) => (e.runtimeType == String)
+                      ? Spacer(flex: int.parse(e[1]))
+                      : SideButton(
+                          e["texto"],
+                          e["método"],
+                        ),
+                ),
+              ]..removeWhere((w) => w == null),
+            ),
             Spacer(
               flex: 1,
             ),
@@ -69,7 +79,6 @@ class _STreinamento2 extends STreinamentoBase<Exercicio2> {
   }
 
   void iniciarExercicio() {
-    respostasDadas.fillRange(1, 10, List(3));
     playBack.play(exercicios[1]);
   }
 }
