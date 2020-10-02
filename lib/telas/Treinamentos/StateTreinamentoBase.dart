@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sprintf/sprintf.dart';
 
 import '../Telas.dart';
 
@@ -24,6 +26,45 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
   void initState() {
     super.initState();
     iniciarExercicio();
+  }
+
+  int numRPS = 3;
+
+  int respostas = 0;
+  int arr = 0;
+  int subarr = 0;
+
+  List<String> respostasDadasL;
+  String respostasDadas;
+
+  void avancar(String resp) {
+    setState(
+      () {
+        if (arr < respostasDadasL.length) {
+          respostasDadasL[arr] += (subarr < numRPS - 1) ? "$resp-" : resp;
+        } else {
+          print(sprintf(respostasDadas, respostasDadasL));
+        }
+
+        if (arr <= respostasDadasL.length) {
+          respostas++;
+          arr = respostas ~/ numRPS;
+          subarr = respostas % numRPS;
+          print(respostasDadasL);
+          print(subarr);
+        }
+      },
+    );
+  }
+
+  Text textInstruct(String txt) {
+    return Text(
+      txt,
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 20,
+      ),
+    );
   }
 
   CAppBar stbAppBar(BuildContext context, {String texto = "exemplo"}) =>
@@ -50,19 +91,31 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     Navigator.pop(context);
   }
 
-  Iterable<Widget> addDynamicComponents(List<dynamic> respostas) {
-    return respostas.map(
-      (lay) => (lay.runtimeType == String)
-          ? Spacer(flex: int.parse(lay[1]))
-          : Row(
-              children: [
-                ...lay.map(
-                  (com) => (com.runtimeType == String)
-                      ? Spacer(flex: int.parse(com[1]))
-                      : SelectButton(com["nome"], com["método"]),
-                )
-              ],
-            ),
+  Container addDynamicComponents(List<dynamic> respostas, int buttons) {
+    double w = MediaQuery.of(context).size.width,
+        h = MediaQuery.of(context).size.height;
+    return Container(
+      width: w,
+      height: h * 0.5,
+      color: accent,
+      child: Column(children: [
+        ...respostas.map(
+          (lay) => (lay.runtimeType == String)
+              ? Spacer(flex: int.parse(lay[1]))
+              : Row(children: [
+                  ...lay.map(
+                    (com) => (com.runtimeType == String)
+                        ? Spacer(flex: int.parse(com[1]))
+                        : SelectButton(
+                            (w * 0.5) * 0.7,
+                            (w * 0.5) * ((10 - buttons) * 0.1),
+                            com["nome"],
+                            com["método"],
+                          ),
+                  ),
+                ]),
+        ),
+      ]),
     );
   }
 
