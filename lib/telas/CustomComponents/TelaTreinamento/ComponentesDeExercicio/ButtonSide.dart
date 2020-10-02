@@ -23,8 +23,8 @@ class SideButton extends StatelessWidget {
         color: cor["fundo"],
         textColor: cor["texto"],
       ),
-      height: (MediaQuery.of(context).size.height / 100) * 50,
-      width: (MediaQuery.of(context).size.width / 100) * 49,
+      height: MediaQuery.of(context).size.height * 0.5,
+      width: MediaQuery.of(context).size.width * 0.48,
     );
   }
 }
