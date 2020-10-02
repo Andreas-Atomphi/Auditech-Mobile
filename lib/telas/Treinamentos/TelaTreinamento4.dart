@@ -5,34 +5,16 @@ import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components
 import 'package:sprintf/sprintf.dart';
 
 class _STreinamento4 extends STreinamentoBase<Exercicio4> {
-  int respostas = 0;
-  int arr = 0;
-  int subarr = 0;
-
-  List<String> respostasDadasL = List.generate(
-    10,
-    (i) => "",
-  );
-
   List<dynamic> selecoes;
-  String respostasDadas = gerarStringRespostas(8);
 
-  void avancar(String resp) {
-    setState(
-      () {
-        if (arr < respostasDadasL.length) {
-          respostasDadasL[arr] += (subarr < 2) ? "$resp-" : resp;
-        } else {
-          print(sprintf(respostasDadas, respostasDadasL));
-        }
-
-        if (arr <= respostasDadasL.length) {
-          respostas++;
-          arr = respostas ~/ 3;
-          subarr = respostas % 3;
-          print(respostasDadasL);
-        }
-      },
+  @override
+  void iniciarExercicio() {
+    numRPS = 1;
+    playBack.play(exercicios[3]);
+    respostasDadas = gerarStringRespostas(8);
+    respostasDadasL = List.generate(
+      8,
+      (i) => "",
     );
   }
 
@@ -43,26 +25,26 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
       "s1",
       [
         "s1",
-        {"nome": "Tambor", "método": avancar},
+        {"nome": "Tambor", "método": () => avancar("tam")},
         "s1",
-        {"nome": "Piano", "método": avancar},
-        "s1",
-      ],
-      "s1",
-      [
-        "s1",
-        {"nome": "Gaita", "método": avancar},
-        "s1",
-        {"nome": "Flauta", "método": avancar},
+        {"nome": "Piano", "método": () => avancar("pia")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Violão", "método": avancar},
+        {"nome": "Gaita", "método": () => avancar("gai")},
+        "s1",
+        {"nome": "Flauta", "método": () => avancar("fla")},
         "s1",
       ],
-      "s5",
+      "s1",
+      [
+        "s1",
+        {"nome": "Violão", "método": () => avancar("vio")},
+        "s1",
+      ],
+      "s1",
     ];
 
     return MaterialApp(
@@ -71,9 +53,12 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
         appBar: stbAppBar(context, texto: "Exercicio 4"),
         body: Column(
           children: [
-            if (arr < selecoes.length)
+            Spacer(
+              flex: 1,
+            ),
+            if (arr < respostasDadasL.length)
               // * Adiciona os componentes de forma dinâmica
-              ...addDynamicComponents(selecoes),
+              addDynamicComponents(selecoes, 5),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,
@@ -84,10 +69,6 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
         ),
       ),
     );
-  }
-
-  void iniciarExercicio() {
-    playBack.play(exercicios[3]);
   }
 }
 

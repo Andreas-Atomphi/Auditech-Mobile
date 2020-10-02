@@ -2,46 +2,42 @@ import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'package:sprintf/sprintf.dart';
 
 class _STreinamento6 extends STreinamentoBase<Exercicio6> {
-  int questaoSelecionada = 0;
+  List<dynamic> selecoes;
 
-  List<dynamic> respostas;
-
-  void avancar() {
-    setState(
-      () {
-        questaoSelecionada += 1;
-        if (questaoSelecionada >= respostas.length) {
-          playBack.stop();
-          irParaResultados(context);
-        }
-        print(questaoSelecionada);
-      },
+  @override
+  void iniciarExercicio() {
+    playBack.play(exercicios[5]);
+    respostasDadas = gerarStringRespostas(8);
+    respostasDadasL = List.generate(
+      10,
+      (i) => "",
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    respostas = [
+    selecoes = [
       "s1",
       //Lista de Widgets
       [
         "s1",
-        {"nome": "Grito", "método": avancar},
+        {"nome": "Grito", "método": () => avancar("grt")},
         "s1",
-        {"nome": "Passo", "método": avancar},
+        {"nome": "Passo", "método": () => avancar("pas")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Palma", "método": avancar},
+        {"nome": "Palma", "método": () => avancar("pma")},
         "s1",
-        {"nome": "Risada", "método": avancar},
+        {"nome": "Risada", "método": () => avancar("rir")},
         "s1",
       ],
-      "s5",
+      "s1",
     ];
 
     return MaterialApp(
@@ -50,9 +46,12 @@ class _STreinamento6 extends STreinamentoBase<Exercicio6> {
         appBar: stbAppBar(context, texto: "Exercicio 6"),
         body: Column(
           children: [
-            if (questaoSelecionada < respostas.length)
+            Spacer(
+              flex: 1,
+            ),
+            if (arr < selecoes.length)
               // * Adiciona os componentes de forma dinâmica
-              ...addDynamicComponents(respostas),
+              addDynamicComponents(selecoes, 4),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,
@@ -63,10 +62,6 @@ class _STreinamento6 extends STreinamentoBase<Exercicio6> {
         ),
       ),
     );
-  }
-
-  void iniciarExercicio() {
-    playBack.play(exercicios[5]);
   }
 }
 

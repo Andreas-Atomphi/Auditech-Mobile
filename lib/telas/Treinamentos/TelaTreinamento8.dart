@@ -3,29 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
+import 'package:flutter/rendering.dart';
 
 class _STreinamento8 extends STreinamentoBase<Exercicio8> {
-  List<String> respostasDadas = List<String>(4);
-  int resp = 0;
-  int selec = 0;
-  int subselec = 0;
-
-  void avancar(String txt) {
-    if (selec < respostasDadas.length - 1) {
-      setState(
-        () {
-          resp++;
-          selec = resp ~/ 3;
-          subselec = resp % 2;
-          print(resp);
-          print(selec);
-          print(subselec);
-        },
-      );
-    } else {
-      irParaResultados(context);
-      print(respostasDadas.length);
-    }
+  void iniciarExercicio() {
+    numRPS = 2;
+    respostasDadas = gerarStringRespostas(8);
+    respostasDadasL = List.generate(
+      10,
+      (i) => "",
+    );
   }
 
   @override
@@ -40,34 +27,31 @@ class _STreinamento8 extends STreinamentoBase<Exercicio8> {
             Spacer(
               flex: 1,
             ),
-            Text(
-              "Digite os números que você ouvir no lado {valor}",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
-            ),
             Spacer(
               flex: 1,
             ),
-            Row(
-              children: [
-                ...respostasDadas.map(
-                  (e) => Text(
-                    (e.toString() != "null") ? e.toString() : "",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              reverse: true,
+              child: Row(
+                children: [
+                  ...respostasDadasL.map(
+                    (e) => Text(
+                      (e.toString() != "null") ? e.toString() + " " : " ",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 32,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             TecladoNumerico(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.5,
-              aoPressionar: avancar,
+              aoPressionar: (String txt) => avancar(txt),
               textColor: Colors.white,
               backgroundColor: accent,
               buttonsColor: primary,
@@ -82,10 +66,6 @@ class _STreinamento8 extends STreinamentoBase<Exercicio8> {
         ),
       ),
     );
-  }
-
-  void iniciarExercicio() {
-    // TODO: implement iniciarExercicio
   }
 }
 

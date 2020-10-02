@@ -2,54 +2,51 @@ import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'package:sprintf/sprintf.dart';
 
 class _STreinamento5 extends STreinamentoBase<Exercicio5> {
-  int questaoSelecionada = 0;
+  List<dynamic> selecoes;
 
-  List<dynamic> respostas;
-
-  void avancar() {
-    setState(
-      () {
-        questaoSelecionada += 1;
-        if (questaoSelecionada >= respostas.length) {
-          playBack.stop();
-          irParaResultados(context);
-        }
-        print(questaoSelecionada);
-      },
+  @override
+  void iniciarExercicio() {
+    numRPS = 1;
+    playBack.play(exercicios[6]);
+    respostasDadas = gerarStringRespostas(8);
+    respostasDadasL = List.generate(
+      10,
+      (i) => "",
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    respostas =
+    selecoes =
         //Automóveis
         [
       "s1",
       //Lista de Widgets
       [
         "s1",
-        {"nome": "Trem", "método": avancar},
+        {"nome": "Trem", "método": () => avancar("tre")},
         "s1",
-        {"nome": "Fórmula 1", "método": avancar},
-        "s1",
-      ],
-      "s1",
-      [
-        "s1",
-        {"nome": "Carro", "método": avancar},
-        "s1",
-        {"nome": "Helicóptero", "método": avancar},
+        {"nome": "Fórmula 1", "método": () => avancar("f1")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Ambulância", "método": avancar},
+        {"nome": "Carro", "método": () => avancar("car")},
+        "s1",
+        {"nome": "Helicóptero", "método": () => avancar("hel")},
         "s1",
       ],
-      "s5",
+      "s1",
+      [
+        "s1",
+        {"nome": "Ambulância", "método": () => avancar("amb")},
+        "s1",
+      ],
+      "s1",
     ];
 
     return MaterialApp(
@@ -58,9 +55,12 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
         appBar: stbAppBar(context, texto: "Exercicio 5"),
         body: Column(
           children: [
-            if (questaoSelecionada < respostas.length)
+            Spacer(
+              flex: 1,
+            ),
+            if (arr < respostasDadasL.length)
               // * Adiciona os componentes de forma dinâmica
-              ...addDynamicComponents(respostas),
+              addDynamicComponents(selecoes, 5),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,
@@ -71,10 +71,6 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
         ),
       ),
     );
-  }
-
-  void iniciarExercicio() {
-    playBack.play(exercicios[6]);
   }
 }
 

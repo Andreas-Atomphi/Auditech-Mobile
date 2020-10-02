@@ -6,48 +6,46 @@ import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components
 class _STreinamento7 extends STreinamentoBase<Exercicio7> {
   int questaoSelecionada = 0;
 
-  List<dynamic> respostas;
+  List<dynamic> selecoes;
 
-  void avancar() {
-    setState(
-      () {
-        questaoSelecionada += 1;
-        if (questaoSelecionada >= respostas.length) {
-          playBack.stop();
-          irParaResultados(context);
-        }
-        print(questaoSelecionada);
-      },
+  @override
+  void iniciarExercicio() {
+    numRPS = 1;
+    playBack.play(exercicios[4]);
+    respostasDadas = gerarStringRespostas(8);
+    respostasDadasL = List.generate(
+      10,
+      (i) => "",
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    respostas = [
+    selecoes = [
       "s1",
       //Lista de Widgets
       [
         "s1",
-        {"nome": "Vento", "método": avancar},
+        {"nome": "Vento", "método": () => avancar("ven")},
         "s1",
-        {"nome": "Água", "método": avancar},
-        "s1",
-      ],
-      "s1",
-      [
-        "s1",
-        {"nome": "Ondas do mar", "método": avancar},
-        "s1",
-        {"nome": "Trovão", "método": avancar},
+        {"nome": "Água", "método": () => avancar("agu")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Chuva com trovão", "método": avancar},
+        {"nome": "Ondas do mar", "método": () => avancar("odm")},
+        "s1",
+        {"nome": "Trovão", "método": () => avancar("tro")},
         "s1",
       ],
-      "s5",
+      "s1",
+      [
+        "s1",
+        {"nome": "Chuva com trovão", "método": () => avancar("cct")},
+        "s1",
+      ],
+      "s1",
     ];
 
     return MaterialApp(
@@ -56,9 +54,12 @@ class _STreinamento7 extends STreinamentoBase<Exercicio7> {
         appBar: stbAppBar(context, texto: "Exercicio 7"),
         body: Column(
           children: [
-            if (questaoSelecionada < respostas.length)
+            Spacer(
+              flex: 1,
+            ),
+            if (arr < respostasDadasL.length)
               // * Adiciona os componentes de forma dinâmica
-              ...addDynamicComponents(respostas),
+              addDynamicComponents(selecoes, 5),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,
@@ -69,10 +70,6 @@ class _STreinamento7 extends STreinamentoBase<Exercicio7> {
         ),
       ),
     );
-  }
-
-  void iniciarExercicio() {
-    playBack.play(exercicios[4]);
   }
 }
 

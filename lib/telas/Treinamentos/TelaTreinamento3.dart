@@ -5,34 +5,20 @@ import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components
 import 'package:sprintf/sprintf.dart';
 
 class _STreinamento3 extends STreinamentoBase<Exercicio3> {
-  int respostas = 0;
-  int arr = 0;
-  int subarr = 0;
-
-  List<String> respostasDadasL = List.generate(
-    10,
-    (i) => "",
-  );
-
   List<dynamic> selecoes;
-  String respostasDadas = gerarStringRespostas(8);
 
-  void avancar(String resp) {
-    setState(
-      () {
-        if (arr < respostasDadasL.length) {
-          respostasDadasL[arr] += (subarr < 2) ? "$resp-" : resp;
-        } else {
-          print(sprintf(respostasDadas, respostasDadasL));
-        }
-
-        if (arr <= respostasDadasL.length) {
-          respostas++;
-          arr = respostas ~/ 3;
-          subarr = respostas % 3;
-          print(respostasDadasL);
-        }
-      },
+  @override
+  void iniciarExercicio() async {
+    numRPS = 1;
+    try {
+      playBack.play(exercicios[2]);
+    } catch (e) {
+      print(e);
+    }
+    respostasDadas = gerarStringRespostas(8);
+    respostasDadasL = List.generate(
+      10,
+      (i) => "",
     );
   }
 
@@ -56,7 +42,7 @@ class _STreinamento3 extends STreinamentoBase<Exercicio3> {
         {"nome": "Bode", "método": () => avancar("bod")},
         "s1",
       ],
-      "s5",
+      "s1",
     ];
 
     return MaterialApp(
@@ -65,9 +51,13 @@ class _STreinamento3 extends STreinamentoBase<Exercicio3> {
         appBar: stbAppBar(context, texto: "Exercicio 3"),
         body: Column(
           children: [
+            Spacer(
+              flex: 1,
+            ),
             if (respostas < selecoes.length)
               // * Adiciona os componentes de forma dinâmica
-              ...addDynamicComponents(selecoes),
+
+              addDynamicComponents(selecoes, 4),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,
@@ -78,14 +68,6 @@ class _STreinamento3 extends STreinamentoBase<Exercicio3> {
         ),
       ),
     );
-  }
-
-  void iniciarExercicio() async {
-    try {
-      playBack.play(exercicios[2]);
-    } catch (e) {
-      print(e);
-    }
   }
 }
 
