@@ -50,10 +50,13 @@ class TecladoNumerico extends StatelessWidget {
                         : (e.runtimeType == int)
                             //Botão do teclado numérico
                             ? Container(
-                                width: btnSqr + (width / 15),
+                                width: btnSqr + (width / 13),
                                 height: btnSqr,
                                 child: FlatButton(
-                                  child: Text("$e"),
+                                  child: Text(
+                                    "$e",
+                                    style: TextStyle(fontSize: 24),
+                                  ),
                                   color: buttonsColor,
                                   textColor: textColor,
                                   onPressed: () {
