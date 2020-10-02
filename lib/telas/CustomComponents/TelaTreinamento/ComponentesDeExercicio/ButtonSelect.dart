@@ -4,8 +4,11 @@ class SelectButton extends StatelessWidget {
   final String texto;
   final Map<String, Color> cor;
   final void Function() aoPressionar;
+  final double width, height;
 
   SelectButton(
+    this.width,
+    this.height,
     this.texto,
     this.aoPressionar, {
     this.cor = const <String, Color>{
@@ -17,8 +20,8 @@ class SelectButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150,
-      height: 150,
+      width: width,
+      height: height,
       child: FlatButton(
         child: Text(texto),
         onPressed: aoPressionar,
