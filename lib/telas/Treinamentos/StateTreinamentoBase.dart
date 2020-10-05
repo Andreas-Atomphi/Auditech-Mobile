@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
@@ -75,11 +74,12 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
       );
 
   @protected
-  Timer startTimeout([int milliseconds = 1]) {
-    assert(milliseconds != null);
-    Duration ms = const Duration(milliseconds: 1);
-    var duration = ms * milliseconds;
-    return Timer(duration, iniciarExercicio);
+  Timer startTimeout(Duration duracao, void Function() executar) {
+    assert(
+      duracao != null,
+      executar != null,
+    );
+    return Timer(duracao, executar);
   }
 
   @protected
@@ -91,31 +91,68 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     Navigator.pop(context);
   }
 
-  Container addDynamicComponents(List<dynamic> respostas, int buttons) {
+  Container addDynamicComponents(List<dynamic> respostas) {
+    int buttons = 0;
+    for (int i = 0; i < respostas.length; i++) {
+      if (respostas[i].runtimeType == List<Object>().runtimeType)
+        for (int j = 0; j < respostas[i].length; j++) {
+          if (respostas[i][j].runtimeType == <String, Object>{}.runtimeType)
+            buttons += 1;
+        }
+    }
+    print(buttons);
     double w = MediaQuery.of(context).size.width,
         h = MediaQuery.of(context).size.height;
     return Container(
       width: w,
       height: h * 0.5,
-      color: accent,
-      child: Column(children: [
-        ...respostas.map(
-          (lay) => (lay.runtimeType == String)
-              ? Spacer(flex: int.parse(lay[1]))
-              : Row(children: [
-                  ...lay.map(
-                    (com) => (com.runtimeType == String)
-                        ? Spacer(flex: int.parse(com[1]))
-                        : SelectButton(
-                            (w * 0.5) * 0.7,
-                            (w * 0.5) * ((10 - buttons) * 0.1),
-                            com["nome"],
-                            com["método"],
-                          ),
-                  ),
-                ]),
-        ),
-      ]),
+      color: secondary,
+      child: Column(
+        children: [
+          ...respostas.map(
+            (lay) {
+              Widget toReturn;
+              switch (lay.runtimeType) {
+                case (String):
+                  toReturn = Spacer(flex: int.parse(lay[1]));
+                  break;
+                default:
+                  toReturn = Row(
+                    children: [
+                      ...lay.map(
+                        (com) {
+                          Widget subComponentToReturn;
+                          switch (com.runtimeType) {
+                            case (String):
+                              subComponentToReturn =
+                                  Spacer(flex: int.parse(com[1]));
+                              break;
+                            default:
+                              subComponentToReturn = SelectButton(
+                                (w * 0.5) * 0.7,
+                                tamanhoRelativoL(
+                                      (h * 0.5) * (buttons * 0.25),
+                                      context,
+                                    ) *
+                                    0.5 *
+                                    ((10 - buttons) * 0.1),
+                                com["nome"],
+                                com["método"],
+                              );
+                              break;
+                          }
+                          return subComponentToReturn;
+                        },
+                      ),
+                    ],
+                  );
+                  break;
+              }
+              return toReturn;
+            },
+          ),
+        ],
+      ),
     );
   }
 
