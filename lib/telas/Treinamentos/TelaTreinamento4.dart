@@ -58,11 +58,11 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
             ),
             if (arr < respostasDadasL.length)
               // * Adiciona os componentes de forma dinâmica
-              addDynamicComponents(selecoes, 5),
+              addDynamicComponents(selecoes),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,
-              valueColor: AlwaysStoppedAnimation(Colors.orange),
+              valueColor: AlwaysStoppedAnimation(corDeDestaque),
               minHeight: 7,
             ),
           ],

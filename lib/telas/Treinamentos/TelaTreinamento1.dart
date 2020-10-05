@@ -41,7 +41,7 @@ class _STreinamento1 extends STreinamentoBase<Exercicio1> {
               flex: 1,
             ),
             Container(
-              color: accent,
+              color: secondary,
               padding: EdgeInsets.all(5),
               child: Row(
                 children: [

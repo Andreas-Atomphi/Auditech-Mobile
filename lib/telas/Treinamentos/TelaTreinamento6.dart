@@ -51,11 +51,11 @@ class _STreinamento6 extends STreinamentoBase<Exercicio6> {
             ),
             if (arr < selecoes.length)
               // * Adiciona os componentes de forma dinâmica
-              addDynamicComponents(selecoes, 4),
+              addDynamicComponents(selecoes),
             LinearProgressIndicator(
               value: 0.5,
               backgroundColor: Colors.blue,
-              valueColor: AlwaysStoppedAnimation(Colors.orange),
+              valueColor: AlwaysStoppedAnimation(corDeDestaque),
               minHeight: 7,
             ),
           ],
