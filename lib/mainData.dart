@@ -4,7 +4,10 @@ import 'package:AuditechMobile/telas/Telas.dart';
 Color backgroundColor = Color.fromARGB(255, 0, 90, 100);
 Brightness theme = Brightness.light;
 Color primary = Color.fromARGB(255, 0, 200, 190); //Variável para a cor global
-Color accent = Color.fromARGB(255, 0, 150, 160); // Variável para cor secundária
+Color secondary =
+    Color.fromARGB(255, 0, 150, 160); // Variável para cor secundária
+Color corDeDestaque =
+    Color.fromRGBO(255, 152, 0, 1); // Variável para cor de destaque do app
 
 Map<String, Widget Function(BuildContext context)> routesExercicios = {
   "treinamento-1": (context) => Exercicio1(),

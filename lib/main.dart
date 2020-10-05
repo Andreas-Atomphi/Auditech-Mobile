@@ -11,7 +11,7 @@ MaterialApp aplicativo = MaterialApp(
   theme: ThemeData(
     brightness: theme,
     primaryColor: primary,
-    accentColor: accent,
+    accentColor: secondary,
     backgroundColor: backgroundColor,
   ),
 );
