@@ -2,14 +2,15 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 final List<String> exercicios = <String>[
-  "8_TomLongo_TomCurto.mp3",
-  "9_TomFino_TomGrosso.mp3",
-  "10_sequencia_animais.mp3",
-  "11_sequencia_instrumentos.mp3",
-  "12_sequencia_natureza.mp3",
-  "13_corpo_humano.mp3",
-  "14_sequencia_transporte.mp3",
-  "15_sequencia_casa.mp3",
+  "E8TomLongoTomCurto.mp3/",
+  "E9TomFinoTomGrosso.mp3/",
+  "E10SequenciaAnimais.mp3/",
+  "E11SequenciaInstrumentos.mp3/",
+  "E12SequenciaNatureza.mp3/",
+  "E13CorpoHumano.mp3/",
+  "E14SequenciaTransporte.mp3/",
+  "E15SequenciaCasa.mp3/",
+  "VozSequencias/",
 ]; //Exercícios
 
 class Playback {
