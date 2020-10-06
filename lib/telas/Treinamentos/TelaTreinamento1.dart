@@ -7,7 +7,11 @@ import 'package:sprintf/sprintf.dart';
 
 class _STreinamento1 extends STreinamentoBase<Exercicio1> {
   List<dynamic> selecoes;
-
+  List<String> sons = "$exercicios[0]".concatSList(<String>[
+    "Introducao",
+    "TomCurto",
+    "TomLongo",
+  ]).concatSList(".mp3");
   @override
   void iniciarExercicio() {
     numRPS = 3;
