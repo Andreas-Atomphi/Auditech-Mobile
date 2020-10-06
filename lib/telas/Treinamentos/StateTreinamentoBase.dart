@@ -17,9 +17,37 @@ String gerarStringRespostas(int qtdRespostas) {
   return (resps + "%s");
 }
 
+extension StringClist on String {
+  List<String> concatSList(List<String> lista) {
+    for (int i = 0; i < lista.length; i++) {
+      lista[i] += this;
+    }
+    return lista;
+  }
+}
+
+extension ListCString on List<String> {
+  List<String> concatSList(String c) {
+    for (int i = 0; i < this.length; i++) {
+      this[i] += c;
+    }
+    return this;
+  }
+}
+
 abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     with Diagnosticable {
   Playback playBack = Playback();
+
+  List<String> sonsSequencia =
+      exercicios[exercicios.length - 1].toString().concatSList(
+            "Num".concatSList(
+              List.generate(
+                10,
+                (index) => index.toString(),
+              ),
+            ),
+          );
 
   @override
   void initState() {
