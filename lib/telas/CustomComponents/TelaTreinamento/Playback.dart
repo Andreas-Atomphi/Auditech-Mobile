@@ -2,20 +2,28 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 final List<String> exercicios = <String>[
-  "E8TomLongoTomCurto.mp3/",
-  "E9TomFinoTomGrosso.mp3/",
-  "E10SequenciaAnimais.mp3/",
-  "E11SequenciaInstrumentos.mp3/",
-  "E12SequenciaNatureza.mp3/",
-  "E13CorpoHumano.mp3/",
-  "E14SequenciaTransporte.mp3/",
-  "E15SequenciaCasa.mp3/",
+  "E8TomLongoTomCurto/",
+  "E9TomFinoTomGrosso/",
+  "E10SequenciaAnimais/",
+  "E11SequenciaInstrumentos/",
+  "E12SequenciaNatureza/",
+  "E13CorpoHumano/",
+  "E14SequenciaTransporte/",
+  "E15SequenciaCasa/",
   "VozSequencias/",
 ]; //Exercícios
 
 class Playback {
   AudioPlayer _player = AudioPlayer();
   AudioCache _loader;
+
+  Playback(dynamic Function() whenEnd) {
+    _player.onPlayerCompletion.listen(
+      (event) {
+        whenEnd();
+      },
+    );
+  }
 
   String get player {
     return _player.toString();
@@ -43,6 +51,10 @@ class Playback {
 
   stop() {
     _player.stop();
+  }
+
+  dispose() {
+    _player.dispose();
   }
 
   get currentPosition {

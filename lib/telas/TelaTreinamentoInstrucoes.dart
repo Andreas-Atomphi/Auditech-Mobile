@@ -12,7 +12,7 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
   _TreinamentoInstrucoesState(
       [this.appbartext, //texto da barra do app
       this.irpara =
-          "treinamento-exemplo" //A tela que irá quando pressionar o botão de ir para exercício,
+          "treinamento-exemplo" //A tela que irá quando pressionar o botão de ir para exercício;
       ]);
 
   @override

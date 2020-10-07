@@ -17,37 +17,23 @@ String gerarStringRespostas(int qtdRespostas) {
   return (resps + "%s");
 }
 
-extension StringClist on String {
-  List<String> concatSList(List<String> lista) {
-    for (int i = 0; i < lista.length; i++) {
-      lista[i] += this;
-    }
-    return lista;
+List<String> concatListS(List<String> lista, String c) {
+  for (int i = 0; i < lista.length; i++) {
+    lista[i] += c;
   }
+  return lista;
 }
 
-extension ListCString on List<String> {
-  List<String> concatSList(String c) {
-    for (int i = 0; i < this.length; i++) {
-      this[i] += c;
-    }
-    return this;
+List<String> concatSList(String c, List lista) {
+  for (int i = 0; i < lista.length; i++) {
+    lista[i] += c;
   }
+  return lista;
 }
 
 abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     with Diagnosticable {
-  Playback playBack = Playback();
-
-  List<String> sonsSequencia =
-      exercicios[exercicios.length - 1].toString().concatSList(
-            "Num".concatSList(
-              List.generate(
-                10,
-                (index) => index.toString(),
-              ),
-            ),
-          );
+  Playback playBack = Playback(() => null);
 
   @override
   void initState() {
@@ -115,7 +101,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
 
   @protected
   void voltar(BuildContext context) {
-    playBack.stop();
+    playBack.dispose();
     Navigator.pop(context);
   }
 
@@ -186,7 +172,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
 
   @protected
   void irParaResultados(BuildContext context, {List respostas}) {
-    playBack.stop();
+    playBack.dispose();
     Navigator.of(context).push(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => Resultados(),
