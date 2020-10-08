@@ -17,10 +17,29 @@ class Playback {
   AudioPlayer _player = AudioPlayer();
   AudioCache _loader;
 
-  Playback(dynamic Function() whenEnd) {
+  Playback({dynamic Function() whenEnd, String prefix}) {
+    _loader = AudioCache(
+      prefix: "assets/audios/Exercicios/",
+      fixedPlayer: _player,
+    );
+    if (prefix != null) {
+      _loader.prefix = _loader.prefix + prefix;
+    }
     _player.onPlayerCompletion.listen(
       (event) {
         whenEnd();
+      },
+    );
+  }
+
+  set prefix(String prfx) {
+    _loader.prefix = "assets/audios/Exercicios/" + prfx;
+  }
+
+  set whenEnd(dynamic Function() func) {
+    _player.onPlayerCompletion.listen(
+      (event) {
+        func();
       },
     );
   }
@@ -38,11 +57,7 @@ class Playback {
   }
 
   play(String path) {
-    _loader = AudioCache(
-      prefix: "assets/audios/Exercicios/",
-      fixedPlayer: _player,
-    );
-    _loader.play(path);
+    _loader.play(path, stayAwake: true);
   }
 
   pause() {
