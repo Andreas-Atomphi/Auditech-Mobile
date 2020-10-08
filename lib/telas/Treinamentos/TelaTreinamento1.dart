@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 
 class _STreinamento1 extends STreinamentoBase<Exercicio1> {
   List<dynamic> selecoes;
-  List<String> sons;
-  int sequencia = 0;
   @override
   void iniciarExercicio() {
     numRPS = 3;
@@ -17,34 +15,31 @@ class _STreinamento1 extends STreinamentoBase<Exercicio1> {
       (i) => "",
     );
     sons = concatListS(
-        concatSList(
-          exercicios[0],
-          <String>[
-            "Introducao",
-            ...List.generate(10, (i) => "Seq" + i.toString()),
-          ],
-        ),
-        ".mp3");
-    playBack = Playback(
-      () {
-        sequencia += 1;
-        tocarSequencia();
-      },
+      <String>[
+        "Introducao",
+        ...List.generate(10, (i) => "Seq" + (i + 1).toString()),
+      ],
+      ".mp3",
     );
-    print(sons);
-    playBack.play(sons[0]);
-  }
 
-  void tocarSequencia() {
-    playBack.play(sons[sequencia]);
+    print(sons);
+
+    playBack.prefix = exercicios[0];
+    playBack.play(sons[0]);
   }
 
   @override
   Widget build(BuildContext context) {
     selecoes = [
-      {"texto": "Tom longo", "método": () => avancar("tl")},
+      {
+        "texto": "Tom longo",
+        "método": podeAvancar("L"),
+      },
       "s1",
-      {"texto": "Tom curto", "método": () => avancar("tc")},
+      {
+        "texto": "Tom curto",
+        "método": podeAvancar("C"),
+      },
     ];
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -60,8 +55,35 @@ class _STreinamento1 extends STreinamentoBase<Exercicio1> {
             Spacer(
               flex: 1,
             ),
+            if (sequencia == 0)
+              Container(
+                width: double.infinity,
+                child: FlatButton(
+                  padding: EdgeInsets.zero,
+                  color: corDeDestaque,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    playBack.stop();
+                    startTimeout(
+                      Duration(seconds: 1),
+                      () {
+                        setState(
+                          () {
+                            sequencia = 1;
+                            tocarSequencia();
+                          },
+                        );
+                      },
+                    );
+                  },
+                  child: Text("Pular explicação"),
+                ),
+                margin: EdgeInsets.zero,
+                padding: EdgeInsets.zero,
+              ),
             Container(
               color: secondary,
+              margin: EdgeInsets.zero,
               padding: EdgeInsets.all(5),
               child: Row(
                 children: [
