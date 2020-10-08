@@ -24,26 +24,50 @@ List<String> concatListS(List<String> lista, String c) {
   return lista;
 }
 
-List<String> concatSList(String c, List lista) {
+List<String> concatSList(String c, List<String> lista) {
   for (int i = 0; i < lista.length; i++) {
-    lista[i] += c;
+    lista[i] = c + lista[i];
   }
   return lista;
 }
 
 abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     with Diagnosticable {
-  Playback playBack = Playback(() => null);
+  Playback playBack;
 
+  @mustCallSuper
   @override
   void initState() {
     super.initState();
+    playBack = Playback(
+      whenEnd: () {
+        if (sequencia < sons.length - 1) {
+          setState(() {
+            sequencia++;
+            subarr = 0;
+            respostas = sequencia * numRPS;
+            tocarSequencia();
+          });
+        } else {
+          irParaResultados(context);
+        }
+      },
+    );
     iniciarExercicio();
   }
 
-  int numRPS = 3;
+  dynamic Function() podeAvancar(String txt) {
+    return (sequencia > 0)
+        ? (arr <= sequencia)
+            ? () => avancar(txt)
+            : null
+        : null;
+  }
 
+  int numRPS = 3;
+  List<String> sons;
   int respostas = 0;
+  int sequencia = 0;
   int arr = 0;
   int subarr = 0;
 
@@ -53,13 +77,14 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
   void avancar(String resp) {
     setState(
       () {
-        if (arr < respostasDadasL.length) {
-          respostasDadasL[arr] += (subarr < numRPS - 1) ? "$resp-" : resp;
+        if (sequencia <= respostasDadasL.length) {
+          respostasDadasL[sequencia - 1] +=
+              (subarr < numRPS - 1) ? "$resp-" : resp;
         } else {
           print(sprintf(respostasDadas, respostasDadasL));
         }
 
-        if (arr <= respostasDadasL.length) {
+        if (sequencia <= respostasDadasL.length) {
           respostas++;
           arr = respostas ~/ numRPS;
           subarr = respostas % numRPS;
@@ -68,6 +93,10 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
         }
       },
     );
+  }
+
+  void tocarSequencia() {
+    playBack.play(sons[sequencia]);
   }
 
   Text textInstruct(String txt) {
