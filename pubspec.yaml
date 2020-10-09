@@ -51,6 +51,7 @@ dev_dependencies:
 flutter:
   assets: 
       - assets/images/
+      - assets/audios/
       - assets/audios/Exercicios/E8TomLongoTomCurto/
       - assets/audios/Exercicios/E9TomFinoTomGrosso/
       - assets/audios/Exercicios/E10SequenciaAnimais/
