@@ -17,11 +17,12 @@ class SideButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FlatButton(
+      child: RaisedButton(
         child: Text(texto),
-        onPressed: () => aoPressionar,
+        onPressed: aoPressionar,
         color: (aoPressionar == null) ? Colors.cyan[800] : cor["fundo"],
-        textColor: (aoPressionar == null) ? Colors.cyan[700] : cor["texto"],
+        textColor: (aoPressionar == null) ? Colors.cyan[600] : cor["texto"],
+        elevation: 0.0,    
       ),
       height: MediaQuery.of(context).size.height * 0.5,
       width: MediaQuery.of(context).size.width * 0.48,
