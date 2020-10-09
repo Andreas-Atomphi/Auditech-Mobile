@@ -46,59 +46,46 @@ class _STreinamento1 extends STreinamentoBase<Exercicio1> {
       home: Scaffold(
         backgroundColor: backgroundColor,
         appBar: stbAppBar(context, texto: "Exercicio 1"),
-        body: Column(
-          children: [
-            Spacer(
-              flex: 1,
-            ),
-            textInstruct("Aperte os tons que você ouvir na orelha: {valor}"),
-            Spacer(
-              flex: 1,
-            ),
+        body: Stack(
+          children: <Widget>[
             if (sequencia == 0)
-              Container(
-                width: double.infinity,
-                child: FlatButton(
-                  padding: EdgeInsets.zero,
-                  color: corDeDestaque,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    playBack.stop();
-                    startTimeout(
-                      Duration(seconds: 1),
-                      () {
-                        setState(
-                          () {
-                            sequencia = 1;
-                            tocarSequencia();
-                          },
-                        );
-                      },
-                    );
-                  },
-                  child: Text("Pular explicação"),
+              Positioned(
+                top: MediaQuery.of(context).size.height * 0.3,
+                bottom: MediaQuery.of(context).size.height * 0.51,
+                right: 0,
+                left: 0,
+                child: jmpBtn(),
+              ),
+            Column(
+              children: [
+                Spacer(
+                  flex: 1,
                 ),
-                margin: EdgeInsets.zero,
-                padding: EdgeInsets.zero,
-              ),
-            Container(
-              color: secondary,
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.all(5),
-              child: Row(
-                children: [
-                  ...selecoes.map(
-                    (e) => (e.runtimeType == String)
-                        ? Spacer(flex: int.parse(e[1]))
-                        : SideButton(
-                            e["texto"],
-                            e["método"],
-                          ),
+                textInstruct(
+                    "Aperte os tons que você ouvir na orelha: {valor}"),
+                Spacer(
+                  flex: 1,
+                ),
+                Container(
+                  color: secondary,
+                  margin: EdgeInsets.zero,
+                  padding: EdgeInsets.all(5),
+                  child: Row(
+                    children: [
+                      ...selecoes.map(
+                        (e) => (e.runtimeType == String)
+                            ? Spacer(flex: int.parse(e[1]))
+                            : SideButton(
+                                e["texto"],
+                                e["método"],
+                              ),
+                      ),
+                    ]..removeWhere((w) => w == null),
                   ),
-                ]..removeWhere((w) => w == null),
-              ),
-            )
-          ]..removeWhere((w) => w == null),
+                )
+              ]..removeWhere((w) => w == null),
+            ),
+          ],
         ),
       ),
     );
