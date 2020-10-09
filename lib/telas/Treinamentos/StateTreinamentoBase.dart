@@ -45,7 +45,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
           setState(() {
             sequencia++;
             subarr = 0;
-            respostas = sequencia * numRPS;
+            respostas = (sequencia-1) * numRPS;
             tocarSequencia();
           });
         } else {
@@ -58,7 +58,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
 
   dynamic Function() podeAvancar(String txt) {
     return (sequencia > 0)
-        ? (arr <= sequencia)
+        ? (arr <= sequencia-1)
             ? () => avancar(txt)
             : null
         : null;
@@ -134,6 +134,31 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     Navigator.pop(context);
   }
 
+  Container jmpBtn() {
+    return Container(
+      width: double.infinity,
+      child: FlatButton(
+          child: Text("Pular explicação"),
+          padding: EdgeInsets.zero,
+          color: corDeDestaque,
+          textColor: Colors.white,
+          onPressed: () {
+            playBack.stop();
+            startTimeout(
+              Duration(seconds: 1),
+              () {
+                setState(
+                  () {
+                    sequencia = 1;
+                    tocarSequencia();
+                  },
+                );
+              },
+            );
+          }),
+    );
+  }
+
   Container addDynamicComponents(List<dynamic> respostas) {
     int buttons = 0;
     for (int i = 0; i < respostas.length; i++) {
@@ -143,7 +168,6 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
             buttons += 1;
         }
     }
-    print(buttons);
     double w = MediaQuery.of(context).size.width,
         h = MediaQuery.of(context).size.height;
     return Container(
