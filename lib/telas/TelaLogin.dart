@@ -18,21 +18,21 @@ class TelaLogin extends StatelessWidget {
         backgroundColor: backgroundColor,
         body: FormLogin(
           [
-            Spacer(flex: 7),
+            Spacer(flex: 8),
             TextFieldLogin("Email", false),
             Spacer(flex: 1),
             TextFieldLogin("Senha", true),
             Spacer(flex: 1),
             ButtonLogin("Entrar", () => entrar(), false),
             ButtonLogin("Registrar-se", () {}, true),
-            Spacer(flex: 2),
+            Spacer(flex: 1),
             Container(
               child: Text(
                 "developed by: H.A.W.Ga.M",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white),
               ),
-              alignment: Alignment(-1, 1),
+              alignment: Alignment(-0.9, 1),
             )
           ],
         ),
