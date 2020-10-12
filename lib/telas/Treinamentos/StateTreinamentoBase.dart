@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
@@ -9,6 +10,7 @@ import 'package:sprintf/sprintf.dart';
 
 import '../Telas.dart';
 
+// * Cria uma String no modelo de respostas da API *
 String gerarStringRespostas(int qtdRespostas) {
   String resps = "";
   for (int i = 0; i < qtdRespostas - 1; i++) {
@@ -17,6 +19,7 @@ String gerarStringRespostas(int qtdRespostas) {
   return (resps + "%s");
 }
 
+//Concatena Lista com String
 List<String> concatListS(List<String> lista, String c) {
   for (int i = 0; i < lista.length; i++) {
     lista[i] += c;
@@ -24,6 +27,7 @@ List<String> concatListS(List<String> lista, String c) {
   return lista;
 }
 
+//Concatena String com List;
 List<String> concatSList(String c, List<String> lista) {
   for (int i = 0; i < lista.length; i++) {
     lista[i] = c + lista[i];
@@ -31,21 +35,33 @@ List<String> concatSList(String c, List<String> lista) {
   return lista;
 }
 
+//Base de todas as outras telas
 abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     with Diagnosticable {
+  //Variáveis principais
   Playback playBack;
+  int numRPS = 3;
+  List<String> sons = List.generate(1, (i) => "");
+  int respostas = 0;
+  int sequencia = 0;
+  int arr = 0;
+  int subarr = 0;
+  List<String> respostasDadasL;
+  String respostasDadas;
 
-  @mustCallSuper
   @override
+  @mustCallSuper
   void initState() {
     super.initState();
+
+    // Instancia playBack com um método pra respostas e áudio
     playBack = Playback(
       whenEnd: () {
         if (sequencia < sons.length - 1) {
           setState(() {
             sequencia++;
             subarr = 0;
-            respostas = (sequencia-1) * numRPS;
+            respostas = (sequencia - 1) * numRPS;
             tocarSequencia();
           });
         } else {
@@ -53,28 +69,57 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
         }
       },
     );
+
+    // Chama o método iniciarExercicio que deve ser construído em uma subclasse
     iniciarExercicio();
   }
 
+  // Define os requisitos para o exerício começar
+  @required
+  void definirRequisitos(
+    int nRPS,
+    int maxResps,
+    String path,
+    bool play,
+  ) async {
+    numRPS = nRPS;
+    respostasDadas = gerarStringRespostas(maxResps);
+    respostasDadasL = List.generate(
+      maxResps,
+      (i) => "",
+    );
+    sons = await listSounds(path);
+    if (play) playBack.play(sons[0]);
+  }
+
+  // Um getter dos assets
+  Future<String> get manifestJson async {
+    return await DefaultAssetBundle.of(context)
+        .loadString('AssetManifest.json');
+  }
+
+  // Lista apenas os sons dos exercícios
+  Future<List> listSounds(path) async {
+    String mj = await manifestJson;
+    Map<String, dynamic> manifestMap = jsonDecode(mj);
+
+    return manifestMap.keys
+        .where((String key) => key.contains(path))
+        .where((String key) => key.contains('mp3'))
+        .toList();
+  }
+
+  // Checa se deve travar os botões ou não
   dynamic Function() podeAvancar(String txt) {
-    return (sequencia > 0)
-        ? (arr <= sequencia-1)
-            ? () => avancar(txt)
+    return (sequencia > 0 || sons[sequencia].contains("Aviso"))
+        ? (arr <= sequencia - 1)
+            ? () => responder(txt)
             : null
         : null;
   }
 
-  int numRPS = 3;
-  List<String> sons;
-  int respostas = 0;
-  int sequencia = 0;
-  int arr = 0;
-  int subarr = 0;
-
-  List<String> respostasDadasL;
-  String respostasDadas;
-
-  void avancar(String resp) {
+  // Método responsável pelas respostas do usuário
+  void responder(String resp) {
     setState(
       () {
         if (sequencia <= respostasDadasL.length) {
@@ -95,10 +140,12 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     );
   }
 
+  // Toca o som do índice {sequencia} da lista de sons
   void tocarSequencia() {
     playBack.play(sons[sequencia]);
   }
 
+  // Retorna um texto com um estilo pré-definido apenas para esta tela
   Text textInstruct(String txt) {
     return Text(
       txt,
@@ -109,6 +156,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     );
   }
 
+  // Retorna uma AppBar com um estilo, texto e ações pré-definido apenas para esta tela
   CAppBar stbAppBar(BuildContext context, {String texto = "exemplo"}) =>
       CAppBar(
         texto,
@@ -116,7 +164,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
         pressBack: () => voltar(context),
       );
 
-  @protected
+  // Conta uma quantidade de tempo para executar uma ação
   Timer startTimeout(Duration duracao, void Function() executar) {
     assert(
       duracao != null,
@@ -125,19 +173,26 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     return Timer(duracao, executar);
   }
 
+  // * Método chamado após o a tela ser carregada, deve ser construído na subclasse
   @protected
   void iniciarExercicio();
 
-  @protected
+  // Volta para a tela de TelaBoasVindas
   void voltar(BuildContext context) {
     playBack.dispose();
     Navigator.pop(context);
   }
 
-  Container jmpBtn() {
-    return Container(
-      width: double.infinity,
-      child: FlatButton(
+  // Retorna o botão para pular a explicação do exercício (Introducao.mp3)
+  Positioned jmpBtn() {
+    return Positioned(
+      top: MediaQuery.of(context).size.height * 0.3,
+      bottom: MediaQuery.of(context).size.height * 0.51,
+      right: 0,
+      left: 0,
+      child: Container(
+        width: double.infinity,
+        child: FlatButton(
           child: Text("Pular explicação"),
           padding: EdgeInsets.zero,
           color: corDeDestaque,
@@ -155,12 +210,16 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
                 );
               },
             );
-          }),
+          },
+        ),
+      ),
     );
   }
 
+  // Adiciona os componentes a partir de uma lista, podem ser adicionados botões, spacers ou rows
   Container addDynamicComponents(List<dynamic> respostas) {
     int buttons = 0;
+    // Conta os botões a serem adicionados
     for (int i = 0; i < respostas.length; i++) {
       if (respostas[i].runtimeType == List<Object>().runtimeType)
         for (int j = 0; j < respostas[i].length; j++) {
@@ -168,6 +227,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
             buttons += 1;
         }
     }
+    // Armazena o valor de altura e largura da tela nas variáveis
     double w = MediaQuery.of(context).size.width,
         h = MediaQuery.of(context).size.height;
     return Container(
@@ -178,6 +238,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
         children: [
           ...respostas.map(
             (lay) {
+              // Retorna Row ou Spacer
               Widget toReturn;
               switch (lay.runtimeType) {
                 case (String):
@@ -188,6 +249,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
                     children: [
                       ...lay.map(
                         (com) {
+                          // Retorna SelectButton ou Spacer
                           Widget subComponentToReturn;
                           switch (com.runtimeType) {
                             case (String):
@@ -223,7 +285,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     );
   }
 
-  @protected
+  // Auto-descritivo
   void irParaResultados(BuildContext context, {List respostas}) {
     playBack.dispose();
     Navigator.of(context).push(

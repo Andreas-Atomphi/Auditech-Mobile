@@ -1,33 +1,14 @@
 import 'package:AuditechMobile/mainData.dart';
-import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
 import 'package:flutter/material.dart';
-import 'package:sprintf/sprintf.dart';
 
 class _STreinamento2 extends STreinamentoBase<Exercicio2> {
   List<dynamic> selecoes;
 
   @override
-  void iniciarExercicio() {
-    numRPS = 3;
-    respostasDadas = gerarStringRespostas(10);
-    respostasDadasL = List.generate(
-      10,
-      (i) => "",
-    );
-    sons = concatListS(
-      <String>[
-        "Introducao",
-        ...List.generate(10, (i) => "Seq" + (i + 1).toString()),
-      ],
-      ".mp3",
-    );
-
-    print(sons);
-
-    playBack.prefix = exercicios[1];
-    playBack.play(sons[0]);
+  void iniciarExercicio() async {
+    definirRequisitos(3, 10, exercicios[1], true);
   }
 
   @override
@@ -44,14 +25,7 @@ class _STreinamento2 extends STreinamentoBase<Exercicio2> {
         appBar: stbAppBar(context, texto: "Exercicio 2"),
         body: Stack(
           children: [
-            if (sequencia == 0)
-              Positioned(
-                top: MediaQuery.of(context).size.height * 0.3,
-                bottom: MediaQuery.of(context).size.height * 0.51,
-                right: 0,
-                left: 0,
-                child: jmpBtn(),
-              ),
+            if (sequencia == 0) jmpBtn(),
             Column(
               children: [
                 Spacer(

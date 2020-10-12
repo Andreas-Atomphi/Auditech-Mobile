@@ -10,13 +10,7 @@ class _STreinamento7 extends STreinamentoBase<Exercicio7> {
 
   @override
   void iniciarExercicio() {
-    numRPS = 1;
-    playBack.play(exercicios[4]);
-    respostasDadas = gerarStringRespostas(8);
-    respostasDadasL = List.generate(
-      10,
-      (i) => "",
-    );
+    definirRequisitos(1, 6, exercicios[6], true);
   }
 
   @override
@@ -26,23 +20,23 @@ class _STreinamento7 extends STreinamentoBase<Exercicio7> {
       //Lista de Widgets
       [
         "s1",
-        {"nome": "Vento", "método": () => avancar("ven")},
+        {"nome": "Vento", "método": () => responder("ven")},
         "s1",
-        {"nome": "Água", "método": () => avancar("agu")},
-        "s1",
-      ],
-      "s1",
-      [
-        "s1",
-        {"nome": "Ondas do mar", "método": () => avancar("odm")},
-        "s1",
-        {"nome": "Trovão", "método": () => avancar("tro")},
+        {"nome": "Água", "método": () => responder("agu")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Chuva com trovão", "método": () => avancar("cct")},
+        {"nome": "Ondas do mar", "método": () => responder("odm")},
+        "s1",
+        {"nome": "Trovão", "método": () => responder("tro")},
+        "s1",
+      ],
+      "s1",
+      [
+        "s1",
+        {"nome": "Chuva com trovão", "método": () => responder("cct")},
         "s1",
       ],
       "s1",
@@ -52,19 +46,24 @@ class _STreinamento7 extends STreinamentoBase<Exercicio7> {
       home: Scaffold(
         backgroundColor: backgroundColor,
         appBar: stbAppBar(context, texto: "Exercicio 7"),
-        body: Column(
+        body: Stack(
           children: [
-            Spacer(
-              flex: 1,
-            ),
-            if (arr < respostasDadasL.length)
-              // * Adiciona os componentes de forma dinâmica
-              addDynamicComponents(selecoes),
-            LinearProgressIndicator(
-              value: 0.5,
-              backgroundColor: Colors.blue,
-              valueColor: AlwaysStoppedAnimation(corDeDestaque),
-              minHeight: 7,
+            if (sequencia == 0) jmpBtn(),
+            Column(
+              children: [
+                Spacer(
+                  flex: 1,
+                ),
+                if (arr < respostasDadasL.length)
+                  // * Adiciona os componentes de forma dinâmica
+                  addDynamicComponents(selecoes),
+                LinearProgressIndicator(
+                  value: 0.5,
+                  backgroundColor: Colors.blue,
+                  valueColor: AlwaysStoppedAnimation(corDeDestaque),
+                  minHeight: 7,
+                ),
+              ],
             ),
           ],
         ),

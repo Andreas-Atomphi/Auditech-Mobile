@@ -9,13 +9,7 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
 
   @override
   void iniciarExercicio() {
-    numRPS = 1;
-    playBack.play(exercicios[3]);
-    respostasDadas = gerarStringRespostas(8);
-    respostasDadasL = List.generate(
-      8,
-      (i) => "",
-    );
+    definirRequisitos(1, 6, exercicios[3], true);
   }
 
   @override
@@ -25,23 +19,23 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
       "s1",
       [
         "s1",
-        {"nome": "Tambor", "método": () => avancar("tam")},
+        {"nome": "Tambor", "método": () => responder("T")},
         "s1",
-        {"nome": "Piano", "método": () => avancar("pia")},
-        "s1",
-      ],
-      "s1",
-      [
-        "s1",
-        {"nome": "Gaita", "método": () => avancar("gai")},
-        "s1",
-        {"nome": "Flauta", "método": () => avancar("fla")},
+        {"nome": "Piano", "método": () => responder("P")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Violão", "método": () => avancar("vio")},
+        {"nome": "Gaita", "método": () => responder("G")},
+        "s1",
+        {"nome": "Flauta", "método": () => responder("F")},
+        "s1",
+      ],
+      "s1",
+      [
+        "s1",
+        {"nome": "Violão", "método": () => responder("V")},
         "s1",
       ],
       "s1",
@@ -51,19 +45,17 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
       home: Scaffold(
         backgroundColor: backgroundColor,
         appBar: stbAppBar(context, texto: "Exercicio 4"),
-        body: Column(
+        body: Stack(
           children: [
-            Spacer(
-              flex: 1,
-            ),
-            if (arr < respostasDadasL.length)
-              // * Adiciona os componentes de forma dinâmica
-              addDynamicComponents(selecoes),
-            LinearProgressIndicator(
-              value: 0.5,
-              backgroundColor: Colors.blue,
-              valueColor: AlwaysStoppedAnimation(corDeDestaque),
-              minHeight: 7,
+            if (sequencia == 0) jmpBtn(),
+            Column(
+              children: [
+                Spacer(
+                  flex: 1,
+                ),
+                if (arr < respostasDadasL.length)
+                  addDynamicComponents(selecoes),
+              ],
             ),
           ],
         ),

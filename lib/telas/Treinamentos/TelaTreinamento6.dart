@@ -9,12 +9,7 @@ class _STreinamento6 extends STreinamentoBase<Exercicio6> {
 
   @override
   void iniciarExercicio() {
-    playBack.play(exercicios[5]);
-    respostasDadas = gerarStringRespostas(8);
-    respostasDadasL = List.generate(
-      10,
-      (i) => "",
-    );
+    definirRequisitos(1, 6, exercicios[5], true);
   }
 
   @override
@@ -24,17 +19,17 @@ class _STreinamento6 extends STreinamentoBase<Exercicio6> {
       //Lista de Widgets
       [
         "s1",
-        {"nome": "Grito", "método": () => avancar("grt")},
+        {"nome": "Grito", "método": () => responder("grt")},
         "s1",
-        {"nome": "Passo", "método": () => avancar("pas")},
+        {"nome": "Passo", "método": () => responder("pas")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Palma", "método": () => avancar("pma")},
+        {"nome": "Palma", "método": () => responder("pma")},
         "s1",
-        {"nome": "Risada", "método": () => avancar("rir")},
+        {"nome": "Risada", "método": () => responder("rir")},
         "s1",
       ],
       "s1",
@@ -44,19 +39,24 @@ class _STreinamento6 extends STreinamentoBase<Exercicio6> {
       home: Scaffold(
         backgroundColor: backgroundColor,
         appBar: stbAppBar(context, texto: "Exercicio 6"),
-        body: Column(
+        body: Stack(
           children: [
-            Spacer(
-              flex: 1,
-            ),
-            if (arr < selecoes.length)
-              // * Adiciona os componentes de forma dinâmica
-              addDynamicComponents(selecoes),
-            LinearProgressIndicator(
-              value: 0.5,
-              backgroundColor: Colors.blue,
-              valueColor: AlwaysStoppedAnimation(corDeDestaque),
-              minHeight: 7,
+            if (sequencia == 0) jmpBtn(),
+            Column(
+              children: [
+                Spacer(
+                  flex: 1,
+                ),
+                if (arr < selecoes.length)
+                  // * Adiciona os componentes de forma dinâmica
+                  addDynamicComponents(selecoes),
+                LinearProgressIndicator(
+                  value: 0.5,
+                  backgroundColor: Colors.blue,
+                  valueColor: AlwaysStoppedAnimation(corDeDestaque),
+                  minHeight: 7,
+                ),
+              ],
             ),
           ],
         ),
