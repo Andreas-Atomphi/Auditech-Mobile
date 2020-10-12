@@ -23,11 +23,12 @@ class SelectButton extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      child: FlatButton(
+      child: RaisedButton(
         child: Text(texto),
         onPressed: aoPressionar,
-        color: cor["fundo"],
-        textColor: cor["texto"],
+        color: (aoPressionar == null) ? Colors.cyan[800] : cor["fundo"],
+        textColor: (aoPressionar == null) ? Colors.cyan[600] : cor["texto"],
+        elevation: 0.0,
       ),
     );
   }
