@@ -2,6 +2,8 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 final List<String> exercicios = <String>[
+  "E6SequenciaNumerosDireita/",
+  "E7SequenciaNumerosEsquerda/",
   "E8TomLongoTomCurto/",
   "E9TomFinoTomGrosso/",
   "E10SequenciaAnimais/",
@@ -10,21 +12,18 @@ final List<String> exercicios = <String>[
   "E13CorpoHumano/",
   "E14SequenciaTransporte/",
   "E15SequenciaCasa/",
-  "VozSequencias/",
 ]; //Exercícios
 
 class Playback {
   AudioPlayer _player = AudioPlayer();
   AudioCache _loader;
+  bool _playing = false;
 
   Playback({dynamic Function() whenEnd, String prefix}) {
     _loader = AudioCache(
-      prefix: "assets/audios/Exercicios/",
+      prefix: (prefix == null) ? '' : prefix,
       fixedPlayer: _player,
     );
-    if (prefix != null) {
-      _loader.prefix = _loader.prefix + prefix;
-    }
     _player.onPlayerCompletion.listen(
       (event) {
         whenEnd();
@@ -33,7 +32,7 @@ class Playback {
   }
 
   set prefix(String prfx) {
-    _loader.prefix = "assets/audios/Exercicios/" + prfx;
+    _loader.prefix = prfx;
   }
 
   set whenEnd(dynamic Function() func) {
@@ -53,23 +52,31 @@ class Playback {
   }
 
   String toString() {
-    return "{player: $_player, loader: $_loader, play: $play(path), pause: $pause(), stop: $stop()}";
+    return "{player: $_player, loader: $_loader,playing: $_playing,  play: $play(path), pause: $pause(), stop: $stop()}";
   }
 
   play(String path) {
     _loader.play(path, stayAwake: true);
+    _playing = true;
   }
 
   pause() {
     _player.pause();
+    _playing = false;
   }
 
   stop() {
     _player.stop();
+    _playing = false;
   }
 
   dispose() {
     _player.dispose();
+    _playing = false;
+  }
+
+  bool get playing {
+    return _playing;
   }
 
   get currentPosition {
