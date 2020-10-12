@@ -35,6 +35,7 @@ dependencies:
   http: ^0.12.2
   path: ^1.7.0
   sprintf: "^4.0.0"
+  path_provider: ^1.6.18 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -52,6 +53,8 @@ flutter:
   assets: 
       - assets/images/
       - assets/audios/
+      - assets/audios/Exercicios/E6SequenciaNumerosDireita/
+      - assets/audios/Exercicios/E7SequenciaNumerosEsquerda/
       - assets/audios/Exercicios/E8TomLongoTomCurto/
       - assets/audios/Exercicios/E9TomFinoTomGrosso/
       - assets/audios/Exercicios/E10SequenciaAnimais/
