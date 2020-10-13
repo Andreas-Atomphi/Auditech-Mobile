@@ -52,17 +52,24 @@ class TecladoNumerico extends StatelessWidget {
                             ? Container(
                                 width: btnSqr + (width / 13),
                                 height: btnSqr,
-                                child: FlatButton(
+                                child: RaisedButton(
                                   child: Text(
                                     "$e",
                                     style: TextStyle(fontSize: 24),
                                   ),
-                                  color: buttonsColor,
-                                  textColor: textColor,
-                                  onPressed: () {
-                                    aoPressionar("$e");
-                                    return "$e";
-                                  },
+                                  color: (aoPressionar == null)
+                                      ? Colors.cyan[800]
+                                      : buttonsColor,
+                                  textColor: (aoPressionar == null)
+                                      ? Colors.cyan[800]
+                                      : textColor,
+                                  elevation: 0.0,
+                                  onPressed: (aoPressionar == null)
+                                      ? null
+                                      : () {
+                                          aoPressionar("$e");
+                                          return "$e";
+                                        },
                                 ),
                               )
                             : null,
