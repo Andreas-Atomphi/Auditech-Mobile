@@ -143,15 +143,33 @@ class _SResultados extends State {
                 child: null,
                 height: 100,
               ),
-              FlatButton(
-                onPressed: () => _backXTimes(3),
-                child: Text("Voltar a tela principal"),
-                color: Colors.grey[300],
-              ),
-              FlatButton(
-                onPressed: () => _backXTimes(2),
-                child: Text("Tentar de novo"),
-                color: Colors.grey[300],
+              Row(
+                children: [
+                  Spacer(
+                    flex: 1,
+                  ),
+                  FlatButton(
+                      onPressed: () => _backXTimes(3),
+                      child: Text(
+                        "Voltar a tela principal",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: corDeDestaque),
+                  Spacer(
+                    flex: 1,
+                  ),
+                  FlatButton(
+                    onPressed: () => _backXTimes(2),
+                    child: Text(
+                      "Tentar de novo",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    color: corDeDestaque,
+                  ),
+                  Spacer(
+                    flex: 1,
+                  ),
+                ],
               ),
               Container(
                 child: null,

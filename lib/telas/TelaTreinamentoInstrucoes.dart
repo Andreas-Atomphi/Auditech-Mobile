@@ -46,46 +46,20 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
             Spacer(
               flex: 1,
             ),
-            CardInstruct("texto"),
-            Row(
-              children: [
-                Spacer(
-                  flex: 1,
-                ),
-                Container(
-                  child: RaisedButton(
-                    child: Text("<-"),
-                    color: Colors.white,
-                    onPressed: () {},
-                  ),
-                ),
-                Spacer(
-                  flex: 6,
-                ),
-                Container(
-                  child: RaisedButton(
-                    child: Text("->"),
-                    color: Colors.white,
-                    onPressed: () {},
-                  ),
-                ),
-                Spacer(
-                  flex: 1,
-                ),
-              ],
-            ),
+            InstrucControll(
+                CardInstruct(""), corDeDestaque, secondary, Colors.white),
             Spacer(
               flex: 1,
             ),
             Container(
               width: 200,
               height: 50,
-              child: RaisedButton(
+              child: FlatButton(
                 child: Text(
                   "Ir para o exercício",
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
-                color: Colors.white,
+                color: corDeDestaque,
                 onPressed: () => irParaTreino(irpara),
               ),
             ),
