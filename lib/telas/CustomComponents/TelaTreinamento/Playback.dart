@@ -1,18 +1,19 @@
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-final List<String> exercicios = <String>[
-  "E6SequenciaNumerosDireita/",
-  "E7SequenciaNumerosEsquerda/",
-  "E8TomLongoTomCurto/",
-  "E9TomFinoTomGrosso/",
-  "E10SequenciaAnimais/",
-  "E11SequenciaInstrumentos/",
-  "E12SequenciaNatureza/",
-  "E13CorpoHumano/",
-  "E14SequenciaTransporte/",
-  "E15SequenciaCasa/",
-]; //Exercícios
+final Map<String, dynamic> exercicios = const <String, dynamic>{
+  "Ex1": "E8TomLongoTomCurto/",
+  "Ex2": "E9TomFinoTomGrosso/",
+  "Ex3": "E10SequenciaAnimais/",
+  "Ex4": "E11SequenciaInstrumentos/",
+  "Ex5": "E13CorpoHumano/",
+  "Ex6": "E14SequenciaTransporte/",
+  "Ex7": "E15SequenciaCasa/",
+  "Ex8": {
+    "Dir": "E6SequenciaNumerosDireita/",
+    "Esq": "E7SequenciaNumerosEsquerda/",
+  },
+}; //Exercícios
 
 class Playback {
   AudioPlayer _player = AudioPlayer();
