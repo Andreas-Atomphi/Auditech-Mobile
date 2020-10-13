@@ -2,20 +2,40 @@ import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
-import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:flutter/rendering.dart';
 
 class _STreinamento8 extends STreinamentoBase<Exercicio8> {
   void iniciarExercicio() {
-    definirRequisitos(1, 1, "", false);
+    definirRequisitos(1, 1, "null", false);
   }
 
   @override
   Widget build(BuildContext context) {
-    defReqs(int nr, int s, String e, bool p) {
-      setState(() {
-        definirRequisitos(nr, s, e, true);
-      });
+    int respsPerSeq = 2;
+    defReqs(String l) {
+      Map lado = {
+        "E": [respsPerSeq, 19, exercicios["Ex8"]["Esq"], true],
+        "D": [respsPerSeq, 17, exercicios["Ex8"]["Dir"], true]
+      };
+      setState(
+        () {
+          definirRequisitos(lado[l][0], lado[l][1], lado[l][2], lado[l][3]);
+          playBack = Playback(
+            whenEnd: () {
+              if (sequencia < sons.length - 1) {
+                setState(() {
+                  sequencia++;
+                  subarr = 0;
+                  respostas = (sequencia - 1) * numRPS;
+                  tocarSequencia();
+                });
+              } else {
+                irParaResultados(context);
+              }
+            },
+          );
+        },
+      );
     }
 
     return MaterialApp(
@@ -53,7 +73,12 @@ class _STreinamento8 extends STreinamentoBase<Exercicio8> {
                   TecladoNumerico(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.5,
-                    aoPressionar: (String txt) => responder(txt),
+                    aoPressionar:
+                        (sequencia > 0 || sons[sequencia].contains("Aviso"))
+                            ? (arr <= sequencia - 1)
+                                ? (String txt) => responder(txt)
+                                : null
+                            : null,
                     textColor: Colors.white,
                     backgroundColor: secondary,
                     buttonsColor: corDeDestaque,
@@ -63,34 +88,39 @@ class _STreinamento8 extends STreinamentoBase<Exercicio8> {
             ],
             if (sequencia == 0 && playBack.playing == false) ...[
               Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  color: Color.fromRGBO(0, 0, 0, 0.5),
-                  child: Column(
-                    children: [
-                      Spacer(flex: 3),
-                      textInstruct("Escolha um lado para começar o exercício"),
-                      Spacer(flex: 2),
-                      Row(
-                        children: [
-                          Spacer(
-                            flex: 1,
-                          ),
-                          SideButton("Esquerda",
-                              () => defReqs(2, 19, exercicios[1], true)),
-                          Spacer(
-                            flex: 1,
-                          ),
-                          SideButton("Direita",
-                              () => defReqs(2, 17, exercicios[0], true)),
-                          Spacer(
-                            flex: 1,
-                          ),
-                        ],
-                      ),
-                      Spacer(flex: 1),
-                    ],
-                  )),
+                width: double.infinity,
+                height: double.infinity,
+                color: Color.fromRGBO(0, 0, 0, 0.5),
+                child: Column(
+                  children: [
+                    Spacer(flex: 3),
+                    textInstruct("Escolha um lado para começar o exercício"),
+                    Spacer(flex: 2),
+                    Row(
+                      children: [
+                        Spacer(
+                          flex: 1,
+                        ),
+                        SideButton(
+                          "Esquerda",
+                          () => defReqs("E"),
+                        ),
+                        Spacer(
+                          flex: 1,
+                        ),
+                        SideButton(
+                          "Direita",
+                          () => defReqs("D"),
+                        ),
+                        Spacer(
+                          flex: 1,
+                        ),
+                      ],
+                    ),
+                    Spacer(flex: 1),
+                  ],
+                ),
+              ),
             ],
           ],
         ),

@@ -12,6 +12,7 @@ import '../Telas.dart';
 
 // * Cria uma String no modelo de respostas da API *
 String gerarStringRespostas(int qtdRespostas) {
+  if (qtdRespostas == null) return "";
   String resps = "";
   for (int i = 0; i < qtdRespostas - 1; i++) {
     resps += "%s|";
@@ -89,7 +90,8 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
       (i) => "",
     );
     sons = await listSounds(path);
-    if (play) playBack.play(sons[0]);
+    if (play == true) playBack.play(sons[0]);
+    print(sons);
   }
 
   // Um getter dos assets
@@ -98,7 +100,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
         .loadString('AssetManifest.json');
   }
 
-  // Lista apenas os sons dos exercícios
+  // Lista apenas os sons no caminho definido exercícios
   Future<List> listSounds(path) async {
     String mj = await manifestJson;
     Map<String, dynamic> manifestMap = jsonDecode(mj);
@@ -110,7 +112,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
   }
 
   // Checa se deve travar os botões ou não
-  dynamic Function() podeAvancar(String txt) {
+  dynamic Function() podeAvancar(String txt, {bool twoParams = false}) {
     return (sequencia > 0 || sons[sequencia].contains("Aviso"))
         ? (arr <= sequencia - 1)
             ? () => responder(txt)

@@ -8,7 +8,7 @@ class _STreinamento3 extends STreinamentoBase<Exercicio3> {
 
   @override
   void iniciarExercicio() async {
-    definirRequisitos(1, 8, exercicios[2], true);
+    definirRequisitos(1, 8, exercicios["Ex3"], true);
   }
 
   @override

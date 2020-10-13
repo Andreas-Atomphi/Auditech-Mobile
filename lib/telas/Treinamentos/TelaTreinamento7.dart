@@ -4,13 +4,11 @@ import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 
 class _STreinamento7 extends STreinamentoBase<Exercicio7> {
-  int questaoSelecionada = 0;
-
   List<dynamic> selecoes;
 
   @override
   void iniciarExercicio() {
-    definirRequisitos(1, 6, exercicios[6], true);
+    definirRequisitos(1, 6, exercicios["Ex7"], true);
   }
 
   @override
@@ -20,23 +18,23 @@ class _STreinamento7 extends STreinamentoBase<Exercicio7> {
       //Lista de Widgets
       [
         "s1",
-        {"nome": "Vento", "método": () => responder("ven")},
+        {"nome": "Vento", "método": podeAvancar("V")},
         "s1",
-        {"nome": "Água", "método": () => responder("agu")},
-        "s1",
-      ],
-      "s1",
-      [
-        "s1",
-        {"nome": "Ondas do mar", "método": () => responder("odm")},
-        "s1",
-        {"nome": "Trovão", "método": () => responder("tro")},
+        {"nome": "Água", "método": podeAvancar("A")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Chuva com trovão", "método": () => responder("cct")},
+        {"nome": "Ondas do mar", "método": podeAvancar("O")},
+        "s1",
+        {"nome": "Trovão", "método": podeAvancar("T")},
+        "s1",
+      ],
+      "s1",
+      [
+        "s1",
+        {"nome": "Chuva com trovão", "método": podeAvancar("CT")},
         "s1",
       ],
       "s1",

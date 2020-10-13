@@ -9,7 +9,7 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
 
   @override
   void iniciarExercicio() {
-    definirRequisitos(1, 6, exercicios[3], true);
+    definirRequisitos(1, 6, exercicios["Ex4"], true);
   }
 
   @override
@@ -19,23 +19,23 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
       "s1",
       [
         "s1",
-        {"nome": "Tambor", "método": () => responder("T")},
+        {"nome": "Tambor", "método": podeAvancar("T")},
         "s1",
-        {"nome": "Piano", "método": () => responder("P")},
-        "s1",
-      ],
-      "s1",
-      [
-        "s1",
-        {"nome": "Gaita", "método": () => responder("G")},
-        "s1",
-        {"nome": "Flauta", "método": () => responder("F")},
+        {"nome": "Piano", "método": podeAvancar("P")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Violão", "método": () => responder("V")},
+        {"nome": "Gaita", "método": podeAvancar("G")},
+        "s1",
+        {"nome": "Flauta", "método": podeAvancar("F")},
+        "s1",
+      ],
+      "s1",
+      [
+        "s1",
+        {"nome": "Violão", "método": podeAvancar("V")},
         "s1",
       ],
       "s1",

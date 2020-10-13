@@ -9,7 +9,7 @@ class _STreinamento6 extends STreinamentoBase<Exercicio6> {
 
   @override
   void iniciarExercicio() {
-    definirRequisitos(1, 6, exercicios[5], true);
+    definirRequisitos(1, 6, exercicios["Ex6"], true);
   }
 
   @override
@@ -19,17 +19,17 @@ class _STreinamento6 extends STreinamentoBase<Exercicio6> {
       //Lista de Widgets
       [
         "s1",
-        {"nome": "Grito", "método": () => responder("grt")},
+        {"nome": "Grito", "método": podeAvancar("grt")},
         "s1",
-        {"nome": "Passo", "método": () => responder("pas")},
+        {"nome": "Passo", "método": podeAvancar("pas")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Palma", "método": () => responder("pma")},
+        {"nome": "Palma", "método": podeAvancar("pma")},
         "s1",
-        {"nome": "Risada", "método": () => responder("rir")},
+        {"nome": "Risada", "método": podeAvancar("rir")},
         "s1",
       ],
       "s1",
