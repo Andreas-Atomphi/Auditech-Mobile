@@ -2,7 +2,6 @@ import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
-import 'package:sprintf/sprintf.dart';
 
 class _STreinamento4 extends STreinamentoBase<Exercicio4> {
   List<dynamic> selecoes;

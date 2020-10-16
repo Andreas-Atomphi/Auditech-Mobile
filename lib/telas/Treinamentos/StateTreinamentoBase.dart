@@ -6,7 +6,6 @@ import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.da
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:sprintf/sprintf.dart';
 
 import '../Telas.dart';
