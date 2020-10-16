@@ -13,28 +13,30 @@ class _STreinamento7 extends STreinamentoBase<Exercicio7> {
 
   @override
   Widget build(BuildContext context) {
-    selecoes = [
+    selecoes =
+        //Automóveis
+        [
       "s1",
       //Lista de Widgets
       [
         "s1",
-        {"nome": "Vento", "método": podeAvancar("V")},
+        {"nome": "Trem", "método": podeAvancar("T")},
         "s1",
-        {"nome": "Água", "método": podeAvancar("A")},
-        "s1",
-      ],
-      "s1",
-      [
-        "s1",
-        {"nome": "Ondas do mar", "método": podeAvancar("O")},
-        "s1",
-        {"nome": "Trovão", "método": podeAvancar("T")},
+        {"nome": "Fórmula 1", "método": podeAvancar("F")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Chuva com trovão", "método": podeAvancar("CT")},
+        {"nome": "Carro", "método": podeAvancar("C")},
+        "s1",
+        {"nome": "Helicóptero", "método": podeAvancar("H")},
+        "s1",
+      ],
+      "s1",
+      [
+        "s1",
+        {"nome": "Ambulância", "método": podeAvancar("A")},
         "s1",
       ],
       "s1",
@@ -46,23 +48,16 @@ class _STreinamento7 extends STreinamentoBase<Exercicio7> {
         appBar: stbAppBar(context, texto: "Exercicio 7"),
         body: Stack(
           children: [
-            if (sequencia == 0) jmpBtn(),
             Column(
               children: [
                 Spacer(
                   flex: 1,
                 ),
                 if (arr < respostasDadasL.length)
-                  // * Adiciona os componentes de forma dinâmica
                   addDynamicComponents(selecoes),
-                LinearProgressIndicator(
-                  value: 0.5,
-                  backgroundColor: Colors.blue,
-                  valueColor: AlwaysStoppedAnimation(corDeDestaque),
-                  minHeight: 7,
-                ),
               ],
             ),
+            if (sequencia == 0) jmpBtn(),
           ],
         ),
       ),

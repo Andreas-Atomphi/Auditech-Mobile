@@ -2,7 +2,6 @@ import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
-import 'package:sprintf/sprintf.dart';
 
 class _STreinamento5 extends STreinamentoBase<Exercicio5> {
   List<dynamic> selecoes;
@@ -14,30 +13,28 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
 
   @override
   Widget build(BuildContext context) {
-    selecoes =
-        //Automóveis
-        [
+    selecoes = [
       "s1",
       //Lista de Widgets
       [
         "s1",
-        {"nome": "Trem", "método": podeAvancar("tre")},
+        {"nome": "Vento", "método": podeAvancar("V")},
         "s1",
-        {"nome": "Fórmula 1", "método": podeAvancar("f1")},
-        "s1",
-      ],
-      "s1",
-      [
-        "s1",
-        {"nome": "Carro", "método": podeAvancar("car")},
-        "s1",
-        {"nome": "Helicóptero", "método": podeAvancar("hel")},
+        {"nome": "Água", "método": podeAvancar("A")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Ambulância", "método": podeAvancar("amb")},
+        {"nome": "Ondas do mar", "método": podeAvancar("OM")},
+        "s1",
+        {"nome": "Trovão", "método": podeAvancar("T")},
+        "s1",
+      ],
+      "s1",
+      [
+        "s1",
+        {"nome": "Chuva com trovão", "método": podeAvancar("CT")},
         "s1",
       ],
       "s1",
@@ -46,7 +43,7 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: stbAppBar(context, texto: "Exercicio 5"),
+        appBar: stbAppBar(context, texto: "Exercicio 7"),
         body: Stack(
           children: [
             if (sequencia == 0) jmpBtn(),
@@ -56,9 +53,17 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
                   flex: 1,
                 ),
                 if (arr < respostasDadasL.length)
+                  // * Adiciona os componentes de forma dinâmica
                   addDynamicComponents(selecoes),
+                LinearProgressIndicator(
+                  value: 0.5,
+                  backgroundColor: Colors.blue,
+                  valueColor: AlwaysStoppedAnimation(corDeDestaque),
+                  minHeight: 7,
+                ),
               ],
             ),
+            if (sequencia == 0) jmpBtn(),
           ],
         ),
       ),

@@ -19,17 +19,17 @@ class _STreinamento6 extends STreinamentoBase<Exercicio6> {
       //Lista de Widgets
       [
         "s1",
-        {"nome": "Grito", "método": podeAvancar("grt")},
+        {"nome": "Grito", "método": podeAvancar("G")},
         "s1",
-        {"nome": "Passo", "método": podeAvancar("pas")},
+        {"nome": "Passo", "método": podeAvancar("P")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Palma", "método": podeAvancar("pma")},
+        {"nome": "Palma", "método": podeAvancar("P")},
         "s1",
-        {"nome": "Risada", "método": podeAvancar("rir")},
+        {"nome": "Risada", "método": podeAvancar("R")},
         "s1",
       ],
       "s1",
@@ -41,7 +41,6 @@ class _STreinamento6 extends STreinamentoBase<Exercicio6> {
         appBar: stbAppBar(context, texto: "Exercicio 6"),
         body: Stack(
           children: [
-            if (sequencia == 0) jmpBtn(),
             Column(
               children: [
                 Spacer(
@@ -58,6 +57,7 @@ class _STreinamento6 extends STreinamentoBase<Exercicio6> {
                 ),
               ],
             ),
+            if (sequencia == 0) jmpBtn(),
           ],
         ),
       ),

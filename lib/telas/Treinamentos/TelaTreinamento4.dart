@@ -47,7 +47,6 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
         appBar: stbAppBar(context, texto: "Exercicio 4"),
         body: Stack(
           children: [
-            if (sequencia == 0) jmpBtn(),
             Column(
               children: [
                 Spacer(
@@ -57,6 +56,7 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
                   addDynamicComponents(selecoes),
               ],
             ),
+            if (sequencia == 0) jmpBtn(),
           ],
         ),
       ),
