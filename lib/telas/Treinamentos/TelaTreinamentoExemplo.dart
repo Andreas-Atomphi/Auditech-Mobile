@@ -53,7 +53,7 @@ class _STreinamento extends STreinamentoBase<TelaTreinamentoExemplo> {
 
   @override
   void iniciarExercicio() {
-    // TODO: implement iniciarExercicio
+    // ! Por ser uma tela de exemplo aqui não vai ter nada, não use esse código.
   }
 }
 
