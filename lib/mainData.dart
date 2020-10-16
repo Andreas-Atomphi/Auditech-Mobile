@@ -18,6 +18,7 @@ Map<String, Widget Function(BuildContext context)> routesExercicios = {
   "treinamento-6": (context) => Exercicio6(),
   "treinamento-7": (context) => Exercicio7(),
   "treinamento-8": (context) => Exercicio8(),
+  "treinamento-9": (context) => Exercicio9(),
 };
 
 Map<String, Widget Function(BuildContext context)> routes = {

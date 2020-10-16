@@ -2,22 +2,24 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 final Map<String, dynamic> exercicios = const <String, dynamic>{
-  "Ex1": "E8TomLongoTomCurto/",
-  "Ex2": "E9TomFinoTomGrosso/",
-  "Ex3": "E10SequenciaAnimais/",
-  "Ex4": "E11SequenciaInstrumentos/",
-  "Ex5": "E13CorpoHumano/",
-  "Ex6": "E14SequenciaTransporte/",
-  "Ex7": "E15SequenciaCasa/",
-  "Ex8": {
-    "Dir": "E6SequenciaNumerosDireita/",
-    "Esq": "E7SequenciaNumerosEsquerda/",
+  "Ex1": "Exercicio01/",
+  "Ex2": "Exercicio02/",
+  "Ex3": "Exercicio02/",
+  "Ex4": "Exercicio02/",
+  "Ex5": "Exercicio05/",
+  "Ex6": "Exercicio06/",
+  "Ex7": "Exercicio07/",
+  "Ex8": "Exercicio08/",
+  "Ex9": {
+    "Dir": "Exercicio09/Direita/",
+    "Esq": "Exercicio09/Esquerda/",
   },
 }; //Exercícios
 
 class Playback {
   AudioPlayer _player = AudioPlayer();
   AudioCache _loader;
+  String toPlay;
   bool _playing = false;
 
   Playback({dynamic Function() whenEnd, String prefix}) {
@@ -56,8 +58,13 @@ class Playback {
     return "{player: $_player, loader: $_loader,playing: $_playing,  play: $play(path), pause: $pause(), stop: $stop()}";
   }
 
-  play(String path) {
-    _loader.play(path, stayAwake: true);
+  play([String path]) {
+    if (toPlay == null || path != null) {
+      _loader.play(path, stayAwake: true);
+      toPlay = path;
+    } else if (toPlay != null && path == null) {
+      _loader.play(toPlay, stayAwake: true);
+    }
     _playing = true;
   }
 
