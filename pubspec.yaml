@@ -53,16 +53,16 @@ flutter:
   assets: 
       - assets/images/
       - assets/audios/
-      - assets/audios/Exercicios/E6SequenciaNumerosDireita/
-      - assets/audios/Exercicios/E7SequenciaNumerosEsquerda/
-      - assets/audios/Exercicios/E8TomLongoTomCurto/
-      - assets/audios/Exercicios/E9TomFinoTomGrosso/
-      - assets/audios/Exercicios/E10SequenciaAnimais/
-      - assets/audios/Exercicios/E11SequenciaInstrumentos/
-      - assets/audios/Exercicios/E12SequenciaNatureza/
-      - assets/audios/Exercicios/E13CorpoHumano/
-      - assets/audios/Exercicios/E14SequenciaTransporte/
-      - assets/audios/Exercicios/E15SequenciaCasa/
+      - assets/audios/Exercicios/Exercicio01/
+      - assets/audios/Exercicios/Exercicio02/
+      - assets/audios/Exercicios/Exercicio03/
+      - assets/audios/Exercicios/Exercicio04/
+      - assets/audios/Exercicios/Exercicio05/
+      - assets/audios/Exercicios/Exercicio06/
+      - assets/audios/Exercicios/Exercicio07/
+      - assets/audios/Exercicios/Exercicio08/
+      - assets/audios/Exercicios/Exercicio09/Direita/
+      - assets/audios/Exercicios/Exercicio09/Esquerda/
       - assets/strings/
       - assets/fonts/
   fonts:
