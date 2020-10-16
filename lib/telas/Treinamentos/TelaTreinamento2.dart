@@ -36,6 +36,13 @@ class _STreinamento2 extends STreinamentoBase<Exercicio2> {
                 Spacer(
                   flex: 1,
                 ),
+                VisorDeRespostas(
+                  respostasDadasL,
+                  direcao: VisorDirecao.HORIZONTAL,
+                ),
+                Spacer(
+                  flex: 1,
+                ),
                 Container(
                   color: secondary,
                   padding: EdgeInsets.all(5),
