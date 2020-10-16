@@ -6,6 +6,7 @@ import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.da
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sprintf/sprintf.dart';
 
 import '../Telas.dart';
@@ -60,6 +61,12 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
       whenEnd: () {
         if (sequencia < sons.length - 1) {
           setState(() {
+            for (int i = respostas; i < (sequencia) * numRPS; i++) {
+              if (podeAvancar("N") != null) {
+                podeAvancar("N")();
+              }
+              print("executado");
+            }
             sequencia++;
             subarr = 0;
             respostas = (sequencia - 1) * numRPS;
@@ -112,8 +119,11 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
   }
 
   // Checa se deve travar os botões ou não
-  dynamic Function() podeAvancar(String txt, {bool twoParams = false}) {
-    return (sequencia > 0 || sons[sequencia].contains("Aviso"))
+  dynamic Function() podeAvancar(
+    String txt, {
+    bool twoParams = false,
+  }) {
+    return (sequencia > 0 && !sons[sequencia].contains("Aviso"))
         ? (arr <= sequencia - 1)
             ? () => responder(txt)
             : null
@@ -180,16 +190,41 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
   void iniciarExercicio();
 
   // Volta para a tela de TelaBoasVindas
-  void voltar(BuildContext context) {
-    playBack.dispose();
-    Navigator.pop(context);
+  Future<dynamic> voltar(BuildContext context) {
+    playBack.pause();
+    return showDialog(
+      context: context,
+      builder: (popcontext) {
+        return AlertDialog(
+          title: Text("Tem certeza de que deseja sair do exercício?"),
+          actions: [
+            FlatButton(
+              child: Text("Não"),
+              onPressed: () {
+                playBack.play();
+                Navigator.pop(popcontext);
+              },
+            ),
+            FlatButton(
+              child: Text("Sim"),
+              onPressed: () {
+                playBack.dispose();
+                Navigator.pop(popcontext);
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
   // Retorna o botão para pular a explicação do exercício (Introducao.mp3)
   Positioned jmpBtn() {
     return Positioned(
       top: MediaQuery.of(context).size.height * 0.3,
-      bottom: MediaQuery.of(context).size.height * 0.51,
+      bottom: MediaQuery.of(context).size.height * 0.50,
       right: 0,
       left: 0,
       child: Container(
@@ -306,6 +341,15 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
             child: child,
           );
         },
+      ),
+    );
+  }
+
+  WillPopScope myPopScope({Widget home}) {
+    return WillPopScope(
+      onWillPop: () => voltar(context),
+      child: MaterialApp(
+        home: home,
       ),
     );
   }
