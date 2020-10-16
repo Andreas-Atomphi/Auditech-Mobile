@@ -26,8 +26,7 @@ class _STreinamento1 extends STreinamentoBase<Exercicio1> {
         "método": podeAvancar("C"),
       },
     ];
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+    return myPopScope(
       home: Scaffold(
         backgroundColor: backgroundColor,
         appBar: stbAppBar(context, texto: "Exercicio 1"),
@@ -39,10 +38,11 @@ class _STreinamento1 extends STreinamentoBase<Exercicio1> {
                 Spacer(
                   flex: 1,
                 ),
-                textInstruct(
-                    "Aperte os tons que você ouvir na orelha: {valor}"),
-                Spacer(
-                  flex: 1,
+                textInstruct("Pressione tom longo ou tom curto após ouvir"),
+                Spacer(flex: 1),
+                VisorDeRespostas(
+                  respostasDadasL,
+                  direcao: VisorDirecao.HORIZONTAL,
                 ),
                 Container(
                   color: secondary,
