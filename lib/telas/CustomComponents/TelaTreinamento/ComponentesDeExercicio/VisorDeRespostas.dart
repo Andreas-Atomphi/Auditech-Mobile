@@ -24,7 +24,7 @@ extension visorDirecaoValores on VisorDirecao {
 }
 
 class VisorDeRespostas extends StatelessWidget {
-  final List respostas;
+  final List<String> respostas;
   final bool reverse;
   final VisorDirecao direcao;
 
@@ -36,7 +36,7 @@ class VisorDeRespostas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List text = [
+    List<Text> text = [
       ...respostas.map(
         (e) => Text(
           (e.toString() != "null") ? e.toString() + " " : " ",
