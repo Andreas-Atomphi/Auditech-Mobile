@@ -5,3 +5,4 @@ export 'ComponentesDeExercicio/ButtonSide.dart';
 export 'ComponentesDeExercicio/ButtonSelect.dart';
 export 'ComponentesDeExercicio/TecladoNumerico.dart';
 export 'ComponentesDeExercicio/VisorDeRespostas.dart';
+export 'ComponentesDeExercicio/EscolherLado.dart';
