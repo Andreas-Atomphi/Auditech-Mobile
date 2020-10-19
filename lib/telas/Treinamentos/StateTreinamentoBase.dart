@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
@@ -10,7 +11,7 @@ import 'package:sprintf/sprintf.dart';
 
 import '../Telas.dart';
 
-// * Cria uma String no modelo de respostas da API *
+// * Cria uma String no modelo de respostas da API
 String gerarStringRespostas(int qtdRespostas) {
   if (qtdRespostas == null) return "";
   String resps = "";
@@ -47,63 +48,77 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
   int sequencia = 0;
   int arr = 0;
   int subarr = 0;
-  List<String> respostasDadasL;
+  List<String> respostasDadasL = ["", ""];
   String respostasDadas;
+  final Map paraEnviar = {
+    "respostaTreino": "",
+    "dataExecucao": "",
+    "faseIdFase": ""
+  };
 
   @override
   @mustCallSuper
   void initState() {
     super.initState();
+    //Dá a data de execução
+    String dtExec = DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now());
+    paraEnviar["dataExecucao"] = "$dtExec";
+    print(paraEnviar);
 
     // Instancia playBack com um método pra respostas e áudio
-    playBack = Playback(
-      whenEnd: () {
-        if (sequencia < sons.length - 1) {
-          setState(() {
-            for (int i = respostas; i < (sequencia) * numRPS; i++) {
-              if (podeAvancar("N") != null) {
-                podeAvancar("N")();
-              }
-              print("executado");
-            }
-            sequencia++;
-            subarr = 0;
-            respostas = (sequencia - 1) * numRPS;
-            tocarSequencia();
-          });
-        } else {
-          irParaResultados(context);
-        }
-      },
-    );
+    instanciarPlayback();
 
     // Chama o método iniciarExercicio que deve ser construído em uma subclasse
     iniciarExercicio();
+  }
+
+  void instanciarPlayback() {
+    playBack = Playback(whenEnd: () => acabarSequencia());
+  }
+
+  //Avança para a próxima cabeça
+  void acabarSequencia() {
+    setState(
+      () {
+        for (int i = respostas; i < (sequencia) * numRPS; i++) {
+          if (podeAvancar("N") != null) {
+            podeAvancar("N")();
+          }
+        }
+        if (sequencia < sons.length - 1) {
+          //Preenche as respostas restantes com N
+          sequencia++;
+          subarr = 0;
+          respostas = (sequencia - 1) * numRPS;
+          tocarSequencia();
+        } else {
+          enviarRespostas();
+        }
+      },
+    );
   }
 
   // Define os requisitos para o exerício começar
   @required
   void definirRequisitos(
     int nRPS,
-    int maxResps,
     String path,
     bool play,
   ) async {
     numRPS = nRPS;
-    respostasDadas = gerarStringRespostas(maxResps);
+    sons = await listSounds(path);
+    respostasDadas = gerarStringRespostas(sons.length - 1);
     respostasDadasL = List.generate(
-      maxResps,
+      sons.length - 1,
       (i) => "",
     );
-    sons = await listSounds(path);
     if (play == true) playBack.play(sons[0]);
-    print(sons);
+    print("quantidades de som nesse exercícios: ${sons.length}");
   }
 
   // Um getter dos assets
   Future<String> get manifestJson async {
-    return await DefaultAssetBundle.of(context)
-        .loadString('AssetManifest.json');
+    return DefaultAssetBundle.of(context).loadString('AssetManifest.json');
   }
 
   // Lista apenas os sons no caminho definido exercícios
@@ -136,8 +151,6 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
         if (sequencia <= respostasDadasL.length) {
           respostasDadasL[sequencia - 1] +=
               (subarr < numRPS - 1) ? "$resp-" : resp;
-        } else {
-          print(sprintf(respostasDadas, respostasDadasL));
         }
 
         if (sequencia <= respostasDadasL.length) {
@@ -227,7 +240,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
       right: 0,
       left: 0,
       child: Container(
-        width: double.infinity,
+        width: MediaQuery.of(context).size.width - 10,
         child: FlatButton(
           child: Text("Pular explicação"),
           padding: EdgeInsets.zero,
@@ -319,6 +332,13 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
         ],
       ),
     );
+  }
+
+  //Auto-descritivo
+  void enviarRespostas() {
+    paraEnviar["respostaTreino"] = sprintf(respostasDadas, respostasDadasL);
+    var jsonParaEnviar = json.encode(paraEnviar);
+    print(jsonParaEnviar);
   }
 
   // Auto-descritivo
