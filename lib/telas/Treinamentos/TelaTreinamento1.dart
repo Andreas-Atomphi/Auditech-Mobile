@@ -7,8 +7,8 @@ class _STreinamento1 extends STreinamentoBase<Exercicio1> {
   List<dynamic> selecoes;
 
   @override
-  void iniciarExercicio() async {
-    definirRequisitos(3, 10, exercicios["Ex1"], true);
+  void iniciarExercicio() {
+    definirRequisitos(3, exercicios["Ex1"], true);
   }
 
   @override
@@ -30,12 +30,9 @@ class _STreinamento1 extends STreinamentoBase<Exercicio1> {
         appBar: stbAppBar(context, texto: "Exercicio 1"),
         body: Stack(
           children: <Widget>[
-            if (sequencia == 0) jmpBtn(),
             Column(
               children: [
-                Spacer(
-                  flex: 1,
-                ),
+                Spacer(flex: 1),
                 textInstruct("Pressione tom longo ou tom curto após ouvir"),
                 Spacer(flex: 1),
                 VisorDeRespostas(
@@ -61,6 +58,7 @@ class _STreinamento1 extends STreinamentoBase<Exercicio1> {
                 )
               ]..removeWhere((w) => w == null),
             ),
+            if (sequencia == 0) jmpBtn(),
           ],
         ),
       ),

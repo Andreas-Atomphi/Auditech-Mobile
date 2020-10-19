@@ -8,7 +8,7 @@ class _STreinamento2 extends STreinamentoBase<Exercicio2> {
 
   @override
   void iniciarExercicio() async {
-    definirRequisitos(3, 10, exercicios["Ex2"], true);
+    definirRequisitos(3, exercicios["Ex2"], true);
   }
 
   @override
@@ -25,7 +25,6 @@ class _STreinamento2 extends STreinamentoBase<Exercicio2> {
         appBar: stbAppBar(context, texto: "Exercicio 2"),
         body: Stack(
           children: [
-            if (sequencia == 0) jmpBtn(),
             Column(
               children: [
                 Spacer(
@@ -39,9 +38,6 @@ class _STreinamento2 extends STreinamentoBase<Exercicio2> {
                 VisorDeRespostas(
                   respostasDadasL,
                   direcao: VisorDirecao.HORIZONTAL,
-                ),
-                Spacer(
-                  flex: 1,
                 ),
                 Container(
                   color: secondary,
@@ -61,6 +57,7 @@ class _STreinamento2 extends STreinamentoBase<Exercicio2> {
                 ),
               ]..removeWhere((w) => w == null),
             ),
+            if (sequencia == 0) jmpBtn(),
           ],
         ),
       ),

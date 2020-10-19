@@ -8,7 +8,7 @@ class _STreinamento3 extends STreinamentoBase<Exercicio3> {
 
   @override
   void iniciarExercicio() async {
-    definirRequisitos(1, 8, exercicios["Ex3"], true);
+    definirRequisitos(1, exercicios["Ex3"], true);
   }
 
   @override
@@ -45,12 +45,16 @@ class _STreinamento3 extends STreinamentoBase<Exercicio3> {
                 Spacer(
                   flex: 1,
                 ),
+                VisorDeRespostas(
+                  respostasDadasL,
+                  direcao: VisorDirecao.HORIZONTAL,
+                ),
                 // Adiciona os componentes de forma dinâmica
                 if (respostas < respostasDadasL.length)
                   addDynamicComponents(selecoes),
-                if (sequencia == 0) jmpBtn(),
               ],
             ),
+            if (sequencia == 0) jmpBtn(),
           ],
         ),
       ),

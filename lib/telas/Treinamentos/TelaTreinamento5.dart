@@ -8,7 +8,7 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
 
   @override
   void iniciarExercicio() {
-    definirRequisitos(1, 6, exercicios["Ex5"], true);
+    definirRequisitos(1, exercicios["Ex5"], true);
   }
 
   @override
@@ -52,15 +52,13 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
                 Spacer(
                   flex: 1,
                 ),
+                VisorDeRespostas(
+                  respostasDadasL,
+                  direcao: VisorDirecao.HORIZONTAL,
+                ),
                 if (arr < respostasDadasL.length)
                   // * Adiciona os componentes de forma dinâmica
                   addDynamicComponents(selecoes),
-                LinearProgressIndicator(
-                  value: 0.5,
-                  backgroundColor: Colors.blue,
-                  valueColor: AlwaysStoppedAnimation(corDeDestaque),
-                  minHeight: 7,
-                ),
               ],
             ),
             if (sequencia == 0) jmpBtn(),

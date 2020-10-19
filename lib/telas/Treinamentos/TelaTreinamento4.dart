@@ -8,7 +8,7 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
 
   @override
   void iniciarExercicio() {
-    definirRequisitos(1, 6, exercicios["Ex4"], true);
+    definirRequisitos(1, exercicios["Ex4"], true);
   }
 
   @override
@@ -50,6 +50,10 @@ class _STreinamento4 extends STreinamentoBase<Exercicio4> {
               children: [
                 Spacer(
                   flex: 1,
+                ),
+                VisorDeRespostas(
+                  respostasDadasL,
+                  direcao: VisorDirecao.HORIZONTAL,
                 ),
                 if (arr < respostasDadasL.length)
                   addDynamicComponents(selecoes),
