@@ -16,56 +16,73 @@ class AbaEstatisticas extends StatelessWidget {
       Colors.blueGrey[300]
     ];
 
-    List<List<Map<String, dynamic>>> graficosAnteriores = [
-      [
-        {
-          "w": graficoP,
-          "h": graficoP,
-          "d": <double>[7, 5, 2],
-          "c": graf,
-          "t": "Exercício 1"
-        },
-        {
-          "w": graficoP,
-          "h": graficoP,
-          "d": <double>[7, 3, 4],
-          "c": graf,
-          "t": "Exercício 2"
-        },
-      ],
-      [
-        {
-          "w": graficoP,
-          "h": graficoP,
-          "d": <double>[5, 5, 4],
-          "c": graf,
-          "t": "Exercício 3"
-        },
-        {
-          "w": graficoP,
-          "h": graficoP,
-          "d": <double>[7, 4, 3],
-          "c": graf,
-          "t": "Exercício 4"
-        },
-      ],
-      [
-        {
-          "w": graficoP,
-          "h": graficoP,
-          "d": <double>[7, 3, 4],
-          "c": graf,
-          "t": "Exercício 5"
-        },
-        {
-          "w": graficoP,
-          "h": graficoP,
-          "d": <double>[2, 7, 5],
-          "c": graf,
-          "t": "Exercício 6"
-        },
-      ],
+    List<Map<String, dynamic>> graficosAnteriores = [
+      {
+        "w": graficoP,
+        "h": graficoP,
+        "d": <double>[7, 5, 2],
+        "c": graf,
+        "t": "Exercício 1"
+      },
+      {
+        "w": graficoP,
+        "h": graficoP,
+        "d": <double>[7, 3, 4],
+        "c": graf,
+        "t": "Exercício 2"
+      },
+      {
+        "w": graficoP,
+        "h": graficoP,
+        "d": <double>[5, 5, 4],
+        "c": graf,
+        "t": "Exercício 3"
+      },
+      {
+        "w": graficoP,
+        "h": graficoP,
+        "d": <double>[7, 4, 3],
+        "c": graf,
+        "t": "Exercício 4"
+      },
+      {
+        "w": graficoP,
+        "h": graficoP,
+        "d": <double>[7, 3, 4],
+        "c": graf,
+        "t": "Exercício 5"
+      },
+      {
+        "w": graficoP,
+        "h": graficoP,
+        "d": <double>[2, 7, 5],
+        "c": graf,
+        "t": "Exercício 6"
+      },
+      {
+        "w": graficoP,
+        "h": graficoP,
+        "d": <double>[2, 7, 5],
+        "c": graf,
+        "t": "Exercício 7"
+      },
+      {
+        "w": graficoP,
+        "h": graficoP,
+        "d": <double>[2, 7, 5],
+        "c": graf,
+        "t": "Exercício 8"
+      },
+      {
+        "w": graficoP,
+        "h": graficoP,
+        "d": <double>[2, 7, 5],
+        "c": graf,
+        "t": "Exercício 9"
+      },
     ];
+
+    double space = 30;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -126,34 +143,24 @@ class AbaEstatisticas extends StatelessWidget {
               chartRadius: 0,
             ),
           ),
-          ...graficosAnteriores.map(
-            (row) => Row(
-              children: [
-                Spacer(
-                  flex: 1,
+          GridView.extent(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.all(space),
+            maxCrossAxisExtent: 200,
+            crossAxisSpacing: space,
+            mainAxisSpacing: space,
+            children: [
+              ...graficosAnteriores.map(
+                (graf) => GraficoAE(
+                  width: graf['w'],
+                  height: graf['h'],
+                  dados: graf['d'],
+                  cores: graf['c'],
+                  titulo: graf['t'],
                 ),
-                GraficoAE(
-                  width: row[0]["w"],
-                  height: row[0]["h"],
-                  dados: row[0]["d"],
-                  cores: row[0]["c"],
-                  titulo: row[0]["t"],
-                ),
-                Spacer(
-                  flex: 1,
-                ),
-                GraficoAE(
-                  width: row[1]["w"],
-                  height: row[1]["h"],
-                  dados: row[1]["d"],
-                  cores: row[1]["c"],
-                  titulo: row[1]["t"],
-                ),
-                Spacer(
-                  flex: 1,
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
