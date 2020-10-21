@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CardInstruct extends StatelessWidget {
-  final String texto;
+  final Widget texto;
 
   CardInstruct(this.texto);
 
@@ -10,12 +10,7 @@ class CardInstruct extends StatelessWidget {
       width: double.infinity,
       height: (MediaQuery.of(context).size.height / 100) * 50,
       child: Card(
-        child: Text(
-          "texto",
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
+        child: texto,
       ),
     );
   }
