@@ -14,9 +14,17 @@ class ScrollableCardColumn extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: SingleChildScrollView(
-        child: Card(
-          child: Column(children: (children != null) ? children : null),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+          color: Colors.white,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [...children],
+          ),
         ),
       ),
     );
