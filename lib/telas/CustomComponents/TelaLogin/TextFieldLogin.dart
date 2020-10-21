@@ -1,29 +1,44 @@
+import 'package:AuditechMobile/telas/CustomComponents/TelaLogin/components.dart';
 import 'package:flutter/material.dart';
 
+enum TipoEntrada {
+  CPF,
+  DT,
+}
+
 class TextFieldLogin extends StatelessWidget {
+  final myController = TextEditingController();
   final String dica;
   final bool obscure;
+  TextField textfield;
+  final TipoEntrada tipo;
 
-  TextFieldLogin(this.dica, this.obscure);
+  TextFieldLogin(this.dica, this.obscure, this.tipo);
 
   Widget build(BuildContext context) {
+    textfield = TextField(
+      style: TextStyle(color: Colors.black),
+      controller: myController,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(2)),
+        fillColor: Colors.white,
+        filled: true,
+        hintText: dica,
+        hintStyle: TextStyle(color: Colors.grey),
+        isDense: true,
+        contentPadding: EdgeInsets.all(8),
+      ),
+      obscureText: obscure,
+    );
     return Center(
       child: Container(
-        child: TextField(
-          style: TextStyle(color: Colors.black),
-          decoration: InputDecoration(
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(2)),
-            fillColor: Colors.white,
-            filled: true,
-            hintText: dica,
-            hintStyle: TextStyle(color: Colors.grey),
-            isDense: true,
-            contentPadding: EdgeInsets.all(8),
-          ),
-          obscureText: obscure,
-        ),
+        child: textfield,
         width: (MediaQuery.of(context).size.width / 100) * 65,
       ),
     );
+  }
+
+  String get text {
+    return myController.text;
   }
 }
