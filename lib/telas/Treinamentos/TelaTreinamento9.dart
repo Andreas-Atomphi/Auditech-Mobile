@@ -10,8 +10,8 @@ class _STreinamento9 extends STreinamentoBase<Exercicio9> {
 
   @override
   Widget build(BuildContext context) {
-    int respsPerSeq = 2;
     defReqs(String l) {
+      int respsPerSeq = 2;
       Map lado = {
         "E": [respsPerSeq, exercicios["Ex9"]["Esq"], true],
         "D": [respsPerSeq, exercicios["Ex9"]["Dir"], true],
