@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'CustomComponents/TelaBoasVindas/components.dart';
 
-class _TelaBoasVindasState extends State with SingleTickerProviderStateMixin {
+class _TelaBoasVindasState extends State<TelaBoasVindas>
+    with SingleTickerProviderStateMixin {
   TabController controller;
   @override
   void initState() {
@@ -28,13 +29,13 @@ class _TelaBoasVindasState extends State with SingleTickerProviderStateMixin {
       onWillPop: () {
         return showDialog(
           context: context,
-          builder: (context) {
+          builder: (pcontext) {
             return AlertDialog(
               title: Text("Tem certeza de que deseja sair?"),
               actions: [
                 FlatButton(
                   child: Text("Não"),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => Navigator.pop(pcontext),
                 ),
                 FlatButton(
                   child: Text("Sim"),
@@ -87,7 +88,7 @@ class _TelaBoasVindasState extends State with SingleTickerProviderStateMixin {
 }
 
 class TelaBoasVindas extends StatefulWidget {
-  State createState() {
+  State<TelaBoasVindas> createState() {
     return _TelaBoasVindasState();
   }
 }
