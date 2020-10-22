@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaLogin/components.dart';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:http/http.dart' as http;
-import 'package:sprintf/sprintf.dart';
 
 class TelaLogin extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -34,7 +33,6 @@ class TelaLogin extends StatelessWidget {
     }
 
     Future entrar() async {
-      /*
       //Formata os valores da TextField
       String cpf = cpfFormat(loginFields[0].text);
       String dtNasc = dtFormat(loginFields[1].text);
@@ -56,7 +54,7 @@ class TelaLogin extends StatelessWidget {
           HttpHeaders.contentTypeHeader: 'application/json',
         },
       );
-      print(existe.body);*/
+      print(existe.body);
       Navigator.push(
         context,
         MaterialPageRoute(builder: routes["boas-vindas"]),
@@ -79,7 +77,7 @@ class TelaLogin extends StatelessWidget {
             Spacer(flex: 1),
             Container(
               child: Text(
-                "developed by: H.A.W.Ga.M",
+                "desenvolvido por: H.A.W.Ga.M",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white),
               ),
