@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
-class ButtonTreinamento extends StatelessWidget {
-  final String texto;
-  final void Function() aoPressionar;
+class _SButtonTreinamento extends State<ButtonTreinamento> {
+  String texto;
+  void Function() aoPressionar;
+  bool ativado = true;
 
-  ButtonTreinamento(
-    this.texto,
-    this.aoPressionar,
-  );
+  @override
+  void initState() {
+    super.initState();
+    aoPressionar = widget._aoPressionar;
+    texto = widget._texto;
+  }
 
   Widget build(BuildContext context) {
     return Container(
       child: FlatButton(
-        onPressed: aoPressionar,
+        onPressed: (ativado) ? aoPressionar : null,
         child: Text(
           texto,
           style: TextStyle(
@@ -24,5 +27,16 @@ class ButtonTreinamento extends StatelessWidget {
         color: Colors.orange,
       ),
     );
+  }
+}
+
+class ButtonTreinamento extends StatefulWidget {
+  final String _texto;
+  final void Function() _aoPressionar;
+
+  ButtonTreinamento(this._texto, this._aoPressionar);
+
+  State<ButtonTreinamento> createState() {
+    return _SButtonTreinamento();
   }
 }
