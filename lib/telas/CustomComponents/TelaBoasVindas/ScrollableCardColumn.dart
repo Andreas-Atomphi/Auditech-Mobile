@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class ScrollableCardColumn extends StatelessWidget {
   final List<Widget> children;
   final double width, height;
+  final EdgeInsets  padding;
 
   ScrollableCardColumn({
     @required this.children,
     this.height = 100,
     this.width = 100,
+    this.padding
   });
 
   Widget build(BuildContext context) {
@@ -15,6 +17,7 @@ class ScrollableCardColumn extends StatelessWidget {
       width: width,
       height: height,
       child: Container(
+        padding:  padding,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(10),
