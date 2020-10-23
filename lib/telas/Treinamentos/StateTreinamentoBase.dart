@@ -11,30 +11,50 @@ import 'package:sprintf/sprintf.dart';
 
 import '../Telas.dart';
 
-// * Cria uma String no modelo de respostas da API
+// * Cria uma String no modelo de respostas para a API
 String gerarStringRespostas(int qtdRespostas) {
-  if (qtdRespostas == null) return "";
-  String resps = "";
-  for (int i = 0; i < qtdRespostas - 1; i++) {
-    resps += "%s|";
+  switch  (qtdRespostas)
+  {
+    case(null): return "";
+    break;
+    default:  if (qtdRespostas<=0)  return  "";
+    break;
   }
+  String resps = "";
+  //  * Será usado no futuro
+  String addString(String s)
+  {
+    String sub_resps;
+    for (int i = 0; i < qtdRespostas - 1; i++) {
+      sub_resps += s;
+    }
+  }
+
+  addString("%s|");
+
   return (resps + "%s");
 }
 
 //Concatena Lista com String
-List<String> concatListS(List<String> lista, String c) {
-  for (int i = 0; i < lista.length; i++) {
-    lista[i] += c;
+extension ListString  on  List<String>
+{
+  List<String> operator + (String texto) {
+    for (int i = 0; i < this.length; i++) {
+      this[i] += texto;
+    }
+    return this;
   }
-  return lista;
 }
 
-//Concatena String com List;
-List<String> concatSList(String c, List<String> lista) {
-  for (int i = 0; i < lista.length; i++) {
-    lista[i] = c + lista[i];
+//Concatena String com List
+extension StringList  on  List<String>
+{
+  List<String> operator + (List lista) {
+    for (int i = 0; i < lista.length; i++) {
+      lista[i] = this + lista[i];
+    }
+    return lista;
   }
-  return lista;
 }
 
 //Base de todas as outras telas
@@ -335,7 +355,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
   }
 
   //Auto-descritivo
-  void enviarRespostas() {
+  void enviarRespostas() async  {
     paraEnviar["respostaTreino"] = sprintf(respostasDadas, respostasDadasL);
     var jsonParaEnviar = json.encode(paraEnviar);
     print(jsonParaEnviar);
