@@ -4,83 +4,79 @@ import 'package:pie_chart/pie_chart.dart';
 import 'package:AuditechMobile/mainData.dart';
 import '../components.dart';
 
+
+//Adiciona uma função para um operador ^ na List<Map>
+extension ListMap on List<Map> {
+  //Adiciona junta a map passada como parâmetro e a as maps do objeto instanciado
+  List<Map> operator ^(Map<String, dynamic> hashMap) {
+    List<Map<String, dynamic>> lista=[];
+    for (int i = 0; i < this.length; i++) {
+      lista.add({
+        ...this[i],
+        ...hashMap,
+      });
+    }
+    return  lista;
+  }
+}
+
 class AbaEstatisticas extends StatelessWidget {
   Widget build(BuildContext context) {
     double graficoG = tamanhoRelativoL(500.0, context);
     double graficoP = tamanhoRelativoL(150.0, context);
 
-    List<Color> graf = [
+    List<Color> grafColor = [
       Color.fromRGBO(0, 229, 255, 1),
       Color.fromRGBO(255, 45, 13, 1),
       //Color.fromRGBO(255, 176, 13, 1),
       Colors.blueGrey[300]
     ];
 
+    Map<String, dynamic> graf = {
+      "w": graficoP,
+      "h": graficoP,
+      "c": grafColor,
+    };
+
     List<Map<String, dynamic>> graficosAnteriores = [
-      {
-        "w": graficoP,
-        "h": graficoP,
-        "d": <double>[7, 5, 2],
-        "c": graf,
-        "t": "Exercício 1"
-      },
-      {
-        "w": graficoP,
-        "h": graficoP,
-        "d": <double>[7, 3, 4],
-        "c": graf,
-        "t": "Exercício 2"
-      },
-      {
-        "w": graficoP,
-        "h": graficoP,
-        "d": <double>[5, 5, 4],
-        "c": graf,
-        "t": "Exercício 3"
-      },
-      {
-        "w": graficoP,
-        "h": graficoP,
-        "d": <double>[7, 4, 3],
-        "c": graf,
-        "t": "Exercício 4"
-      },
-      {
-        "w": graficoP,
-        "h": graficoP,
-        "d": <double>[7, 3, 4],
-        "c": graf,
-        "t": "Exercício 5"
-      },
-      {
-        "w": graficoP,
-        "h": graficoP,
-        "d": <double>[2, 7, 5],
-        "c": graf,
-        "t": "Exercício 6"
-      },
-      {
-        "w": graficoP,
-        "h": graficoP,
-        "d": <double>[2, 7, 5],
-        "c": graf,
-        "t": "Exercício 7"
-      },
-      {
-        "w": graficoP,
-        "h": graficoP,
-        "d": <double>[2, 7, 5],
-        "c": graf,
-        "t": "Exercício 8"
-      },
-      {
-        "w": graficoP,
-        "h": graficoP,
-        "d": <double>[2, 7, 5],
-        "c": graf,
-        "t": "Exercício 9"
-      },
-    ];
+          {
+            "d": <double>[7, 5, 2],
+            "t": "Exercício 1"
+          },
+          {
+            "d": <double>[7, 3, 4],
+            "t": "Exercício 2"
+          },
+          {
+            "d": <double>[5, 5, 4],
+            "t": "Exercício 3"
+          },
+          {
+            "d": <double>[7, 4, 3],
+            "t": "Exercício 4"
+          },
+          {
+            "d": <double>[7, 3, 4],
+            "t": "Exercício 5"
+          },
+          {
+            "d": <double>[2, 7, 5],
+            "t": "Exercício 6"
+          },
+          {
+            "d": <double>[2, 7, 5],
+            "t": "Exercício 7"
+          },
+          {
+            "d": <double>[2, 7, 5],
+            "t": "Exercício 8"
+          },
+          {
+            "d": <double>[2, 7, 5],
+            "t": "Exercício 9"
+          },
+        ] ^
+        graf;
 
     double space = 30;
     return SingleChildScrollView(
@@ -103,9 +99,9 @@ class AbaEstatisticas extends StatelessWidget {
             height: graficoG,
             child: PieChart(
               dataMap: {
-                "Progredindo": 5,
-                "Regredindo": 6,
-                "Estagnado": 3,
+                "Ganhando": 5,
+                "Perdendo": 6,
+                //"Parado": 3,
               },
               legendOptions: LegendOptions(
                 legendPosition: LegendPosition.top,
@@ -113,8 +109,8 @@ class AbaEstatisticas extends StatelessWidget {
                 legendTextStyle: TextStyle(color: Colors.white),
               ),
               colorList: [
-                graf[0],
-                graf[1],
+                grafColor[0],
+                grafColor[1],
                 Colors.deepOrangeAccent,
               ],
             ),
@@ -139,7 +135,7 @@ class AbaEstatisticas extends StatelessWidget {
                 legendPosition: LegendPosition.top,
                 legendTextStyle: TextStyle(color: Colors.white, fontSize: 15),
               ),
-              colorList: graf,
+              colorList: grafColor,
               chartRadius: 0,
             ),
           ),
