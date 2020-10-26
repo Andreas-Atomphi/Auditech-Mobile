@@ -2,8 +2,9 @@ import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'treinamentos.dart';
 
-class _STreinamento9 extends STreinamentoBase<Exercicio9> {
+class STreinamento9 extends STreinamentoBase<ExercicioCentral> {
   void iniciarExercicio() {
     definirRequisitos(1, "null", false);
   }
@@ -68,11 +69,5 @@ class _STreinamento9 extends STreinamentoBase<Exercicio9> {
         ),
       ),
     );
-  }
-}
-
-class Exercicio9 extends StatefulWidget {
-  STreinamentoBase<Exercicio9> createState() {
-    return _STreinamento9();
   }
 }

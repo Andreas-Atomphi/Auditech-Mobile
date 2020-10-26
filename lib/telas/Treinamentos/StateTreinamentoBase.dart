@@ -13,32 +13,27 @@ import '../Telas.dart';
 
 // * Cria uma String no modelo de respostas para a API
 String gerarStringRespostas(int qtdRespostas) {
-  switch  (qtdRespostas)
-  {
-    case(null): return "";
-    break;
-    default:  if (qtdRespostas<=0)  return  "";
-    break;
-  }
-  String resps = "";
-  //  * Será usado no futuro
-  String addString(String s)
-  {
-    String sub_resps;
-    for (int i = 0; i < qtdRespostas - 1; i++) {
-      sub_resps += s;
-    }
+  switch (qtdRespostas) {
+    case (null):
+      return "";
+      break;
+    default:
+      if (qtdRespostas <= 0) return "";
+      break;
   }
 
-  addString("%s|");
+  String resps = "";
+
+  for (int i = 0; i < qtdRespostas - 1; i++) {
+    resps += "%s";
+  }
 
   return (resps + "%s");
 }
 
 //Concatena Lista com String
-extension ListString  on  List<String>
-{
-  List<String> operator + (String texto) {
+extension ListString on List<String> {
+  List<String> operator +(String texto) {
     for (int i = 0; i < this.length; i++) {
       this[i] += texto;
     }
@@ -47,9 +42,8 @@ extension ListString  on  List<String>
 }
 
 //Concatena String com List
-extension StringList  on  List<String>
-{
-  List<String> operator + (List lista) {
+extension StringList on List<String> {
+  List<String> operator +(List lista) {
     for (int i = 0; i < lista.length; i++) {
       lista[i] = this + lista[i];
     }
@@ -355,7 +349,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
   }
 
   //Auto-descritivo
-  void enviarRespostas() async  {
+  void enviarRespostas() async {
     paraEnviar["respostaTreino"] = sprintf(respostasDadas, respostasDadasL);
     var jsonParaEnviar = json.encode(paraEnviar);
     print(jsonParaEnviar);

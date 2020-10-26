@@ -9,17 +9,28 @@ Color secondary =
 Color corDeDestaque =
     Color.fromRGBO(255, 152, 0, 1); // Variável para cor de destaque do app
 
-Map<String, Widget Function(BuildContext context)> routesExercicios = {
-  "treinamento-1": (context) => Exercicio1(),
-  "treinamento-2": (context) => Exercicio2(),
-  "treinamento-3": (context) => Exercicio3(),
-  "treinamento-4": (context) => Exercicio4(),
-  "treinamento-5": (context) => Exercicio5(),
-  "treinamento-6": (context) => Exercicio6(),
-  "treinamento-7": (context) => Exercicio7(),
-  "treinamento-8": (context) => Exercicio8(),
-  "treinamento-9": (context) => Exercicio9(),
-};
+extension MapAddAll on Map<String, Widget Function(BuildContext context)> {
+  Map<String, Widget Function(BuildContext context)> generate(
+    int length,
+    Map<String, Widget Function(BuildContext context)> Function(int i) index,
+  ) {
+    Map<String, Widget Function(BuildContext context)> toReturn = {};
+    for (int i = 1; i <= length; i++) {
+      var ind = index(i);
+      toReturn[ind.keys.single] = ind.values.single;
+    }
+    return toReturn;
+  }
+}
+
+Map<String, Widget Function(BuildContext context)> routesExercicios =
+    <String, Widget Function(BuildContext context)>{}.generate(
+  9,
+  (i) => {
+    "treinamento-$i": (context) => ExercicioCentral(i),
+  },
+);
+//  "treinamento-1": (context) => ExercicioCentral(1);
 
 Map<String, Widget Function(BuildContext context)> routes = {
   "principal": (context) => TelaLogin(),

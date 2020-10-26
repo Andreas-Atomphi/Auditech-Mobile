@@ -1,9 +1,9 @@
-import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
+import 'treinamentos.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 
-class _STreinamento5 extends STreinamentoBase<Exercicio5> {
+class STreinamento5 extends STreinamentoBase<ExercicioCentral> {
   List<dynamic> selecoes;
 
   @override
@@ -43,7 +43,7 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: stbAppBar(context, texto: "Exercicio 7"),
+        appBar: stbAppBar(context, texto: "Exercicio 5"),
         body: Stack(
           children: [
             if (sequencia == 0) jmpBtn(),
@@ -66,11 +66,5 @@ class _STreinamento5 extends STreinamentoBase<Exercicio5> {
         ),
       ),
     );
-  }
-}
-
-class Exercicio5 extends StatefulWidget {
-  STreinamentoBase<Exercicio5> createState() {
-    return _STreinamento5();
   }
 }

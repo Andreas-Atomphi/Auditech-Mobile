@@ -6,18 +6,16 @@ import 'package:path/path.dart';
 
 class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
   //Argumentos da clase
-  final String irpara;
-  final String appbartext;
+  String irpara;
+  String appbartext;
 
   //Chamando o construtor da classe
-  _TreinamentoInstrucoesState(
-      [this.appbartext, //texto da barra do app
-      this.irpara =
-          "treinamento-exemplo" //A tela que irá quando pressionar o botão de ir para exercício;
-      ]);
+  _TreinamentoInstrucoesState();
 
   @override
   Widget build(BuildContext context) {
+    irpara = widget.irpara;
+    appbartext = widget.appbartext;
     //Método que será chamado quando o botão voltar for pressionado
     _backPress() {
       Navigator.pop(context);
@@ -103,6 +101,7 @@ class TelaInstrucoesTreinamento extends StatefulWidget {
   ]);
 
   State<TelaInstrucoesTreinamento> createState() {
-    return _TreinamentoInstrucoesState(appbartext, irpara);
+    print(routesExercicios);
+    return _TreinamentoInstrucoesState();
   }
 }

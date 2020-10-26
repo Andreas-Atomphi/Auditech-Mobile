@@ -1,9 +1,9 @@
-import 'package:AuditechMobile/telas/Treinamentos/StateTreinamentoBase.dart';
+import 'treinamentos.dart';
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 
-class _STreinamento8 extends STreinamentoBase<Exercicio8> {
+class STreinamento8 extends STreinamentoBase<ExercicioCentral> {
   List<dynamic> selecoes;
 
   @override
@@ -65,11 +65,5 @@ class _STreinamento8 extends STreinamentoBase<Exercicio8> {
         ),
       ),
     );
-  }
-}
-
-class Exercicio8 extends StatefulWidget {
-  STreinamentoBase<Exercicio8> createState() {
-    return _STreinamento8();
   }
 }
