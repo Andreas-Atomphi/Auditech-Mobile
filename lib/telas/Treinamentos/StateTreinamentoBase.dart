@@ -119,14 +119,23 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     String path,
     bool play,
   ) async {
-    numRPS = nRPS;
-    sons = await listSounds(path);
-    respostasDadas = gerarStringRespostas(sons.length - 1);
-    respostasDadasL = List.generate(
-      sons.length - 1,
-      (i) => "",
-    );
-    if (play == true) playBack.play(sons[0]);
+    try {
+      numRPS = nRPS;
+      if (path != null) {
+        sons = await listSounds(path);
+        respostasDadas = gerarStringRespostas(sons.length - 1);
+        respostasDadasL = List.generate(
+          sons.length - 1,
+          (i) => "",
+        );
+        if (play == true) playBack.play(sons[0]);
+      } else {
+        if (play == true) throw Exception("Caminho inválido");
+      }
+    } catch (e) {
+      throw e;
+    }
+
     print("quantidades de som nesse exercícios: ${sons.length}");
   }
 

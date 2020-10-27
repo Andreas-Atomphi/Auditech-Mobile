@@ -6,7 +6,7 @@ import 'treinamentos.dart';
 
 class STreinamento9 extends STreinamentoBase<ExercicioCentral> {
   void iniciarExercicio() {
-    definirRequisitos(1, "null", false);
+    definirRequisitos(1, null, false);
   }
 
   @override
