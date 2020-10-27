@@ -1,15 +1,22 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'CustomComponents/TelaBoasVindas/components.dart';
 
 class _TelaBoasVindasState extends State<TelaBoasVindas>
     with SingleTickerProviderStateMixin {
   TabController controller;
+  int idFase = 1;
+  Map localFase;
   @override
   void initState() {
     super.initState();
+
     controller = TabController(length: 3, vsync: this);
   }
 
@@ -24,6 +31,25 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
     void sair() {
       Navigator.pop(context);
     }
+
+    Future<http.Response> getFase() async {
+      http.Response fase = await http.get(
+        "http://hawgamtech.somee.com/AuditechAPI/fases/$idFase",
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        },
+      );
+      return fase;
+    }
+
+    () async {
+      http.Response fase = await getFase();
+      localFase = {
+        "fase": fase,
+        "json": jsonDecode(fase.body),
+      };
+      print(localFase);
+    }();
 
     return WillPopScope(
       onWillPop: () {
