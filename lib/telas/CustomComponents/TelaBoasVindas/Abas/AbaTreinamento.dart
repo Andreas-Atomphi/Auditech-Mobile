@@ -17,19 +17,25 @@ class AbaTreinamento extends StatelessWidget {
     }
 
     List model = ["Exercício ", "treinamento-"];
-    List<Widget> buttons = [
+    List<ButtonTreinamento> buttons = [
       //Adiciona os componentes de forma dinâmica através das chaves de routesExercicios
       ...routesExercicios.keys.map(
         //Retorna ButtonTreinamento
-        (e) => ButtonTreinamento(
-          //Concatena model com o último dígito da chave (treinamento-n)
-          model[0] + e[e.length - 1],
-          //Adiciona o método para ButtonTreinamento
-          () => irParaTreino(
-            model[0] + e[e.length - 1],
-            e,
-          ),
-        ),
+        (e) {
+          //  Armazena os números dos treinos
+          String exercicio =
+              "${model[0]} ${int.parse(e.replaceAll(RegExp('[^0-9]'), ''))}";
+          //  Retorna um ButtonTreinamento
+          return ButtonTreinamento(
+            //Concatena model com o último dígito da chave (treinamento-n)
+            exercicio,
+            //Adiciona o método para ButtonTreinamento
+            () => irParaTreino(
+              exercicio,
+              e,
+            ),
+          );
+        },
       ),
     ];
 
@@ -39,7 +45,9 @@ class AbaTreinamento extends StatelessWidget {
       maxCrossAxisExtent: 200,
       crossAxisSpacing: space,
       mainAxisSpacing: space,
-      children: [...buttons],
+      children: [
+        ...buttons,
+      ],
     );
   }
 }
