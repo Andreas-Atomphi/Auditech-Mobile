@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/telas/Telas.dart';
+import 'package:http/http.dart' as http;
 
 Color backgroundColor = Color.fromARGB(255, 0, 90, 100);
 Brightness theme = Brightness.light;
@@ -54,4 +57,14 @@ double tamanhoRelativoL(double valor, BuildContext context) {
 double tamanhoRelativoA(double valor, BuildContext context) {
   double relativoATela = (MediaQuery.of(context).size.height - 30);
   return (relativoATela < valor) ? relativoATela : valor;
+}
+
+Future<http.Response> getFase(idFase) async {
+  http.Response fase = await http.get(
+    "http://hawgamtech.somee.com/AuditechAPI/fases/$idFase",
+    headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    },
+  );
+  return fase;
 }
