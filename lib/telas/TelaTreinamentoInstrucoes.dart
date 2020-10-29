@@ -2,20 +2,27 @@ import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
+
+import 'CustomComponents/TelaBoasVindas/components.dart';
 
 class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
   //Argumentos da clase
   String irpara;
   String appbartext;
+  Map fase;
 
   //Chamando o construtor da classe
   _TreinamentoInstrucoesState();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     irpara = widget.irpara;
     appbartext = widget.appbartext;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     //Método que será chamado quando o botão voltar for pressionado
     _backPress() {
       Navigator.pop(context);
@@ -48,17 +55,23 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
                 flex: 1,
               ),
               InstrucControll(
-                  CardInstruct(
-                    RichText(
-                      text: WidgetSpan(
-                        child: RichText(
-                          text: TextSpan(
-                            text: "Descrição do exercício.",
-                            style: FormatoTexto.title(weight: FontWeight.bold),
+                  ScrollableCardColumn(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    children: [
+                      RichText(
+                        text: WidgetSpan(
+                          child: RichText(
+                            text: TextSpan(
+                              text:
+                                  "${widget.fase['exercicio']['descricaoExercicio']}",
+                              style:
+                                  FormatoTexto.corpo(weight: FontWeight.bold),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                   corDeDestaque,
                   secondary,
@@ -93,15 +106,16 @@ class TelaInstrucoesTreinamento extends StatefulWidget {
   //Argumentos da classe
   final String appbartext;
   final String irpara;
+  final Map fase;
 
   //Chama o construtor da classe
   TelaInstrucoesTreinamento([
     this.appbartext = "Exemplo", //Texto da Appbar
     this.irpara = "treinamento-exemplo", //define qual tela que deve ir
+    this.fase,
   ]);
 
   State<TelaInstrucoesTreinamento> createState() {
-    print(routesExercicios);
     return _TreinamentoInstrucoesState();
   }
 }
