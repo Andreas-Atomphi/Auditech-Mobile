@@ -1,24 +1,33 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'CustomComponents/TelaBoasVindas/components.dart';
 
 class _TelaBoasVindasState extends State<TelaBoasVindas>
     with SingleTickerProviderStateMixin {
   TabController controller;
-  int idFase = 5;
-  Map localFase = {};
+  int idFase = 1;
+  Widget _wait = Container(
+    width: double.infinity,
+    height: double.infinity,
+    decoration: BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0.5)),
+    child: SpinKitRing(
+      color: Colors.white,
+      size: 50.0,
+    ),
+  );
+  Map<String, http.Response> localFase = {};
   @override
   void initState() {
     super.initState();
     () async {
-      Future<http.Response> faseFuture = getFase(idFase);
       http.Response fase;
+      http.Response exercicio;
+      Future<http.Response> faseFuture = getFase(idFase);
       faseFuture.then(
         (value) {
           fase = value;
@@ -29,13 +38,30 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
         () {
           setState(
             () {
-              localFase = {
-                "fase": fase,
-                "json": jsonDecode(fase.body),
-              };
-              print(localFase);
+              localFase['fase'] = fase;
             },
           );
+          print(localFase);
+        },
+      );
+
+      Future<http.Response> exercicioFuture =
+          getExercicio(jsonDecode(fase.body)['exercicioIdExercicio']);
+      exercicioFuture.then(
+        (value) {
+          exercicio = value;
+        },
+      );
+
+      await exercicioFuture.whenComplete(
+        () {
+          setState(
+            () {
+              localFase['exercicio'] = exercicio;
+              _wait = null;
+            },
+          );
+          print(localFase);
         },
       );
     }();
@@ -87,30 +113,37 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
               {"texto": "Sair", "metodo": sair},
             ],
           ),
-          appBar: CAppBar("Auditech",
-              tab: TabBar(
-                controller: controller,
-                tabs: [
-                  Tab(
-                    text: "Início",
-                  ),
-                  Tab(
-                    text: "Treinamentos",
-                  ),
-                  Tab(
-                    text: "Estatísticas",
-                  ),
-                ],
-              )),
-          body: TabBarView(
-            controller: controller,
+          appBar: CAppBar(
+            "Auditech",
+            tab: (_wait == null)
+                ? TabBar(
+                    controller: controller,
+                    tabs: [
+                      Tab(
+                        text: "Início",
+                      ),
+                      Tab(
+                        text: "Treinamentos",
+                      ),
+                      Tab(
+                        text: "Estatísticas",
+                      ),
+                    ],
+                  )
+                : null,
+          ),
+          body: Stack(
             children: [
-              AbaBoasVindas(),
-              AbaTreinamento(
-                fase: (localFase['json'] != null) ? localFase['json'] : null,
+              TabBarView(
+                controller: controller,
+                children: [
+                  AbaBoasVindas(),
+                  AbaTreinamento(fase: localFase),
+                  AbaEstatisticas(),
+                ],
               ),
-              AbaEstatisticas(),
-            ],
+              _wait,
+            ]..removeWhere((element) => element == null),
           ),
         ),
       ),
