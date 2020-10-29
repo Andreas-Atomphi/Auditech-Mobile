@@ -1,21 +1,28 @@
+import 'dart:convert';
 import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:AuditechMobile/mainData.dart';
 import '../components.dart';
 
 class AbaTreinamento extends StatelessWidget {
-  final Map fase;
+  final Map<String, http.Response> fase;
 
   AbaTreinamento({this.fase});
 
   Widget build(BuildContext context) {
-    void irParaTreino(String appbartext, [String numtreino = "exemplo-tr"]) {
+    Map<String, Map<String, dynamic>> faseJson = {
+      "fase": jsonDecode(fase['fase'].body),
+      "exercicio": jsonDecode(fase['exercicio'].body),
+    };
+    irParaTreino(String appbartext,
+        [String numtreino = "exemplo-tr", jsonFase]) async {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) =>
-              TelaInstrucoesTreinamento(appbartext, numtreino),
+              TelaInstrucoesTreinamento(appbartext, numtreino, jsonFase),
         ),
       );
     }
@@ -23,10 +30,12 @@ class AbaTreinamento extends StatelessWidget {
     List model = ["Exercício ", "treinamento-"];
     DateFormat dataPadrao = DateFormat("dd/MM/yyyy HH:mm:ss");
     Map<String, DateTime> data = {
-      'inicio': dataPadrao.parse(fase['dataInicio']),
-      'fim': dataPadrao.parse(fase['dataFinal']),
+      'inicio': dataPadrao.parse(faseJson['fase']['dataInicio']),
+      'fim': dataPadrao.parse(faseJson['fase']['dataFinal']),
       'atual': DateTime.now(),
     };
+
+    print(faseJson["fase"]['exercicioIdExercicio']);
 
     print(data);
     print(
@@ -55,9 +64,10 @@ class AbaTreinamento extends StatelessWidget {
             () => irParaTreino(
               exercicio,
               e,
+              faseJson,
             ),
             ((fase != null) &&
-                (fase['exercicioIdExercicio'] == exercicioNum) &&
+                (faseJson['fase']['exercicioIdExercicio'] == exercicioNum) &&
                 (data['atual'].compareTo(
                           data['inicio'],
                         ) >=
