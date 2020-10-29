@@ -68,3 +68,13 @@ Future<http.Response> getFase(idFase) async {
   );
   return fase;
 }
+
+Future<http.Response> getExercicio(idExercicio) async {
+  http.Response fase = await http.get(
+    "http://hawgamtech.somee.com/AuditechAPI/exercicios/$idExercicio",
+    headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    },
+  );
+  return fase;
+}
