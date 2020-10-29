@@ -14,7 +14,7 @@ class InstrucControll extends StatelessWidget {
       child: Column(
         children: [
           visor,
-          Row(
+          /*Row(
             children: [
               Spacer(
                 flex: 1,
@@ -48,7 +48,7 @@ class InstrucControll extends StatelessWidget {
                 flex: 1,
               ),
             ],
-          ),
+          ),*/
         ],
       ),
     );
