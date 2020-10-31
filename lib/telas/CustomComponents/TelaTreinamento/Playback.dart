@@ -10,10 +10,8 @@ final Map<String, dynamic> exercicios = const <String, dynamic>{
   "Ex6": "Exercicio06/",
   "Ex7": "Exercicio07/",
   "Ex8": "Exercicio08/",
-  "Ex9": {
-    "Dir": "Exercicio09/Direita/",
-    "Esq": "Exercicio09/Esquerda/",
-  },
+  "Ex9": "Exercicio09/",
+  "Ex10": "Exercicio10/",
 }; //Exercícios
 
 class Playback {
