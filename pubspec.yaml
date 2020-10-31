@@ -37,6 +37,7 @@ dependencies:
   sprintf: "^4.0.0"
   path_provider: ^1.6.18
   flutter_spinkit: "^4.1.2"
+  reflectable: ^2.2.8
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -63,10 +64,11 @@ flutter:
       - assets/audios/Exercicios/Exercicio06/
       - assets/audios/Exercicios/Exercicio07/
       - assets/audios/Exercicios/Exercicio08/
-      - assets/audios/Exercicios/Exercicio09/Direita/
-      - assets/audios/Exercicios/Exercicio09/Esquerda/
+      - assets/audios/Exercicios/Exercicio09/
+      - assets/audios/Exercicios/Exercicio10/
       - assets/strings/
       - assets/fonts/
+      - assets/fonts/OpenSans/
   fonts:
     - family: OpenSans
       fonts:
