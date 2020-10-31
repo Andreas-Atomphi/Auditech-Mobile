@@ -24,6 +24,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
   @override
   void initState() {
     super.initState();
+    //  Carrega os dados do usuário
     () async {
       http.Response fase;
       http.Response exercicio;
@@ -80,6 +81,11 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
       Navigator.pop(context);
     }
 
+    /*
+    int idExercicio = 1;
+    String cla = 'STreinamento$idExercicio';
+    print();
+    */
     return WillPopScope(
       onWillPop: () {
         return showDialog(
