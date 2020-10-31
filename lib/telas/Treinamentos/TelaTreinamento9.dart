@@ -6,25 +6,11 @@ import 'treinamentos.dart';
 
 class STreinamento9 extends STreinamentoBase<ExercicioCentral> {
   void iniciarExercicio() {
-    definirRequisitos(1, null, false);
+    definirRequisitos(2, exercicios["Ex9"], true);
   }
 
   @override
   Widget build(BuildContext context) {
-    defReqs(String l) {
-      int respsPerSeq = 2;
-      Map lado = {
-        "E": [respsPerSeq, exercicios["Ex9"]["Esq"], true],
-        "D": [respsPerSeq, exercicios["Ex9"]["Dir"], true],
-      };
-      setState(
-        () {
-          definirRequisitos(lado[l][0], lado[l][1], lado[l][2]);
-          instanciarPlayback();
-        },
-      );
-    }
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -57,14 +43,6 @@ class STreinamento9 extends STreinamentoBase<ExercicioCentral> {
               ],
             ),
             if (sequencia == 0) jmpBtn(),
-
-            //Deixa a tela escura com opções de escolha
-            if (sequencia == 0 && playBack.playing == false)
-              EscolherLado(
-                aoPressionarE: () => defReqs("E"),
-                aoPressionarD: () => defReqs("D"),
-                aviso: textInstruct("Escolha o lado que você deseja exercitar"),
-              ),
           ],
         ),
       ),
