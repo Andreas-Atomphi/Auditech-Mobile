@@ -7,3 +7,4 @@ export 'TelaTreinamento7.dart';
 export 'TelaTreinamento6.dart';
 export 'TelaTreinamento8.dart';
 export 'TelaTreinamento9.dart';
+export 'TelaTreinamento10.dart';
