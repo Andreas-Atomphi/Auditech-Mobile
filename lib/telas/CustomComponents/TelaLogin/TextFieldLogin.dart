@@ -10,12 +10,12 @@ class TextFieldLogin extends StatelessWidget {
   final myController = TextEditingController();
   final String dica;
   final bool obscure;
-  TextField textfield;
   final TipoEntrada tipo;
 
   TextFieldLogin(this.dica, this.obscure, this.tipo);
 
   Widget build(BuildContext context) {
+    TextField textfield;
     textfield = TextField(
       style: TextStyle(color: Colors.black),
       controller: myController,

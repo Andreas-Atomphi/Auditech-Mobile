@@ -10,7 +10,7 @@ import 'CustomComponents/TelaBoasVindas/components.dart';
 class _TelaBoasVindasState extends State<TelaBoasVindas>
     with SingleTickerProviderStateMixin {
   TabController controller;
-  int idFase = 1;
+  int idFase = 3;
   Widget _wait = Container(
     width: double.infinity,
     height: double.infinity,

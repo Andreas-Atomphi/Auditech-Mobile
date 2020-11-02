@@ -6,9 +6,26 @@ import 'package:flutter/material.dart';
 import 'package:AuditechMobile/telas/CustomComponents/TelaLogin/components.dart';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TelaLogin extends StatelessWidget {
   Widget build(BuildContext context) {
+    () async {
+      SharedPreferences dados = await SharedPreferences.getInstance();
+      if (dados.containsKey('firstAccess'))
+        dados.setBool('firstAccess', false);
+      else {
+        if (dados.containsKey('swq')) if (dados.containsKey('zhn')) {
+          try {
+            final result =
+                await InternetAddress.lookup('http://hawgamtech.somee.com/');
+            if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {}
+          } on SocketException catch (_) {
+            print('not connected');
+          }
+        }
+      }
+    }();
     List<TextFieldLogin> loginFields = [
       TextFieldLogin("CPF", false, TipoEntrada.CPF),
       TextFieldLogin("Data de Aniversário", false, TipoEntrada.DT),
@@ -32,10 +49,10 @@ class TelaLogin extends StatelessWidget {
       return "$one/$two/$three 00:00:00";
     }
 
-    Future entrar() async {
+    Future entrar(log, snh) async {
       //Formata os valores da TextField
-      String cpf = cpfFormat(loginFields[0].text);
-      String dtNasc = dtFormat(loginFields[1].text);
+      String cpf = cpfFormat(log);
+      String dtNasc = dtFormat(snh);
 
       const Map<String, String> corpo = <String, String>{
         "cpf": "123.456.789-00",
@@ -44,17 +61,26 @@ class TelaLogin extends StatelessWidget {
 
       //Define a url e corpo para enviar
       final Uri auditechAPI = Uri.parse(
-          "http://hawgamtech.somee.com/AuditechAPI/usuarios/ValidarUsuario");
-      final uri = auditechAPI.replace(queryParameters: corpo);
-
+        "http://hawgamtech.somee.com/AuditechAPI/usuarios/ValidarUsuario",
+      );
+      /*
+      HttpClient comunicacao = HttpClient();
+      HttpClientRequest apiRequest = await comunicacao.getUrl(auditechAPI);
+      apiRequest.add(utf8.encode(jsonEncode(corpo)));
+      HttpClientResponse apiResp = await apiRequest.close();
+      var reply = await apiResp.transform(utf8.decoder).join();
+      comunicacao.close();
+      print(reply);
+      */
       //Checa se existe
       http.Response existe = await http.get(
-        uri,
+        auditechAPI,
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
         },
       );
-      print(existe.body);
+      print(existe);
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: routes["boas-vindas"]),
@@ -72,7 +98,11 @@ class TelaLogin extends StatelessWidget {
             Spacer(flex: 1),
             loginFields[1],
             Spacer(flex: 1),
-            ButtonLogin("Entrar", () => entrar(), false),
+            ButtonLogin(
+                "Entrar",
+                () => entrar(loginFields[0].myController.text,
+                    loginFields[1].myController.text),
+                false),
             ButtonLogin("Registrar-se", () {}, true),
             Spacer(flex: 1),
             Container(
