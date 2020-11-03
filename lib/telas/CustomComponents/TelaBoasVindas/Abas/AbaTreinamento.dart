@@ -6,30 +6,20 @@ import 'package:intl/intl.dart';
 import 'package:AuditechMobile/mainData.dart';
 import '../components.dart';
 
-class AbaTreinamento extends StatelessWidget {
-  final Map<String, http.Response> fase;
-
-  AbaTreinamento({this.fase});
-
-  Widget build(BuildContext context) {
-    Map<String, Map<String, dynamic>> faseJson = {
+class _SAbaTreinamento extends State<AbaTreinamento> {
+  Map<String, http.Response> fase;
+  Map<String, Map<String, dynamic>> faseJson;
+  Map<String, DateTime> data;
+  @override
+  void initState() {
+    super.initState();
+    fase = widget.fase;
+    faseJson = {
       "fase": jsonDecode(fase['fase'].body),
       "exercicio": jsonDecode(fase['exercicio'].body),
     };
-    irParaTreino(String appbartext,
-        [String numtreino = "exemplo-tr", jsonFase]) async {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              TelaInstrucoesTreinamento(appbartext, numtreino, jsonFase),
-        ),
-      );
-    }
-
-    List model = ["Exercício ", "treinamento-"];
     DateFormat dataPadrao = DateFormat("dd/MM/yyyy HH:mm:ss");
-    Map<String, DateTime> data = {
+    data = {
       'inicio': dataPadrao.parse(faseJson['fase']['dataInicio']),
       'fim': dataPadrao.parse(faseJson['fase']['dataFinal']),
       'atual': DateTime.now(),
@@ -48,6 +38,21 @@ class AbaTreinamento extends StatelessWidget {
         data['fim'],
       ),
     );
+  }
+
+  Widget build(BuildContext context) {
+    irParaTreino(String appbartext,
+        [String numtreino = "exemplo-tr", jsonFase]) async {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              TelaInstrucoesTreinamento(appbartext, numtreino, jsonFase),
+        ),
+      );
+    }
+
+    List model = ["Exercício ", "treinamento-"];
     List<ButtonTreinamento> buttons = [
       //Adiciona os componentes de forma dinâmica através das chaves de routesExercicios
       ...routesExercicios.keys.map(
@@ -87,9 +92,18 @@ class AbaTreinamento extends StatelessWidget {
       maxCrossAxisExtent: 200,
       crossAxisSpacing: space,
       mainAxisSpacing: space,
-      children: [
-        ...buttons,
-      ],
+      scrollDirection: Axis.vertical,
+      children: buttons,
     );
+  }
+}
+
+class AbaTreinamento extends StatefulWidget {
+  final Map<String, http.Response> fase;
+
+  AbaTreinamento({this.fase});
+
+  State<AbaTreinamento> createState() {
+    return _SAbaTreinamento();
   }
 }
