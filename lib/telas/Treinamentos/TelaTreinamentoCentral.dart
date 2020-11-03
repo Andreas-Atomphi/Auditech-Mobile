@@ -1,9 +1,7 @@
-import 'dart:convert';
+library tela_treinamento_central;
 
 import 'package:flutter/material.dart';
-import 'package:AuditechMobile/mainData.dart';
 import 'treinamentos.dart';
-import 'dart:collection';
 
 class ExercicioCentral extends StatefulWidget {
   final int idExercicio;
@@ -19,6 +17,7 @@ class ExercicioCentral extends StatefulWidget {
       STreinamento7(),
       STreinamento8(),
       STreinamento9(),
+      STreinamento10(),
     ][idExercicio - 1];
   }
 }
