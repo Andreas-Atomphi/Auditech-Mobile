@@ -28,7 +28,7 @@ extension MapAddAll on Map<String, Widget Function(BuildContext context)> {
 
 Map<String, Widget Function(BuildContext context)> routesExercicios =
     <String, Widget Function(BuildContext context)>{}.generate(
-  9,
+  10,
   (i) => {
     "treinamento-$i": (context) => ExercicioCentral(i),
   },
