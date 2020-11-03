@@ -4,8 +4,8 @@ import 'package:audioplayers/audioplayers.dart';
 final Map<String, dynamic> exercicios = const <String, dynamic>{
   "Ex1": "Exercicio01/",
   "Ex2": "Exercicio02/",
-  "Ex3": "Exercicio02/",
-  "Ex4": "Exercicio02/",
+  "Ex3": "Exercicio03/",
+  "Ex4": "Exercicio04/",
   "Ex5": "Exercicio05/",
   "Ex6": "Exercicio06/",
   "Ex7": "Exercicio07/",
