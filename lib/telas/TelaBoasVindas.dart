@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'package:AuditechMobile/mainData.dart';
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
-import 'package:AuditechMobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
-import 'package:reflectable/reflectable.dart';
 import 'CustomComponents/TelaBoasVindas/components.dart';
 
 class _TelaBoasVindasState extends State<TelaBoasVindas>
