@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:AuditechMobile/telas/Telas.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 Color backgroundColor = Color.fromARGB(255, 0, 90, 100);
@@ -77,4 +78,44 @@ Future<http.Response> getExercicio(idExercicio) async {
     },
   );
   return fase;
+}
+
+mixin PortraitModeMixin on StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    _portraitModeOnly();
+    return null;
+  }
+}
+
+/// Força o modo Retrato
+mixin PortraitStatefulModeMixin<T extends StatefulWidget> on State<T> {
+  @override
+  Widget build(BuildContext context) {
+    _portraitModeOnly();
+    return null;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _enableRotation();
+  }
+}
+
+/// blocks rotation; sets orientation to: portrait
+void _portraitModeOnly() {
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+}
+
+void _enableRotation() {
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ]);
 }
