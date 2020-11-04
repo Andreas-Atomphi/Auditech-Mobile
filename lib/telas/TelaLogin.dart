@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
@@ -12,9 +11,10 @@ class TelaLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     () async {
       SharedPreferences dados = await SharedPreferences.getInstance();
-      if (dados.containsKey('firstAccess'))
+      if (!dados.containsKey('firstAccess'))
         dados.setBool('firstAccess', false);
       else {
+        print("checa os dados");
         if (dados.containsKey('swq')) if (dados.containsKey('zhn')) {
           try {
             final result =
@@ -26,10 +26,6 @@ class TelaLogin extends StatelessWidget {
         }
       }
     }();
-    List<TextFieldLogin> loginFields = [
-      TextFieldLogin("CPF", false, TipoEntrada.CPF),
-      TextFieldLogin("Data de Aniversário", false, TipoEntrada.DT),
-    ];
 
     String cpfFormat(String str) {
       if (str.length < 11) return null;
@@ -79,7 +75,7 @@ class TelaLogin extends StatelessWidget {
           HttpHeaders.contentTypeHeader: 'application/json',
         },
       );
-      print(existe);
+      print(existe.body);
 
       Navigator.push(
         context,
@@ -87,31 +83,33 @@ class TelaLogin extends StatelessWidget {
       );
     }
 
+    FormLogin form = FormLogin(
+      actionWhenSubmit: (String log, String snh) {
+        entrar(log, snh);
+      },
+    );
+
+    List<Widget> defaultForm = form.defaultLogin;
+
     return MaterialApp(
       home: Scaffold(
         appBar: CAppBar("Login"),
         backgroundColor: backgroundColor,
-        body: FormLogin(
-          [
-            Spacer(flex: 8),
-            loginFields[0],
-            Spacer(flex: 1),
-            loginFields[1],
-            Spacer(flex: 1),
-            ButtonLogin(
-                "Entrar",
-                () => entrar(loginFields[0].myController.text,
-                    loginFields[1].myController.text),
-                false),
-            ButtonLogin("Registrar-se", () {}, true),
-            Spacer(flex: 1),
+        body: Stack(
+          children: [
+            form.setMyComponents(
+              [
+                Spacer(flex: 12),
+                ...defaultForm,
+              ],
+            ),
             Container(
               child: Text(
                 "desenvolvido por: H.A.W.Ga.M",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white),
               ),
-              alignment: Alignment(-0.9, 1),
+              alignment: Alignment(-0.95, 0.99),
             )
           ],
         ),
