@@ -1,21 +1,19 @@
 import 'package:AuditechMobile/mainData.dart';
 import 'package:flutter/material.dart';
 
-class _SButtonTreinamento extends State<ButtonTreinamento> {
-  String texto;
-  void Function() aoPressionar;
-  bool _ativado;
+class ButtonTreinamento extends StatelessWidget {
+  final String texto;
+  final void Function() aoPressionar;
+  final bool _ativado;
 
-  @override
-  void initState() {
-    super.initState();
-    aoPressionar = widget._aoPressionar;
-    texto = widget._texto;
-    _ativado = widget._ativado;
+  ButtonTreinamento(this.texto, this.aoPressionar, this._ativado);
+
+  ButtonTreinamento ativar(bool a) {
+    return ButtonTreinamento(texto, aoPressionar, true);
   }
 
-  set ativado(bool a) {
-    _ativado = a;
+  ButtonTreinamento desativar(bool a) {
+    return ButtonTreinamento(texto, aoPressionar, false);
   }
 
   Widget build(BuildContext context) {
@@ -35,33 +33,5 @@ class _SButtonTreinamento extends State<ButtonTreinamento> {
         color: (_ativado && aoPressionar != null) ? corDeDestaque : secondary,
       ),
     );
-  }
-}
-
-class ButtonTreinamento extends StatefulWidget {
-  final String _texto;
-  final void Function() _aoPressionar;
-  final bool _ativado;
-  ButtonTreinamento(
-    this._texto,
-    this._aoPressionar, [
-    this._ativado = false,
-  ]);
-  final _state = _SButtonTreinamento();
-
-  State<ButtonTreinamento> createState() {
-    return _state;
-  }
-
-  void ativar() {
-    _state.ativado = true;
-  }
-
-  void desativar() {
-    _state.ativado = false;
-  }
-
-  bool get estaAtivado {
-    return _ativado;
   }
 }
