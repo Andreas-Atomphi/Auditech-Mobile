@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:AuditechMobile/mainData.dart';
 
 class InstrucControll extends StatelessWidget {
   final Widget visor;
