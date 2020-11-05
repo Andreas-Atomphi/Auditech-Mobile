@@ -1,6 +1,6 @@
-import 'package:AuditechMobile/mainData.dart';
-import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
-import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'package:auditech_mobile/mainData.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
+import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:flutter/material.dart';
 
 import 'CustomComponents/TelaBoasVindas/components.dart';

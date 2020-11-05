@@ -10,8 +10,16 @@ class TextFieldLogin extends StatelessWidget {
   final String dica;
   final bool obscure;
   final TipoEntrada tipo;
+  final BorderRadius borderRadius;
 
-  TextFieldLogin(this.dica, this.obscure, this.tipo);
+  TextFieldLogin(
+    this.dica,
+    this.obscure,
+    this.tipo, {
+    this.borderRadius = const BorderRadius.all(
+      Radius.circular(5),
+    ),
+  });
 
   Widget build(BuildContext context) {
     TextField textfield;
@@ -19,7 +27,9 @@ class TextFieldLogin extends StatelessWidget {
       style: TextStyle(color: Colors.black),
       controller: myController,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(2)),
+        border: OutlineInputBorder(
+          borderRadius: borderRadius,
+        ),
         fillColor: Colors.white,
         filled: true,
         hintText: dica,
@@ -29,11 +39,9 @@ class TextFieldLogin extends StatelessWidget {
       ),
       obscureText: obscure,
     );
-    return Center(
-      child: Container(
-        child: textfield,
-        width: (MediaQuery.of(context).size.width / 100) * 65,
-      ),
+    return Container(
+      child: textfield,
+      width: MediaQuery.of(context).size.width * 0.8,
     );
   }
 

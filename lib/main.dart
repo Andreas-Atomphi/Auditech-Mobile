@@ -1,4 +1,4 @@
-import 'package:AuditechMobile/telas/TelaLogin.dart';
+import 'package:auditech_mobile/telas/TelaLogin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'mainData.dart';

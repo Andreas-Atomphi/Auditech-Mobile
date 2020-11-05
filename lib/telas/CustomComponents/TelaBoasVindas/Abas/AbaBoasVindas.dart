@@ -1,4 +1,4 @@
-import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:flutter/material.dart';
 
 import '../components.dart';

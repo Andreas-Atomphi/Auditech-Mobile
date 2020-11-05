@@ -10,14 +10,29 @@ class FormLogin extends StatelessWidget {
 
   List<Widget> get defaultLogin {
     List<TextFieldLogin> loginFields = [
-      TextFieldLogin("CPF", false, TipoEntrada.CPF),
-      TextFieldLogin("Data de Aniversário", true, TipoEntrada.DT),
+      TextFieldLogin(
+        "CPF",
+        false,
+        TipoEntrada.CPF,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+      ),
+      TextFieldLogin(
+        "Data de Aniversário",
+        true,
+        TipoEntrada.DT,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        ),
+      ),
     ];
     return [
       loginFields[0],
-      Spacer(flex: 1),
       loginFields[1],
-      Spacer(flex: 1),
+      Spacer(flex: 2),
       ButtonLogin(
           "Entrar",
           () => actionWhenSubmit(

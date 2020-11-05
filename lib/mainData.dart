@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:AuditechMobile/telas/Telas.dart';
+import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 

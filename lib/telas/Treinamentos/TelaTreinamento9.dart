@@ -1,7 +1,7 @@
-import 'package:AuditechMobile/telas/Telas.dart';
+import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
-import 'package:AuditechMobile/mainData.dart';
-import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'package:auditech_mobile/mainData.dart';
+import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'treinamentos.dart';
 
 class STreinamento9 extends STreinamentoBase<ExercicioCentral> {

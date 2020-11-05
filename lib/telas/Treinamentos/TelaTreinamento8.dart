@@ -1,7 +1,7 @@
 import 'treinamentos.dart';
 import 'package:flutter/material.dart';
-import 'package:AuditechMobile/mainData.dart';
-import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'package:auditech_mobile/mainData.dart';
+import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/components.dart';
 
 class STreinamento8 extends STreinamentoBase<ExercicioCentral> {
   List<dynamic> selecoes;

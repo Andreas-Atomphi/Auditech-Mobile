@@ -1,4 +1,4 @@
-import 'package:AuditechMobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'package:flutter/material.dart';
 
 class EscolherLado extends Container {

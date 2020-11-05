@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:AuditechMobile/telas/Telas.dart';
+import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:AuditechMobile/mainData.dart';
+import 'package:auditech_mobile/mainData.dart';
 import '../components.dart';
 
 class _SAbaTreinamento extends State<AbaTreinamento> {
@@ -72,15 +72,17 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
               faseJson,
             ),
             ((fase != null) &&
-                (faseJson['fase']['exercicioIdExercicio'] == exercicioNum) &&
-                (data['atual'].compareTo(
-                          data['inicio'],
-                        ) >=
-                        0 &&
-                    data['atual'].compareTo(
-                          data['fim'],
-                        ) <=
-                        0)),
+                    (faseJson['fase']['exercicioIdExercicio'] ==
+                        exercicioNum) &&
+                    (data['atual'].compareTo(
+                              data['inicio'],
+                            ) >=
+                            0 &&
+                        data['atual'].compareTo(
+                              data['fim'],
+                            ) <=
+                            0)) ||
+                true,
           );
         },
       ),

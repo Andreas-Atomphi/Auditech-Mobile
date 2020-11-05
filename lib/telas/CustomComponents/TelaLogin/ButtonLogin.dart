@@ -12,10 +12,11 @@ class ButtonLogin extends StatelessWidget {
         ? Align(
             child: Container(
               child: FlatButton(
+                hoverColor: Colors.transparent,
                 child: Text(
                   texto,
                   style: TextStyle(
-                    color: Colors.lightBlue[600],
+                    color: Colors.lightBlue[300],
                     decoration: TextDecoration.underline,
                   ),
                 ),
@@ -26,6 +27,7 @@ class ButtonLogin extends StatelessWidget {
         : Align(
             child: Container(
               child: RaisedButton(
+                padding: EdgeInsets.all(12.5),
                 onPressed: aoPressionar,
                 child: Text(
                   texto,
@@ -33,7 +35,7 @@ class ButtonLogin extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                color: Colors.lightBlue[600],
+                color: Colors.lightBlue[300],
               ),
             ),
           );

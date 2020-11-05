@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:AuditechMobile/mainData.dart';
-import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
+import 'package:auditech_mobile/mainData.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -10,7 +10,7 @@ import 'CustomComponents/TelaBoasVindas/components.dart';
 class _TelaBoasVindasState extends State<TelaBoasVindas>
     with SingleTickerProviderStateMixin {
   TabController controller;
-  int idFase = 3;
+  int idFase = 2;
   Widget _wait = Container(
     width: double.infinity,
     height: double.infinity,

@@ -1,22 +1,21 @@
 //import 'package:fl_animated_linechart/common/dates.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'package:AuditechMobile/mainData.dart';
+import 'package:auditech_mobile/mainData.dart';
 import '../components.dart';
-
 
 //Adiciona uma função para um operador ^ na List<Map>
 extension ListMap on List<Map> {
   //Adiciona junta a map passada como parâmetro e a as maps do objeto instanciado
   List<Map> operator ^(Map<String, dynamic> hashMap) {
-    List<Map<String, dynamic>> lista=[];
+    List<Map<String, dynamic>> lista = [];
     for (int i = 0; i < this.length; i++) {
       lista.add({
         ...this[i],
         ...hashMap,
       });
     }
-    return  lista;
+    return lista;
   }
 }
 

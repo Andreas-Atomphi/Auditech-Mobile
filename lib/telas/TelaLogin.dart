@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:AuditechMobile/telas/CustomComponents/Global/globalComponents.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:flutter/material.dart';
-import 'package:AuditechMobile/telas/CustomComponents/TelaLogin/components.dart';
-import 'package:AuditechMobile/mainData.dart';
+import 'package:auditech_mobile/telas/CustomComponents/TelaLogin/components.dart';
+import 'package:auditech_mobile/mainData.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -56,7 +56,7 @@ class TelaLogin extends StatelessWidget {
       };
 
       //Define a url e corpo para enviar
-      final Uri auditechAPI = Uri.parse(
+      /*final Uri auditechAPI = Uri.parse(
         "http://hawgamtech.somee.com/AuditechAPI/usuarios/ValidarUsuario",
       );
       /*
@@ -75,7 +75,7 @@ class TelaLogin extends StatelessWidget {
           HttpHeaders.contentTypeHeader: 'application/json',
         },
       );
-      print(existe.body);
+      print(existe.body);*/
 
       Navigator.push(
         context,
@@ -91,17 +91,39 @@ class TelaLogin extends StatelessWidget {
 
     List<Widget> defaultForm = form.defaultLogin;
 
+    double space = 10;
+    double screen = MediaQuery.of(context).size.height;
+
     return MaterialApp(
       home: Scaffold(
         appBar: CAppBar("Login"),
-        backgroundColor: backgroundColor,
+        backgroundColor: Color.fromRGBO(22, 71, 85, 1),
         body: Stack(
           children: [
-            form.setMyComponents(
-              [
-                Spacer(flex: 12),
-                ...defaultForm,
-              ],
+            Positioned(
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 200,
+              child: Container(
+                width: 300,
+                height: 300,
+                child: Image.asset("assets/images/Logo_02.jpg"),
+              ),
+            ),
+            Positioned(
+              top: screen * 0.42,
+              child: Container(
+                padding: EdgeInsets.only(top: 30, bottom: 30),
+                color: secondary,
+                height: screen * 0.45,
+                width: MediaQuery.of(context).size.width,
+                child: form.setMyComponents(
+                  [
+                    ...defaultForm,
+                  ],
+                ),
+              ),
             ),
             Container(
               child: Text(

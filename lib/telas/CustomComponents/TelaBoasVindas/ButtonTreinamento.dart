@@ -1,4 +1,4 @@
-import 'package:AuditechMobile/mainData.dart';
+import 'package:auditech_mobile/mainData.dart';
 import 'package:flutter/material.dart';
 
 class ButtonTreinamento extends StatelessWidget {
