@@ -5,15 +5,18 @@ import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:auditech_mobile/telas/CustomComponents/TelaLogin/components.dart';
 import 'package:auditech_mobile/mainData.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
-class TelaLogin extends StatelessWidget {
+class _STelaLogin extends State<TelaLogin> {
   final TextEditingController controllerCPF = TextEditingController();
   final TextEditingController controllerDT = TextEditingController();
   final DateFormat formatoData = DateFormat("yyyy/MM/dd");
+  bool isKeyboardOn;
 
   // Formata o cpf
   String cpfFormat(String str) {
@@ -58,7 +61,14 @@ class TelaLogin extends StatelessWidget {
     }
   }
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
+    var keyboard = MediaQuery.of(context).viewInsets.bottom;
+    isKeyboardOn = keyboard > 0;
     SharedPreferences dados;
     // Entra na conta do usuário
     Future entrar(String log, String snh) async {
@@ -140,46 +150,57 @@ class TelaLogin extends StatelessWidget {
       },
     );
 
-    List<Widget> defaultForm = form.defaultLogin([
+    List<TextEditingController> controller = [
       controllerCPF,
       controllerDT,
-    ]);
+    ];
 
-    double space = 10;
+    List<Widget> defaultForm = (isKeyboardOn)
+        ? form.fields(
+            controller,
+            Radius.circular(10),
+          )
+        : form.defaultLogin(
+            controller,
+          );
+
     double screen = MediaQuery.of(context).size.height;
-
+    Container loginContainer = Container(
+      padding: EdgeInsets.only(top: 30, bottom: 30),
+      color: secondary,
+      height: (isKeyboardOn) ? (screen * 0.483) : (screen * 0.45),
+      width: MediaQuery.of(context).size.width,
+      child: form.setMyComponents(
+        [
+          ...defaultForm,
+        ],
+      ),
+    );
     return MaterialApp(
       home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        resizeToAvoidBottomPadding: false,
         appBar: CAppBar("Login"),
         backgroundColor: Color.fromRGBO(22, 71, 85, 1),
         body: Stack(
           children: [
-            Positioned(
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 200,
+            Align(
+              alignment: Alignment(0, -0.75),
               child: Container(
-                width: 300,
-                height: 300,
+                width: tamanhoRelativoL(200, context),
+                height: tamanhoRelativoL(200, context),
                 child: Image.asset("assets/images/Logo_02.jpg"),
               ),
             ),
-            Positioned(
-              top: screen * 0.42,
-              child: Container(
-                padding: EdgeInsets.only(top: 30, bottom: 30),
-                color: secondary,
-                height: screen * 0.45,
-                width: MediaQuery.of(context).size.width,
-                child: form.setMyComponents(
-                  [
-                    ...defaultForm,
-                  ],
+            Column(
+              children: [
+                Spacer(
+                  flex: 1,
                 ),
-              ),
+                loginContainer,
+                if (isKeyboardOn)
+                  Spacer(
+                    flex: 1,
+                  ),
+              ],
             ),
             Container(
               child: Text(
@@ -193,5 +214,11 @@ class TelaLogin extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class TelaLogin extends StatefulWidget {
+  State<TelaLogin> createState() {
+    return _STelaLogin();
   }
 }

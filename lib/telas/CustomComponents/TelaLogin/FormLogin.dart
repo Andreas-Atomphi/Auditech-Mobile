@@ -8,10 +8,11 @@ class FormLogin extends StatelessWidget {
   final void Function(String login, String psswd) actionWhenSubmit;
   final void Function() actionWhenRegister;
 
-  List<Widget> defaultLogin(List<TextEditingController> controllers) {
-    Radius raio = Radius.circular(10);
-    List<Map<String, dynamic>> entradas = [
+  List<Map<String, dynamic>> textFieldsMap(
+      List<TextEditingController> controllers, raio) {
+    return [
       {
+        "ação": TextInputAction.next,
         "controller": controllers[0],
         "dica": "CPF",
         "escondido": false,
@@ -22,6 +23,7 @@ class FormLogin extends StatelessWidget {
         ),
       },
       {
+        "ação": TextInputAction.next,
         "controller": controllers[1],
         "dica": "Data de Aniversário",
         "escondido": true,
@@ -32,9 +34,17 @@ class FormLogin extends StatelessWidget {
         ),
       }
     ];
+  }
+
+  List<Widget> defaultLogin(List<TextEditingController> controllers) {
+    Radius raio = Radius.circular(10);
+
+    List<Map<String, dynamic>> entradas = textFieldsMap(controllers, raio);
     List<TextFieldLogin> loginFields = [
       ...entradas.map(
         (e) => TextFieldLogin(
+          widthScale: 0.8,
+          action: e['ação'],
           controller: e["controller"],
           dica: e["dica"],
           obscure: e["escondido"],
@@ -53,6 +63,31 @@ class FormLogin extends StatelessWidget {
           false),
       ButtonLogin("Registrar-se", () {}, true),
       Spacer(flex: 1),
+    ];
+  }
+
+  List<Widget> fields(List<TextEditingController> controllers, Radius raio) {
+    List<TextFieldLogin> textFields = [
+      ...textFieldsMap(controllers, raio).map(
+        (e) => TextFieldLogin(
+          widthScale: 1,
+          action: e["ação"],
+          controller: e["controller"],
+          dica: e["dica"],
+          obscure: e["escondido"],
+          tipo: e["tipoEntrada"],
+          borderRadius: e["raio"],
+        ),
+      ),
+    ];
+    return [
+      ...textFields,
+      ButtonLogin(
+        "Entrar",
+        () => actionWhenSubmit(textFields[0].text, textFields[1].text),
+        false,
+        alignment: Alignment(1, 0),
+      ),
     ];
   }
 

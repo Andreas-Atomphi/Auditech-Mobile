@@ -4,12 +4,19 @@ class ButtonLogin extends StatelessWidget {
   final void Function() aoPressionar;
   final String texto;
   final bool isALink;
+  final Alignment alignment;
 
-  ButtonLogin(this.texto, this.aoPressionar, this.isALink);
+  ButtonLogin(
+    this.texto,
+    this.aoPressionar,
+    this.isALink, {
+    this.alignment = const Alignment(0, 0),
+  });
 
   Widget build(BuildContext context) {
     return (isALink)
         ? Align(
+            alignment: alignment,
             child: Container(
               child: FlatButton(
                 hoverColor: Colors.transparent,
@@ -25,6 +32,7 @@ class ButtonLogin extends StatelessWidget {
             ),
           )
         : Align(
+            alignment: alignment,
             child: Container(
               child: RaisedButton(
                 padding: EdgeInsets.all(12.5),

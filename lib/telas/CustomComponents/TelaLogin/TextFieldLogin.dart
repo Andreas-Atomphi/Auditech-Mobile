@@ -27,12 +27,16 @@ class TextFieldLogin extends StatelessWidget {
   final bool obscure;
   final TipoEntrada tipo;
   final BorderRadius borderRadius;
+  final TextInputAction action;
+  final double widthScale;
 
   TextFieldLogin({
     this.controller,
     this.dica,
     this.obscure,
     this.tipo,
+    this.action,
+    this.widthScale = 0.8,
     this.borderRadius = const BorderRadius.all(
       Radius.circular(5),
     ),
@@ -59,7 +63,7 @@ class TextFieldLogin extends StatelessWidget {
     );
     return Container(
       child: textfield,
-      width: MediaQuery.of(context).size.width * 0.8,
+      width: MediaQuery.of(context).size.width * widthScale,
     );
   }
 

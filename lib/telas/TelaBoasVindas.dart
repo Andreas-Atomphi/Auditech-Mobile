@@ -22,7 +22,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
       size: 50.0,
     ),
   );
-  Map<String, dynamic> localFase = {};
+  Map<String, String> localFase = {};
 
   void baixarDados() async {
     _wait = Container(
@@ -87,7 +87,10 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
         faseBody,
       );
     } else if (widget.dados.containsKey("fase")) {
-      localFase = jsonDecode(widget.dados.getString("fase"));
+      List<String> dados = widget.dados.getStringList("fase");
+      localFase['fase'] = dados[0];
+      localFase['exercicio'] = dados[0];
+      _wait = null;
     }
   }
 
