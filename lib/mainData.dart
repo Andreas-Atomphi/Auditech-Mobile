@@ -62,7 +62,7 @@ double tamanhoRelativoA(double valor, BuildContext context) {
 
 Future<http.Response> getFase(idFase) async {
   http.Response fase = await http.get(
-    "http://hawgamtech.somee.com/AuditechAPI/fases/$idFase",
+    "http://hawgamtech.somee.com/AuditechAPI/fases/usuario/$idFase",
     headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
     },

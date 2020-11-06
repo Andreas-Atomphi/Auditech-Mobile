@@ -8,26 +8,40 @@ class FormLogin extends StatelessWidget {
   final void Function(String login, String psswd) actionWhenSubmit;
   final void Function() actionWhenRegister;
 
-  List<Widget> get defaultLogin {
+  List<Widget> defaultLogin(List<TextEditingController> controllers) {
+    Radius raio = Radius.circular(10);
+    List<Map<String, dynamic>> entradas = [
+      {
+        "controller": controllers[0],
+        "dica": "CPF",
+        "escondido": false,
+        "tipoEntrada": TipoEntrada.CPF,
+        "raio": BorderRadius.only(
+          topLeft: raio,
+          topRight: raio,
+        ),
+      },
+      {
+        "controller": controllers[1],
+        "dica": "Data de Aniversário",
+        "escondido": true,
+        "tipoEntrada": TipoEntrada.DT,
+        "raio": BorderRadius.only(
+          bottomLeft: raio,
+          bottomRight: raio,
+        ),
+      }
+    ];
     List<TextFieldLogin> loginFields = [
-      TextFieldLogin(
-        "CPF",
-        false,
-        TipoEntrada.CPF,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
+      ...entradas.map(
+        (e) => TextFieldLogin(
+          controller: e["controller"],
+          dica: e["dica"],
+          obscure: e["escondido"],
+          tipo: e["tipoEntrada"],
+          borderRadius: e["raio"],
         ),
-      ),
-      TextFieldLogin(
-        "Data de Aniversário",
-        true,
-        TipoEntrada.DT,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(10),
-          bottomRight: Radius.circular(10),
-        ),
-      ),
+      )
     ];
     return [
       loginFields[0],
@@ -35,8 +49,7 @@ class FormLogin extends StatelessWidget {
       Spacer(flex: 2),
       ButtonLogin(
           "Entrar",
-          () => actionWhenSubmit(
-              loginFields[0].text, loginFields[1].myController.text),
+          () => actionWhenSubmit(loginFields[0].text, loginFields[1].text),
           false),
       ButtonLogin("Registrar-se", () {}, true),
       Spacer(flex: 1),

@@ -7,7 +7,7 @@ import 'package:auditech_mobile/mainData.dart';
 import '../components.dart';
 
 class _SAbaTreinamento extends State<AbaTreinamento> {
-  Map<String, http.Response> fase;
+  Map<String, dynamic> fase;
   Map<String, Map<String, dynamic>> faseJson;
   Map<String, DateTime> data;
   @override
@@ -15,8 +15,8 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
     super.initState();
     fase = widget.fase;
     faseJson = {
-      "fase": jsonDecode(fase['fase'].body),
-      "exercicio": jsonDecode(fase['exercicio'].body),
+      "fase": jsonDecode(fase['fase']),
+      "exercicio": jsonDecode(fase['exercicio']),
     };
     DateFormat dataPadrao = DateFormat("dd/MM/yyyy HH:mm:ss");
     data = {
@@ -72,17 +72,15 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
               faseJson,
             ),
             ((fase != null) &&
-                    (faseJson['fase']['exercicioIdExercicio'] ==
-                        exercicioNum) &&
-                    (data['atual'].compareTo(
-                              data['inicio'],
-                            ) >=
-                            0 &&
-                        data['atual'].compareTo(
-                              data['fim'],
-                            ) <=
-                            0)) ||
-                true,
+                (faseJson['fase']['exercicioIdExercicio'] == exercicioNum) &&
+                (data['atual'].compareTo(
+                          data['inicio'],
+                        ) >=
+                        0 &&
+                    data['atual'].compareTo(
+                          data['fim'],
+                        ) <=
+                        0)),
           );
         },
       ),
@@ -101,7 +99,7 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
 }
 
 class AbaTreinamento extends StatefulWidget {
-  final Map<String, http.Response> fase;
+  final Map<String, dynamic> fase;
 
   AbaTreinamento({this.fase});
 

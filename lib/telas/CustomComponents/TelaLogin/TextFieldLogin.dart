@@ -1,21 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 enum TipoEntrada {
   CPF,
   DT,
 }
 
+extension TipoEntrda2 on TipoEntrada {
+  TextInputType get type {
+    TextInputType toReturn;
+    switch (this) {
+      case TipoEntrada.CPF:
+        toReturn = TextInputType.number;
+        break;
+      case TipoEntrada.DT:
+        toReturn = TextInputType.datetime;
+        break;
+    }
+    return toReturn;
+  }
+}
+
 class TextFieldLogin extends StatelessWidget {
-  final myController = TextEditingController();
+  final TextEditingController controller;
   final String dica;
   final bool obscure;
   final TipoEntrada tipo;
   final BorderRadius borderRadius;
 
-  TextFieldLogin(
+  TextFieldLogin({
+    this.controller,
     this.dica,
     this.obscure,
-    this.tipo, {
+    this.tipo,
     this.borderRadius = const BorderRadius.all(
       Radius.circular(5),
     ),
@@ -24,8 +41,9 @@ class TextFieldLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     TextField textfield;
     textfield = TextField(
+      keyboardType: tipo.type,
       style: TextStyle(color: Colors.black),
-      controller: myController,
+      controller: controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: borderRadius,
@@ -46,6 +64,6 @@ class TextFieldLogin extends StatelessWidget {
   }
 
   String get text {
-    return myController.text;
+    return controller.text;
   }
 }
