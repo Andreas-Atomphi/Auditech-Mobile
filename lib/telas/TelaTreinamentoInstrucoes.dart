@@ -38,15 +38,13 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
       );
     }
 
+    // Retorna os componentes para texto
     TextSpan formatRules(String str) {
-      print(str);
-      print(fase);
-      print(str.indexOf(RegExp(r'\".*\"')));
       String text = str.substring(
         str.indexOf(RegExp(r'\".*\"')) + 1,
         str.indexOf(RegExp(r'\"\}')),
       );
-      print(text);
+
       String size = str.substring(
         str.indexOf(RegExp(r'\:\s.*[0-9]')) + 1,
         str.indexOf(RegExp(r'[0-9]\,')) + 1,
@@ -55,9 +53,6 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
       texts = text.split(
         RegExp(r'\\n'),
       );
-      print(text);
-      print(texts);
-      print(size);
 
       return TextSpan(
         style: TextStyle(
@@ -70,8 +65,6 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
         ],
       );
     }
-
-    formatRules("${widget.fase['exercicio']['descricaoExercicio']}");
 
     return WillPopScope(
       onWillPop: () => _backPress(),

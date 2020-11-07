@@ -13,6 +13,7 @@ class MainApp extends StatelessWidget with PortraitModeMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: "principal",

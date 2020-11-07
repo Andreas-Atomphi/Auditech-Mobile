@@ -49,30 +49,19 @@ class _STelaLogin extends State<TelaLogin> {
     return "$one/$two/$three";
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  Widget build(BuildContext context) {
-    var keyboard = MediaQuery.of(context).viewInsets.bottom;
-    isKeyboardOn = keyboard > 0;
-    SharedPreferences dados;
-    // Entra na conta do usuário
-    Future entrar(String log, String snh) async {
-      if ((log != null && snh != null) &&
-          (log.length >= 11 && snh.length >= 8)) {
-        print("$log $snh");
-        final String dataTeste = formatoData.parse("2006/05/30").toString();
-        //Formata os valores da TextField
-        String dataOficial =
-            formatoData.parse(dtFormat(snh)).toString().substring(
-                  0,
-                  dataTeste.indexOf(
-                    RegExp(r'\s[0-9]'),
-                  ),
-                );
-        /* 
+  entrar(String log, String snh, {BuildContext context}) async {
+    if ((log != null && snh != null) && (log.length >= 11 && snh.length >= 8)) {
+      print("$log $snh");
+      final String dataTeste = formatoData.parse("2006/05/30").toString();
+      //Formata os valores da TextField
+      String dataOficial =
+          formatoData.parse(dtFormat(snh)).toString().substring(
+                0,
+                dataTeste.indexOf(
+                  RegExp(r'\s[0-9]'),
+                ),
+              );
+      /* 
       * Corpo para testes
     final Map<String, dynamic> corpoTestes = <String, dynamic>{
       "cpf": "213.546.879-00",
@@ -84,54 +73,71 @@ class _STelaLogin extends State<TelaLogin> {
       ),
     };
     */
-        bool connect = await conectado;
-        //  Corpo para envio
-        final Map<String, dynamic> corpo = <String, dynamic>{
-          "cpf": cpfFormat(log),
-          "dataNascimento": dataOficial,
-        };
-        print(corpo['dataNascimento']);
-        print(corpo['cpf']);
+      bool connect = await conectado;
+      //  Corpo para envio
+      final Map<String, dynamic> corpo = <String, dynamic>{
+        "cpf": cpfFormat(log),
+        "dataNascimento": dataOficial,
+      };
+      print(corpo['dataNascimento']);
+      print(corpo['cpf']);
 
-        // Executa a requisição
-        http.Response existe = await http.get(
-          "http://hawgamtech.somee.com/AuditechAPI/usuarios/login/${corpo['cpf']}/${corpo['dataNascimento']}",
-          headers: {
-            HttpHeaders.contentTypeHeader: 'application/json',
-          },
-        );
-        print(existe.body);
-        if (existe.statusCode == 200) {
-          print("200 Ok!");
-          if (jsonDecode(existe.body)["idTipoUsuario"] == 2) {
-            dados.setString('log', log);
-            dados.setString('anv', snh);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TelaBoasVindas(
-                  usuario: existe.body,
-                  dados: dados,
-                ),
+      // Executa a requisição
+      http.Response existe =
+          await getUsuario(corpo['cpf'], corpo['dataNascimento']);
+      print(existe.body);
+      if (existe.statusCode == 200) {
+        print("200 Ok!");
+        if (jsonDecode(existe.body)["idTipoUsuario"] == 2) {
+          dados.setString('log', log);
+          dados.setString('anv', snh);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TelaBoasVindas(
+                usuario: existe.body,
+                dados: dados,
               ),
-            );
-          }
+            ),
+          );
         }
       }
     }
+  }
 
+  bool firstBuild = true;
+
+  Future<bool> haveData() async {
+    dados = await SharedPreferences.getInstance();
+    if (!dados.containsKey('firstAccess'))
+      dados.setBool('firstAccess', false);
+    else {
+      print("checa os dados");
+      if (dados.containsKey('log')) if (dados.containsKey('anv')) {
+        if (await conectado) return true;
+      }
+    }
+    return false;
+  }
+
+  SharedPreferences dados;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Widget build(BuildContext context) {
     () async {
-      dados = await SharedPreferences.getInstance();
-      if (!dados.containsKey('firstAccess'))
-        dados.setBool('firstAccess', false);
-      else {
-        print("checa os dados");
-        if (dados.containsKey('log')) if (dados.containsKey('anv')) {
-          if (await conectado)
-            entrar(dados.getString('log'), dados.getString('anv'));
-        }
+      if (firstBuild) if (await haveData()) {
+        entrar(
+          dados.getString('log'),
+          dados.getString('anv'),
+          context: context,
+        );
       }
     }();
+    var keyboard = MediaQuery.of(context).viewInsets.bottom;
+    isKeyboardOn = keyboard > 0;
 
     FormLogin form = FormLogin(
       actionWhenSubmit: (String log, String snh) {
@@ -165,6 +171,7 @@ class _STelaLogin extends State<TelaLogin> {
         ],
       ),
     );
+    firstBuild = false;
     return MaterialApp(
       home: Scaffold(
         appBar: CAppBar("Login"),

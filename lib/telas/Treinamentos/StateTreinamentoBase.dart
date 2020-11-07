@@ -25,7 +25,7 @@ String gerarStringRespostas(int qtdRespostas) {
   String resps = "";
 
   for (int i = 0; i < qtdRespostas - 1; i++) {
-    resps += "%s";
+    resps += "%s|";
   }
 
   return (resps + "%s");

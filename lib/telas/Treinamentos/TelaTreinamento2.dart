@@ -30,8 +30,7 @@ class STreinamento2 extends STreinamentoBase<ExercicioCentral> {
                 Spacer(
                   flex: 1,
                 ),
-                textInstruct(
-                    "Aperte os tons que você ouvir na orelha: {valor}"),
+                textInstruct("Pressione tom fino ou tom grosso após ouvir"),
                 Spacer(
                   flex: 1,
                 ),

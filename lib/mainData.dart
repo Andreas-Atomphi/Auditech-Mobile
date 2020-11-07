@@ -81,6 +81,15 @@ Future<http.Response> getExercicio(idExercicio) async {
   return fase;
 }
 
+Future<http.Response> getUsuario(String login, String senha) {
+  return http.get(
+    "http://hawgamtech.somee.com/AuditechAPI/usuarios/login/$login/$senha",
+    headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    },
+  );
+}
+
 mixin PortraitModeMixin on StatelessWidget {
   @override
   Widget build(BuildContext context) {
