@@ -38,27 +38,15 @@ class _STelaLogin extends State<TelaLogin> {
   // Adiciona as barras na data
   String dtFormat(String str) {
     if (str == null) return null;
-    if (str.length < 8) return null;
+    if (str.length < 8 || str.length > 8) return null;
     if (str.contains(
-      RegExp('[0-9][0-9][0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]'),
+      RegExp('.*[0-9]\/.*[0-9]\/.*[0-9]'),
     )) return str;
     String one = str.substring(0, 4);
     String two = str.substring(4, 6);
     String three = str.substring(6, 8);
 
     return "$one/$two/$three";
-  }
-
-  Future<bool> get conectado async {
-    try {
-      final result =
-          await InternetAddress.lookup('http://hawgamtech.somee.com/');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        return true;
-      }
-    } on SocketException catch (_) {
-      return false;
-    }
   }
 
   @override
@@ -74,6 +62,7 @@ class _STelaLogin extends State<TelaLogin> {
     Future entrar(String log, String snh) async {
       if ((log != null && snh != null) &&
           (log.length >= 11 && snh.length >= 8)) {
+        print("$log $snh");
         final String dataTeste = formatoData.parse("2006/05/30").toString();
         //Formata os valores da TextField
         String dataOficial =
@@ -95,7 +84,7 @@ class _STelaLogin extends State<TelaLogin> {
       ),
     };
     */
-        bool conect = await conectado;
+        bool connect = await conectado;
         //  Corpo para envio
         final Map<String, dynamic> corpo = <String, dynamic>{
           "cpf": cpfFormat(log),
@@ -113,16 +102,16 @@ class _STelaLogin extends State<TelaLogin> {
         );
         print(existe.body);
         if (existe.statusCode == 200) {
-          print("não é 404");
+          print("200 Ok!");
           if (jsonDecode(existe.body)["idTipoUsuario"] == 2) {
-            dados.setString('log', corpo["cpf"]);
-            dados.setString('anv', corpo["dataNascimento"]);
+            dados.setString('log', log);
+            dados.setString('anv', snh);
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => TelaBoasVindas(
                   usuario: existe.body,
-                  dados: (conect) ? null : dados,
+                  dados: dados,
                 ),
               ),
             );

@@ -34,64 +34,75 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
         size: 50.0,
       ),
     );
-    if (widget.dados == null || !widget.dados.containsKey("fase")) {
-      usuario = widget.usuario;
-      Map localUsuario = jsonDecode(usuario);
-      int idUsuario = localUsuario["idUsuario"];
+    bool estaConectado = await conectado;
+    print(estaConectado);
 
-      http.Response fase;
-      http.Response exercicio;
-      Future<http.Response> faseFuture = getFase(idUsuario);
-      faseFuture.then(
-        (value) {
-          fase = value;
-        },
-      );
+    await conectado.whenComplete(
+      () async {
+        print("teste");
+        if (estaConectado) {
+          usuario = widget.usuario;
+          Map localUsuario = jsonDecode(usuario);
+          int idUsuario = localUsuario["idUsuario"];
 
-      await faseFuture.whenComplete(
-        () {
-          setState(
-            () {
-              localFase['fase'] = fase.body;
+          http.Response fase;
+          http.Response exercicio;
+          Future<http.Response> faseFuture = getFase(idUsuario);
+          faseFuture.then(
+            (value) {
+              fase = value;
             },
           );
-          print(localFase);
-        },
-      );
 
-      Future<http.Response> exercicioFuture =
-          getExercicio(jsonDecode(fase.body)['exercicioIdExercicio']);
-      exercicioFuture.then(
-        (value) {
-          exercicio = value;
-        },
-      );
-
-      await exercicioFuture.whenComplete(
-        () {
-          setState(
+          await faseFuture.whenComplete(
             () {
-              localFase['exercicio'] = exercicio.body;
-              _wait = null;
+              setState(
+                () {
+                  localFase['fase'] = fase.body;
+                },
+              );
+              print(localFase);
             },
           );
-          print(localFase);
-        },
-      );
-      List<String> faseBody = [
-        localFase['fase'],
-        localFase['exercicio'],
-      ];
-      widget.dados.setStringList(
-        'fase',
-        faseBody,
-      );
-    } else if (widget.dados.containsKey("fase")) {
-      List<String> dados = widget.dados.getStringList("fase");
-      localFase['fase'] = dados[0];
-      localFase['exercicio'] = dados[0];
-      _wait = null;
-    }
+
+          Future<http.Response> exercicioFuture =
+              getExercicio(jsonDecode(fase.body)['exercicioIdExercicio']);
+          exercicioFuture.then(
+            (value) {
+              exercicio = value;
+              print(exercicio.body);
+            },
+          );
+
+          await exercicioFuture.whenComplete(
+            () {
+              setState(
+                () {
+                  localFase['exercicio'] = exercicio.body;
+                  _wait = null;
+                },
+              );
+              print(localFase);
+            },
+          );
+          List<String> faseBody = [
+            localFase['fase'],
+            localFase['exercicio'],
+          ];
+          widget.dados.setStringList(
+            'fase',
+            faseBody,
+          );
+        } else if (widget.dados.containsKey("fase") && !estaConectado) {
+          setState(() {
+            List<String> dados = widget.dados.getStringList("fase");
+            localFase['fase'] = dados[0];
+            localFase['exercicio'] = dados[1];
+            _wait = null;
+          });
+        }
+      },
+    );
   }
 
   @override

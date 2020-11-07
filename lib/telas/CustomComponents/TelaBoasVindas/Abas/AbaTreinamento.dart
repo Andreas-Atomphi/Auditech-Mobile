@@ -25,6 +25,8 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
       'atual': DateTime.now(),
     };
 
+    print(faseJson);
+
     print(faseJson["fase"]['exercicioIdExercicio']);
 
     print(data);

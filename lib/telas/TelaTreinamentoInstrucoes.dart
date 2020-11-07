@@ -40,10 +40,13 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
 
     TextSpan formatRules(String str) {
       print(str);
+      print(fase);
+      print(str.indexOf(RegExp(r'\".*\"')));
       String text = str.substring(
         str.indexOf(RegExp(r'\".*\"')) + 1,
         str.indexOf(RegExp(r'\"\}')),
       );
+      print(text);
       String size = str.substring(
         str.indexOf(RegExp(r'\:\s.*[0-9]')) + 1,
         str.indexOf(RegExp(r'[0-9]\,')) + 1,

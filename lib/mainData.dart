@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:connectivity/connectivity.dart';
 
 Color backgroundColor = Color.fromARGB(255, 0, 90, 100);
 Brightness theme = Brightness.light;
@@ -118,4 +119,16 @@ void _enableRotation() {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
+}
+
+Future<bool> get conectado async {
+  bool toReturn;
+  ConnectivityResult coneccao = await Connectivity().checkConnectivity();
+  if (coneccao == ConnectivityResult.mobile ||
+      coneccao == ConnectivityResult.wifi) {
+    toReturn = true;
+  } else if (coneccao == ConnectivityResult.none) {
+    toReturn = false;
+  }
+  return toReturn;
 }
