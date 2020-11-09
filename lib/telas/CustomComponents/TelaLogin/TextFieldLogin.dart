@@ -29,6 +29,8 @@ class TextFieldLogin extends StatelessWidget {
   final BorderRadius borderRadius;
   final TextInputAction action;
   final double widthScale;
+  final Widget icon;
+  final void Function(String value) whenSubmit;
 
   TextFieldLogin({
     this.controller,
@@ -37,6 +39,8 @@ class TextFieldLogin extends StatelessWidget {
     this.tipo,
     this.action,
     this.widthScale = 0.8,
+    this.icon,
+    this.whenSubmit,
     this.borderRadius = const BorderRadius.all(
       Radius.circular(5),
     ),
@@ -45,10 +49,13 @@ class TextFieldLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     TextField textfield;
     textfield = TextField(
+      onSubmitted: whenSubmit,
+      textInputAction: action,
       keyboardType: tipo.type,
       style: TextStyle(color: Colors.black),
       controller: controller,
       decoration: InputDecoration(
+        icon: icon,
         border: OutlineInputBorder(
           borderRadius: borderRadius,
         ),

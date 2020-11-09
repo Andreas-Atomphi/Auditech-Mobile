@@ -91,8 +91,7 @@ class _STelaLogin extends State<TelaLogin> {
         if (jsonDecode(existe.body)["idTipoUsuario"] == 2) {
           dados.setString('log', log);
           dados.setString('anv', snh);
-          Navigator.push(
-            context,
+          Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => TelaBoasVindas(
                 usuario: existe.body,
@@ -132,7 +131,7 @@ class _STelaLogin extends State<TelaLogin> {
         entrar(
           dados.getString('log'),
           dados.getString('anv'),
-          context: context,
+          context: this.context,
         );
       }
     }();
@@ -141,7 +140,7 @@ class _STelaLogin extends State<TelaLogin> {
 
     FormLogin form = FormLogin(
       actionWhenSubmit: (String log, String snh) {
-        entrar(log, snh);
+        entrar(log, snh, context: this.context);
       },
     );
 
@@ -151,9 +150,10 @@ class _STelaLogin extends State<TelaLogin> {
     ];
 
     List<Widget> defaultForm = (isKeyboardOn)
-        ? form.fields(
+        ? form.fieldsWithSubmit(
             controller,
             Radius.circular(10),
+            submitButton: Alignment(1, 0),
           )
         : form.defaultLogin(
             controller,

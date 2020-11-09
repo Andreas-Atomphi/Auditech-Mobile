@@ -122,8 +122,13 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
 
   @override
   Widget build(BuildContext context) {
-    void sair() {
-      Navigator.pop(context);
+    void sair() async {
+      await widget.dados.clear().whenComplete(
+        () {
+          print("limpo");
+          Navigator.pop(context);
+        },
+      );
     }
 
     final List<Map<String, Object>> tabs = const [

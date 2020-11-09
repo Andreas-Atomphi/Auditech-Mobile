@@ -10,8 +10,10 @@ class FormLogin extends StatelessWidget {
 
   List<Map<String, dynamic>> textFieldsMap(
       List<TextEditingController> controllers, raio) {
-    return [
+    List<Map<String, dynamic>> toReturn = [
       {
+        "wsm": null,
+        "icon": Icon(Icons.person),
         "ação": TextInputAction.next,
         "controller": controllers[0],
         "dica": "CPF",
@@ -23,6 +25,7 @@ class FormLogin extends StatelessWidget {
         ),
       },
       {
+        "icon": Icon(Icons.vpn_key),
         "ação": TextInputAction.next,
         "controller": controllers[1],
         "dica": "Data de Aniversário",
@@ -34,23 +37,20 @@ class FormLogin extends StatelessWidget {
         ),
       }
     ];
+    toReturn[1]["wsm"] = (value) => actionWhenSubmit(
+          <TextEditingController>[toReturn[0]["controller"]][0].text,
+          value,
+        );
+    return toReturn;
   }
 
   List<Widget> defaultLogin(List<TextEditingController> controllers) {
     Radius raio = Radius.circular(10);
-
-    List<Map<String, dynamic>> entradas = textFieldsMap(controllers, raio);
     List<TextFieldLogin> loginFields = [
-      ...entradas.map(
-        (e) => TextFieldLogin(
-          widthScale: 0.8,
-          action: e['ação'],
-          controller: e["controller"],
-          dica: e["dica"],
-          obscure: e["escondido"],
-          tipo: e["tipoEntrada"],
-          borderRadius: e["raio"],
-        ),
+      ...fields(
+        controllers,
+        raio,
+        widthScale: 0.8,
       )
     ];
     return [
@@ -58,19 +58,25 @@ class FormLogin extends StatelessWidget {
       loginFields[1],
       Spacer(flex: 2),
       ButtonLogin(
-          "Entrar",
-          () => actionWhenSubmit(loginFields[0].text, loginFields[1].text),
-          false),
+        "Entrar",
+        () => actionWhenSubmit(loginFields[0].text, loginFields[1].text),
+        false,
+      ),
       ButtonLogin("Registrar-se", () {}, true),
       Spacer(flex: 1),
     ];
   }
 
-  List<Widget> fields(List<TextEditingController> controllers, Radius raio) {
+  List<TextFieldLogin> fields(
+    List<TextEditingController> controllers,
+    Radius raio, {
+    double widthScale = 1,
+  }) {
     List<TextFieldLogin> textFields = [
       ...textFieldsMap(controllers, raio).map(
         (e) => TextFieldLogin(
-          widthScale: 1,
+          whenSubmit: e["wsm"],
+          widthScale: widthScale,
           action: e["ação"],
           controller: e["controller"],
           dica: e["dica"],
@@ -80,13 +86,27 @@ class FormLogin extends StatelessWidget {
         ),
       ),
     ];
-    return [
+    return <TextFieldLogin>[
       ...textFields,
+    ];
+  }
+
+  List<Widget> fieldsWithSubmit(
+    List<TextEditingController> controllers,
+    Radius raio, {
+    double widthScale = 1,
+    Alignment submitButton,
+  }) {
+    List<TextFieldLogin> loginFields = [
+      ...fields(controllers, raio),
+    ];
+    return <Widget>[
+      ...loginFields,
       ButtonLogin(
         "Entrar",
-        () => actionWhenSubmit(textFields[0].text, textFields[1].text),
+        () => actionWhenSubmit(loginFields[0].text, loginFields[1].text),
         false,
-        alignment: Alignment(1, 0),
+        alignment: submitButton,
       ),
     ];
   }

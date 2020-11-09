@@ -14,16 +14,26 @@ class MainApp extends StatelessWidget with PortraitModeMixin {
   Widget build(BuildContext context) {
     super.build(context);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: "principal",
-      routes: routes,
-      home: TelaLogin(),
-      theme: ThemeData(
-        brightness: theme,
-        primaryColor: primary,
-        accentColor: secondary,
-        backgroundColor: backgroundColor,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
+          FocusManager.instance.primaryFocus.unfocus();
+        }
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: "principal",
+        routes: routes,
+        home: TelaLogin(),
+        theme: ThemeData(
+          brightness: theme,
+          primaryColor: primary,
+          accentColor: secondary,
+          backgroundColor: backgroundColor,
+        ),
       ),
     );
   }
