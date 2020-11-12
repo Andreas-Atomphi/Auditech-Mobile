@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:auditech_mobile/mainData.dart';
 import '../components.dart';

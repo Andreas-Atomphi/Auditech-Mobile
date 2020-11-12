@@ -44,7 +44,12 @@ class FormLogin extends StatelessWidget {
     return toReturn;
   }
 
-  List<Widget> defaultLogin(List<TextEditingController> controllers) {
+  // Retorna um formulário padrão, login senha botão de entrar e registrar.
+
+  List<Widget> defaultLogin(
+    List<TextEditingController> controllers,
+    String text,
+  ) {
     Radius raio = Radius.circular(10);
     List<TextFieldLogin> loginFields = [
       ...fields(
@@ -56,6 +61,13 @@ class FormLogin extends StatelessWidget {
     return [
       loginFields[0],
       loginFields[1],
+      Align(
+        alignment: Alignment(0, 0),
+        child: Text(
+          "$text",
+          style: TextStyle(color: Colors.amber[500]),
+        ),
+      ),
       Spacer(flex: 2),
       ButtonLogin(
         "Entrar",
@@ -66,6 +78,8 @@ class FormLogin extends StatelessWidget {
       Spacer(flex: 1),
     ];
   }
+
+  // Retorna apenas as caixas de texto
 
   List<TextFieldLogin> fields(
     List<TextEditingController> controllers,
@@ -91,17 +105,26 @@ class FormLogin extends StatelessWidget {
     ];
   }
 
+  //  Retorna as duas caixas de texto e um botão de entrar
   List<Widget> fieldsWithSubmit(
     List<TextEditingController> controllers,
     Radius raio, {
     double widthScale = 1,
     Alignment submitButton,
+    String text,
   }) {
     List<TextFieldLogin> loginFields = [
       ...fields(controllers, raio),
     ];
     return <Widget>[
       ...loginFields,
+      Align(
+        alignment: Alignment(-1, 0),
+        child: Text(
+          "$text",
+          style: TextStyle(color: Colors.amber[500]),
+        ),
+      ),
       ButtonLogin(
         "Entrar",
         () => actionWhenSubmit(loginFields[0].text, loginFields[1].text),

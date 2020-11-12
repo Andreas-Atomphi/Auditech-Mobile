@@ -21,7 +21,14 @@ class STreinamento9 extends STreinamentoBase<ExercicioCentral> {
             Column(
               children: [
                 Spacer(
-                  flex: 2,
+                  flex: 1,
+                ),
+                (sequencia > 0)
+                    ? textInstruct(
+                        "Repita apenas os números que você ouvir na orelha direita")
+                    : textInstruct("Preste atenção na explicação."),
+                Spacer(
+                  flex: 1,
                 ),
                 VisorDeRespostas(
                   respostasDadasL,

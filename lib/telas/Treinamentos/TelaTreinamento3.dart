@@ -45,13 +45,22 @@ class STreinamento3 extends STreinamentoBase<ExercicioCentral> {
                 Spacer(
                   flex: 1,
                 ),
+                (sequencia > 0)
+                    ? (sequencia < 5)
+                        ? textInstruct(
+                            "Escute com atenção e repita os animais que você ouvir na orelha direita")
+                        : textInstruct(
+                            "Escute com atenção e repita os animais que você ouvir na orelha esquerda")
+                    : textInstruct("Preste atenção na explicação."),
+                Spacer(
+                  flex: 1,
+                ),
                 VisorDeRespostas(
                   respostasDadasL,
                   direcao: VisorDirecao.HORIZONTAL,
                 ),
                 // Adiciona os componentes de forma dinâmica
-                if (respostas < respostasDadasL.length)
-                  addDynamicComponents(selecoes),
+                addDynamicComponents(selecoes),
               ],
             ),
             if (sequencia == 0) jmpBtn(),

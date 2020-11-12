@@ -1,21 +1,25 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:auditech_mobile/telas/CustomComponents/TelaLogin/components.dart';
 import 'package:auditech_mobile/mainData.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:keyboard_visibility/keyboard_visibility.dart';
-import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
 class _STelaLogin extends State<TelaLogin> {
+  // Controllers para conseguir os textos
   final TextEditingController controllerCPF = TextEditingController();
   final TextEditingController controllerDT = TextEditingController();
+
+  Map<String, Object> usrExiste = {
+    "bool": null,
+    "usr": null,
+  };
+  // Guarda o formato das datas
   final DateFormat formatoData = DateFormat("yyyy/MM/dd");
+  // * Variável para saber se o teclado está na tela ou não.
   bool isKeyboardOn;
 
   // Formata o cpf
@@ -49,7 +53,12 @@ class _STelaLogin extends State<TelaLogin> {
     return "$one/$two/$three";
   }
 
-  entrar(String log, String snh, {BuildContext context}) async {
+  // Checa se usuário existe
+  Future<Map<String, Object>> usuarioExiste(String log, String snh) async {
+    Map<String, Object> toReturn = {
+      "bool": false,
+      "usr": null,
+    };
     if ((log != null && snh != null) && (log.length >= 11 && snh.length >= 8)) {
       print("$log $snh");
       final String dataTeste = formatoData.parse("2006/05/30").toString();
@@ -61,47 +70,45 @@ class _STelaLogin extends State<TelaLogin> {
                   RegExp(r'\s[0-9]'),
                 ),
               );
-      /* 
-      * Corpo para testes
-    final Map<String, dynamic> corpoTestes = <String, dynamic>{
-      "cpf": "213.546.879-00",
-      "dataNascimento": dataTeste.substring(
-        0,
-        dataTeste.indexOf(
-          RegExp(r'\s[0-9]'),
-        ),
-      ),
-    };
-    */
-      bool connect = await conectado;
+
       //  Corpo para envio
       final Map<String, dynamic> corpo = <String, dynamic>{
         "cpf": cpfFormat(log),
         "dataNascimento": dataOficial,
       };
+
       print(corpo['dataNascimento']);
       print(corpo['cpf']);
 
       // Executa a requisição
       http.Response existe =
           await getUsuario(corpo['cpf'], corpo['dataNascimento']);
+
       print(existe.body);
+
       if (existe.statusCode == 200) {
         print("200 Ok!");
+        // Checa se o usuário existe e se é um paciente
         if (jsonDecode(existe.body)["idTipoUsuario"] == 2) {
-          dados.setString('log', log);
-          dados.setString('anv', snh);
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => TelaBoasVindas(
-                usuario: existe.body,
-                dados: dados,
-              ),
-            ),
-          );
+          toReturn['bool'] = true;
+          toReturn['usr'] = existe;
         }
       }
     }
+    return toReturn;
+  }
+
+  //  Passa para a próxima tela
+  void entrar(http.Response usuario, {BuildContext context}) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TelaBoasVindas(
+          usuario: usuario.body,
+          dados: dados,
+        ),
+      ),
+    );
   }
 
   bool firstBuild = true;
@@ -128,19 +135,37 @@ class _STelaLogin extends State<TelaLogin> {
   Widget build(BuildContext context) {
     () async {
       if (firstBuild) if (await haveData()) {
-        entrar(
+        usuarioExiste(
           dados.getString('log'),
           dados.getString('anv'),
-          context: this.context,
+        ).then(
+          (value) {
+            usrExiste['bool'] = value;
+            if (usrExiste['bool'] != null) if (usrExiste['bool'] == true) {
+              entrar(usrExiste['usr'], context: context);
+            }
+          },
         );
       }
     }();
+
     var keyboard = MediaQuery.of(context).viewInsets.bottom;
     isKeyboardOn = keyboard > 0;
 
     FormLogin form = FormLogin(
-      actionWhenSubmit: (String log, String snh) {
-        entrar(log, snh, context: this.context);
+      actionWhenSubmit: (String log, String snh) async {
+        var val;
+        val = await usuarioExiste(log, snh);
+        await usuarioExiste(log, snh).whenComplete(
+          () {
+            usrExiste = val;
+            if (usrExiste['bool'] == false)
+              setState(() {});
+            else if (usrExiste['bool'] != null) if (usrExiste['bool'] == true) {
+              entrar(usrExiste['usr'], context: context);
+            }
+          },
+        );
       },
     );
 
@@ -149,29 +174,39 @@ class _STelaLogin extends State<TelaLogin> {
       controllerDT,
     ];
 
+    String texto = (usrExiste['bool'] != null)
+        ? (usrExiste['bool'] == false)
+            ? "Este usuário não existe, corrija seu login e senha e tente novamente."
+            : ""
+        : "";
+
     List<Widget> defaultForm = (isKeyboardOn)
         ? form.fieldsWithSubmit(
             controller,
             Radius.circular(10),
             submitButton: Alignment(1, 0),
+            text: texto,
           )
         : form.defaultLogin(
             controller,
+            texto,
           );
 
-    double screen = MediaQuery.of(context).size.height;
+    Size screen = MediaQuery.of(context).size;
     Container loginContainer = Container(
       padding: EdgeInsets.only(top: 30, bottom: 30),
       color: secondary,
-      height: (isKeyboardOn) ? (screen * 0.483) : (screen * 0.45),
-      width: MediaQuery.of(context).size.width,
+      height: (isKeyboardOn) ? (screen.height * 0.483) : (screen.height * 0.45),
+      width: screen.width,
       child: form.setMyComponents(
         [
           ...defaultForm,
         ],
       ),
     );
+
     firstBuild = false;
+
     return MaterialApp(
       home: Scaffold(
         appBar: CAppBar("Login"),
@@ -205,7 +240,7 @@ class _STelaLogin extends State<TelaLogin> {
                 style: TextStyle(color: Colors.white),
               ),
               alignment: Alignment(-0.95, 0.99),
-            )
+            ),
           ],
         ),
       ),

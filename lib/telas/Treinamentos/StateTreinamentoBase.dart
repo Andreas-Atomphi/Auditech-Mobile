@@ -360,6 +360,9 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
   //Auto-descritivo
   void enviarRespostas() async {
     paraEnviar["respostaTreino"] = sprintf(respostasDadas, respostasDadasL);
+    paraEnviar["respostaTreino"] =
+        paraEnviar["respostaTreino"].replaceAll(RegExp(r'\|\|'), '|');
+    print(paraEnviar["respostaTreino"]);
     var jsonParaEnviar = json.encode(paraEnviar);
     print(jsonParaEnviar);
   }

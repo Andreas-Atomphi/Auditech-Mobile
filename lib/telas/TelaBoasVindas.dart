@@ -177,6 +177,20 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
       },
       child: MaterialApp(
         home: Scaffold(
+          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomPadding: false,
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.cloud_download),
+            onPressed: (_wait == null)
+                ? () {
+                    setState(
+                      () {
+                        baixarDados();
+                      },
+                    );
+                  }
+                : null,
+          ),
           backgroundColor: backgroundColor,
           drawer: DrawerWelcome(
             mapDados: [
@@ -213,18 +227,6 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
               ),
               Align(
                 alignment: Alignment(0.85, 0.85),
-                child: FloatingActionButton(
-                  child: Icon(Icons.cloud_download),
-                  onPressed: (_wait == null)
-                      ? () {
-                          setState(
-                            () {
-                              baixarDados();
-                            },
-                          );
-                        }
-                      : null,
-                ),
               ),
               _wait,
             ]..removeWhere((element) => element == null),
