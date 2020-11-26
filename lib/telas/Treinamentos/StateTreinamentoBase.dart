@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:auditech_mobile/mainData.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
@@ -10,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
 
 import '../Telas.dart';
+
+int faseId;
 
 // * Cria uma String no modelo de respostas para a API
 String gerarStringRespostas(int qtdRespostas) {
@@ -51,8 +54,27 @@ extension StringList on List<String> {
   }
 }
 
+class TreinamentoFase {
+  int id;
+  String respostasDadas;
+  DateTime dataExecucao;
+
+  String _dateFormat(DateTime date) {
+    return DateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+  }
+
+  TreinamentoFase({this.id, this.respostasDadas, this.dataExecucao});
+  Map<String, dynamic> get toJson {
+    return <String, dynamic>{
+      "faseIdFase": id,
+      "respostaTreino": respostasDadas,
+      "dataExecucao": _dateFormat(dataExecucao),
+    };
+  }
+}
+
 //Base de todas as outras telas
-abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
+abstract class STreinamentoBase extends State<ExercicioCentral>
     with Diagnosticable {
   //Variáveis principais
   Playback playBack;
@@ -64,20 +86,18 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
   int subarr = 0;
   List<String> respostasDadasL = ["", ""];
   String respostasDadas;
-  final Map paraEnviar = {
-    "respostaTreino": "",
-    "dataExecucao": "",
-    "faseIdFase": ""
-  };
+  final TreinamentoFase paraEnviar = TreinamentoFase();
 
   @override
   @mustCallSuper
   void initState() {
     super.initState();
     //Dá a data de execução
-    String dtExec = DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now());
-    paraEnviar["dataExecucao"] = "$dtExec";
-    print(paraEnviar);
+    //String dtExec = DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now());
+    //Atribui a data de execução
+    paraEnviar.dataExecucao = DateTime.now();
+    paraEnviar.id = faseId;
+    print(paraEnviar.toJson);
 
     // Instancia playBack com um método pra respostas e áudio
     instanciarPlayback();
@@ -359,16 +379,24 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
 
   //Auto-descritivo
   void enviarRespostas() async {
-    paraEnviar["respostaTreino"] = sprintf(respostasDadas, respostasDadasL);
-    paraEnviar["respostaTreino"] =
-        paraEnviar["respostaTreino"].replaceAll(RegExp(r'\|\|'), '|');
-    print(paraEnviar["respostaTreino"]);
-    var jsonParaEnviar = json.encode(paraEnviar);
+    paraEnviar.respostasDadas = sprintf(respostasDadas, respostasDadasL);
+    paraEnviar.respostasDadas =
+        paraEnviar.respostasDadas.replaceAll(RegExp(r'\|\|'), '|');
+    var enviar = paraEnviar.toJson;
+    print(enviar["respostaTreino"]);
+    var jsonParaEnviar = json.encode(enviar);
     print(jsonParaEnviar);
+    var respostaServidor = postResposta(enviar);
+    respostaServidor.then((value) {
+      print(value.body);
+    });
+    await respostaServidor.whenComplete(() {
+      irParaResultados(context);
+    });
   }
 
   // Auto-descritivo
-  void irParaResultados(BuildContext context, {List respostas}) {
+  void irParaResultados(BuildContext context) {
     playBack.dispose();
     Navigator.of(context).push(
       PageRouteBuilder(
@@ -390,7 +418,7 @@ abstract class STreinamentoBase<T extends StatefulWidget> extends State<T>
     );
   }
 
-  WillPopScope myPopScope({Widget home}) {
+  WillPopScope myPopScope({Widget home, BuildContext context}) {
     return WillPopScope(
       onWillPop: () => voltar(context),
       child: MaterialApp(

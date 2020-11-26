@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:auditech_mobile/mainData.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
-import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -104,6 +103,8 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
       },
     );
   }
+
+  int firstBuild = 0;
 
   @override
   void initState() {

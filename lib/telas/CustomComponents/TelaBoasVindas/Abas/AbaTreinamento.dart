@@ -17,7 +17,7 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
       "fase": jsonDecode(fase['fase']),
       "exercicio": jsonDecode(fase['exercicio']),
     };
-    DateFormat dataPadrao = DateFormat("dd/MM/yyyy HH:mm:ss");
+    DateFormat dataPadrao = DateFormat(r'MM/dd/yyyy HH:mm:ss');
     data = {
       'inicio': dataPadrao.parse(faseJson['fase']['dataInicio']),
       'fim': dataPadrao.parse(faseJson['fase']['dataFinal']),

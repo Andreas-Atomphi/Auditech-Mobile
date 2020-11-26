@@ -3,7 +3,7 @@ import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/component
 import 'package:flutter/material.dart';
 import 'treinamentos.dart';
 
-class STreinamento2 extends STreinamentoBase<ExercicioCentral> {
+class STreinamento2 extends STreinamentoBase {
   List<dynamic> selecoes;
 
   @override
@@ -18,8 +18,8 @@ class STreinamento2 extends STreinamentoBase<ExercicioCentral> {
       "s1",
       {"texto": "Tom grosso", "método": podeAvancar("G")},
     ];
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+    return myPopScope(
+      context: context,
       home: Scaffold(
         backgroundColor: backgroundColor,
         appBar: stbAppBar(context, texto: "Exercicio 2"),

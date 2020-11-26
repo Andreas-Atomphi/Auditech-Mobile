@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'treinamentos.dart';
 
 class ExercicioCentral extends StatefulWidget {
-  final int idExercicio;
-  ExercicioCentral(this.idExercicio);
-  STreinamentoBase<ExercicioCentral> createState() {
+  final int exercicio;
+  final int idFase;
+  ExercicioCentral(this.exercicio, {this.idFase});
+  STreinamentoBase createState() {
     return [
       STreinamento1(),
       STreinamento2(),
@@ -18,6 +19,6 @@ class ExercicioCentral extends StatefulWidget {
       STreinamento8(),
       STreinamento9(),
       STreinamento10(),
-    ][idExercicio - 1];
+    ][exercicio - 1];
   }
 }

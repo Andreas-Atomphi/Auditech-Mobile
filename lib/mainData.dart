@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -32,7 +33,9 @@ Map<String, Widget Function(BuildContext context)> routesExercicios =
     <String, Widget Function(BuildContext context)>{}.generate(
   10,
   (i) => {
-    "treinamento-$i": (context) => ExercicioCentral(i),
+    "treinamento-$i": (context) => ExercicioCentral(
+          i,
+        ),
   },
 );
 //  "treinamento-1": (context) => ExercicioCentral(1);
@@ -86,6 +89,20 @@ Future<http.Response> getUsuario(String login, String senha) {
     "http://hawgamtech.somee.com/AuditechAPI/usuarios/login/$login/$senha",
     headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
+    },
+  );
+}
+
+Future<http.Response> postResposta(Map<String, dynamic> resposta) {
+  return http.post(
+    Uri.parse(
+      "http://hawgamtech.somee.com/AuditechAPI/treinamentofases",
+    ),
+    body: jsonEncode(resposta),
+    encoding: Encoding.getByName("utf-8"),
+    headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.expectHeader: 'application/json'
     },
   );
 }

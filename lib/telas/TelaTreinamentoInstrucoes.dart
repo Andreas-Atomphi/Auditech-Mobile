@@ -4,6 +4,7 @@ import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/component
 import 'package:flutter/material.dart';
 
 import 'CustomComponents/TelaBoasVindas/components.dart';
+import 'Telas.dart';
 
 class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
   //Argumentos da clase
@@ -19,6 +20,7 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
     super.initState();
     irpara = widget.irpara;
     appbartext = widget.appbartext;
+    fase = widget.fase;
   }
 
   @override
@@ -28,8 +30,11 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
       Navigator.pop(context);
     }
 
+    print("fase: ");
+    print(fase);
     //Método que será chamado quando o botão ir para o exercício for pressionado
     void irParaTreino([String treinamento]) {
+      faseId = fase["fase"]["idFase"];
       Navigator.push(
         context,
         MaterialPageRoute(

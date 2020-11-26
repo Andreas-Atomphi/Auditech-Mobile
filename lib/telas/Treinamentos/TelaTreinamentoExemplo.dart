@@ -4,7 +4,7 @@ import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/component
 import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 
-class _STreinamento extends STreinamentoBase<TelaTreinamentoExemplo> {
+class _STreinamento extends STreinamentoBase {
   @override
   Widget build(BuildContext context) {
     void _backPress() {
@@ -58,7 +58,7 @@ class _STreinamento extends STreinamentoBase<TelaTreinamentoExemplo> {
 }
 
 class TelaTreinamentoExemplo extends StatefulWidget {
-  STreinamentoBase<TelaTreinamentoExemplo> createState() {
+  STreinamentoBase createState() {
     return _STreinamento();
   }
 }

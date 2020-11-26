@@ -4,15 +4,15 @@ import 'package:auditech_mobile/mainData.dart';
 import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/components.dart';
 import 'treinamentos.dart';
 
-class STreinamento10 extends STreinamentoBase<ExercicioCentral> {
+class STreinamento10 extends STreinamentoBase {
   void iniciarExercicio() {
     definirRequisitos(2, exercicios["Ex10"], true);
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+    return myPopScope(
+      context: context,
       home: Scaffold(
         backgroundColor: backgroundColor,
         appBar: stbAppBar(context, texto: "Exercicio 10"),

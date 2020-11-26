@@ -4,7 +4,7 @@ import 'package:auditech_mobile/telas/Treinamentos/StateTreinamentoBase.dart';
 import 'package:flutter/material.dart';
 import 'treinamentos.dart';
 
-class STreinamento1 extends STreinamentoBase<ExercicioCentral> {
+class STreinamento1 extends STreinamentoBase {
   List<dynamic> selecoes;
 
   @override
@@ -26,6 +26,7 @@ class STreinamento1 extends STreinamentoBase<ExercicioCentral> {
       },
     ];
     return myPopScope(
+      context: context,
       home: Scaffold(
         backgroundColor: backgroundColor,
         appBar: stbAppBar(context, texto: "Exercicio 1"),
