@@ -73,61 +73,59 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
 
     return WillPopScope(
       onWillPop: () => _backPress(),
-      child: MaterialApp(
-        home: Scaffold(
-          backgroundColor: backgroundColor, //define a cor de fundo
-          appBar: CAppBar(
-            //Chama o componente CAppBar (para dúvidas: Ctrl+Click no nome da classe)
-            appbartext, //Texto da appbar
-            backButton: true, //Define se CAppBar terá ou não um botão voltar
-            pressBack: _backPress, //para quando o botão voltar for pressionado
-          ),
-          body: Column(
-            children: [
-              Spacer(
-                flex: 1,
-              ),
-              InstrucControll(
-                  ScrollableCardColumn(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.6,
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.1,
-                      ),
-                      RichText(
-                        text: WidgetSpan(
-                          child: RichText(
-                            text: formatRules(
-                                "${widget.fase['exercicio']['descricaoExercicio']}"),
-                          ),
+      child: Scaffold(
+        backgroundColor: backgroundColor, //define a cor de fundo
+        appBar: CAppBar(
+          //Chama o componente CAppBar (para dúvidas: Ctrl+Click no nome da classe)
+          appbartext, //Texto da appbar
+          backButton: true, //Define se CAppBar terá ou não um botão voltar
+          pressBack: _backPress, //para quando o botão voltar for pressionado
+        ),
+        body: Column(
+          children: [
+            Spacer(
+              flex: 1,
+            ),
+            InstrucControll(
+                ScrollableCardColumn(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                    ),
+                    RichText(
+                      text: WidgetSpan(
+                        child: RichText(
+                          text: formatRules(
+                              "${widget.fase['exercicio']['descricaoExercicio']}"),
                         ),
                       ),
-                    ],
-                  ),
-                  corDeDestaque,
-                  secondary,
-                  Colors.white),
-              Spacer(
-                flex: 1,
-              ),
-              Container(
-                width: 200,
-                height: 50,
-                child: FlatButton(
-                  child: Text(
-                    "Ir para o exercício",
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
-                  color: corDeDestaque,
-                  onPressed: () => irParaTreino(irpara),
+                    ),
+                  ],
                 ),
+                corDeDestaque,
+                secondary,
+                Colors.white),
+            Spacer(
+              flex: 1,
+            ),
+            Container(
+              width: 200,
+              height: 50,
+              child: FlatButton(
+                child: Text(
+                  "Ir para o exercício",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                color: corDeDestaque,
+                onPressed: () => irParaTreino(irpara),
               ),
-              Spacer(
-                flex: 1,
-              ),
-            ],
-          ),
+            ),
+            Spacer(
+              flex: 1,
+            ),
+          ],
         ),
       ),
     );

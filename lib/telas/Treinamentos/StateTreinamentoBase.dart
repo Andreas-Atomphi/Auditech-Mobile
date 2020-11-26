@@ -245,7 +245,7 @@ abstract class STreinamentoBase extends State<ExercicioCentral>
   void iniciarExercicio();
 
   // Volta para a tela de TelaBoasVindas
-  Future<dynamic> voltar(BuildContext context) {
+  Future<bool> voltar(BuildContext context) {
     playBack.pause();
     return showDialog(
       context: context,
@@ -421,9 +421,7 @@ abstract class STreinamentoBase extends State<ExercicioCentral>
   WillPopScope myPopScope({Widget home, BuildContext context}) {
     return WillPopScope(
       onWillPop: () => voltar(context),
-      child: MaterialApp(
-        home: home,
-      ),
+      child: home,
     );
   }
 }

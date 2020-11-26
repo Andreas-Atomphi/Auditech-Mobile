@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:auditech_mobile/mainData.dart';
 
 class CAppBar extends AppBar {
   final String texto;
@@ -21,7 +20,6 @@ class CAppBar extends AppBar {
                   texto,
                 ),
           centerTitle: centralizar,
-          backgroundColor: primary,
           leading: (backButton)
               ? BackButton(
                   onPressed: pressBack,

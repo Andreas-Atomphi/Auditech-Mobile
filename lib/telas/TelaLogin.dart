@@ -207,42 +207,40 @@ class _STelaLogin extends State<TelaLogin> {
 
     firstBuild = false;
 
-    return MaterialApp(
-      home: Scaffold(
-        appBar: CAppBar("Login"),
-        backgroundColor: Color.fromRGBO(22, 71, 85, 1),
-        body: Stack(
-          children: [
-            Align(
-              alignment: Alignment(0, -0.75),
-              child: Container(
-                width: tamanhoRelativoL(200, context),
-                height: tamanhoRelativoL(200, context),
-                child: Image.asset("assets/images/Logo_02.jpg"),
-              ),
+    return Scaffold(
+      appBar: CAppBar("Login"),
+      backgroundColor: Color.fromRGBO(22, 71, 85, 1),
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment(0, -0.75),
+            child: Container(
+              width: tamanhoRelativoL(200, context),
+              height: tamanhoRelativoL(200, context),
+              child: Image.asset("assets/images/Logo_02.jpg"),
             ),
-            Column(
-              children: [
+          ),
+          Column(
+            children: [
+              Spacer(
+                flex: 1,
+              ),
+              loginContainer,
+              if (isKeyboardOn)
                 Spacer(
                   flex: 1,
                 ),
-                loginContainer,
-                if (isKeyboardOn)
-                  Spacer(
-                    flex: 1,
-                  ),
-              ],
+            ],
+          ),
+          Container(
+            child: Text(
+              "desenvolvido por: H.A.W.Ga.M",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white),
             ),
-            Container(
-              child: Text(
-                "desenvolvido por: H.A.W.Ga.M",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white),
-              ),
-              alignment: Alignment(-0.95, 0.99),
-            ),
-          ],
-        ),
+            alignment: Alignment(-0.95, 0.99),
+          ),
+        ],
       ),
     );
   }

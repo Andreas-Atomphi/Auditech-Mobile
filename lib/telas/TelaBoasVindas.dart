@@ -123,26 +123,35 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
 
   @override
   Widget build(BuildContext context) {
-    void sair() async {
-      await widget.dados.clear().whenComplete(
-        () {
-          print("limpo");
-          Navigator.pop(context);
-        },
-      );
+    void sair() {
+      () async {
+        await widget.dados.clear().whenComplete(
+          () {
+            print("limpo");
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+        );
+      }();
     }
 
     final List<Map<String, Object>> tabs = const [
       {
-        "icon": Icon(Icons.home),
+        "icon": Icon(
+          Icons.home,
+        ),
         "text": "Início",
       },
       {
-        "icon": Icon(Icons.games),
+        "icon": Icon(
+          Icons.games,
+        ),
         "text": "Exercícios",
       },
       {
-        "icon": Icon(Icons.pie_chart),
+        "icon": Icon(
+          Icons.pie_chart,
+        ),
         "text": "Estatísticas",
       },
     ];
@@ -176,62 +185,60 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
           },
         );
       },
-      child: MaterialApp(
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          resizeToAvoidBottomPadding: false,
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.cloud_download),
-            onPressed: (_wait == null)
-                ? () {
-                    setState(
-                      () {
-                        baixarDados();
-                      },
-                    );
-                  }
-                : null,
-          ),
-          backgroundColor: backgroundColor,
-          drawer: DrawerWelcome(
-            mapDados: [
-              {"texto": "Configurações", "metodo": () => null},
-              {"texto": "Sobre DPAC", "metodo": () => null},
-              {"texto": "Sair", "metodo": sair},
-            ],
-          ),
-          appBar: CAppBar(
-            "Auditech",
-            tab: (_wait == null)
-                ? TabBar(
-                    controller: controller,
-                    tabs: [
-                      ...tabs.map(
-                        (e) => Tab(
-                          icon: e['icon'],
-                          text: e['text'],
-                        ),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomPadding: false,
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.cloud_download),
+          onPressed: (_wait == null)
+              ? () {
+                  setState(
+                    () {
+                      baixarDados();
+                    },
+                  );
+                }
+              : null,
+        ),
+        backgroundColor: backgroundColor,
+        drawer: DrawerWelcome(
+          mapDados: [
+            {"texto": "Configurações", "metodo": () => null},
+            {"texto": "Sobre DPAC", "metodo": () => null},
+            {"texto": "Sair", "metodo": sair},
+          ],
+        ),
+        appBar: CAppBar(
+          "Auditech",
+          tab: (_wait == null)
+              ? TabBar(
+                  controller: controller,
+                  tabs: [
+                    ...tabs.map(
+                      (e) => Tab(
+                        icon: e['icon'],
+                        text: e['text'],
                       ),
-                    ],
-                  )
-                : null,
-          ),
-          body: Stack(
-            children: [
-              TabBarView(
-                controller: controller,
-                children: [
-                  AbaBoasVindas(),
-                  AbaTreinamento(fase: localFase),
-                  AbaEstatisticas(),
-                ],
-              ),
-              Align(
-                alignment: Alignment(0.85, 0.85),
-              ),
-              _wait,
-            ]..removeWhere((element) => element == null),
-          ),
+                    ),
+                  ],
+                )
+              : null,
+        ),
+        body: Stack(
+          children: [
+            TabBarView(
+              controller: controller,
+              children: [
+                AbaBoasVindas(),
+                AbaTreinamento(fase: localFase),
+                AbaEstatisticas(),
+              ],
+            ),
+            Align(
+              alignment: Alignment(0.85, 0.85),
+            ),
+            _wait,
+          ]..removeWhere((element) => element == null),
         ),
       ),
     );

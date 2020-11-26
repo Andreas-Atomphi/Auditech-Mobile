@@ -61,7 +61,7 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
         (e) {
           int exercicioNum = int.parse(e.replaceAll(RegExp('[^0-9]'), ''));
           //  Armazena os números dos treinos
-          String exercicio = "${model[0]} $exercicioNum";
+          String exercicio = "${model[0]}$exercicioNum";
           //  Retorna um ButtonTreinamento
           return ButtonTreinamento(
             //Concatena model com o último dígito da chave (treinamento-n)
