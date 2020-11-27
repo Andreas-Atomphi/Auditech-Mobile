@@ -48,7 +48,7 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              TelaInstrucoesTreinamento(appbartext, numtreino, jsonFase),
+              InstrucoesExercicio(appbartext, numtreino, jsonFase),
         ),
       );
     }

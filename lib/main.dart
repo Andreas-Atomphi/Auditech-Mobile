@@ -15,12 +15,9 @@ class MainApp extends StatelessWidget with PortraitModeMixin {
   Widget build(BuildContext context) {
     super.build(context);
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: primary.subRGB(90),
-        statusBarIconBrightness: Brightness.light,
-        statusBarBrightness: Brightness.dark,
-      ),
+      SystemUiOverlayStyle.light,
     );
+
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -38,6 +35,9 @@ class MainApp extends StatelessWidget with PortraitModeMixin {
         home: TelaLogin(),
         themeMode: ThemeMode.light,
         darkTheme: ThemeData(
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
           primaryColor: primary.subRGB(255),
           accentColor: secondary.subRGB(255),
           backgroundColor: backgroundColor,
@@ -72,10 +72,14 @@ class MainApp extends StatelessWidget with PortraitModeMixin {
           ),
         ),
         theme: ThemeData(
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
           primaryColor: primary,
           accentColor: secondary,
           backgroundColor: backgroundColor,
           brightness: Brightness.light,
+          fontFamily: "OpenSans",
           primaryTextTheme: TextTheme(
             bodyText1: TextStyle(
               color: Colors.white,

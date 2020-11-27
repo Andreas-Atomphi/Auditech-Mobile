@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:http/http.dart';
-import 'package:intl/intl.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Global/ApiClasses.dart';
+import 'package:auditech_mobile/telas/Exercicios/telasDeExercicio.dart';
 import 'package:auditech_mobile/mainData.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
-import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
@@ -54,27 +54,8 @@ extension StringList on List<String> {
   }
 }
 
-class TreinamentoFase {
-  int id;
-  String respostasDadas;
-  DateTime dataExecucao;
-
-  String _dateFormat(DateTime date) {
-    return DateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-  }
-
-  TreinamentoFase({this.id, this.respostasDadas, this.dataExecucao});
-  Map<String, dynamic> get toJson {
-    return <String, dynamic>{
-      "faseIdFase": id,
-      "respostaTreino": respostasDadas,
-      "dataExecucao": _dateFormat(dataExecucao),
-    };
-  }
-}
-
 //Base de todas as outras telas
-abstract class STreinamentoBase extends State<ExercicioCentral>
+abstract class SExercicioBase extends State<ExercicioCentral>
     with Diagnosticable {
   //Variáveis principais
   Playback playBack;

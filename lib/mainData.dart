@@ -9,9 +9,9 @@ import 'package:connectivity/connectivity.dart';
 
 Color backgroundColor = Color.fromARGB(255, 0, 90, 100);
 Brightness theme = Brightness.light;
-Color primary = Color.fromARGB(255, 0, 200, 190); //Variável para a cor global
+Color primary = Color.fromRGBO(0, 200, 190, 1); //Variável para a cor global
 Color secondary =
-    Color.fromARGB(255, 0, 150, 160); // Variável para cor secundária
+    Color.fromRGBO(0, 150, 160, 1); // Variável para cor secundária
 Color corDeDestaque =
     Color.fromRGBO(255, 152, 0, 1); // Variável para cor de destaque do app
 
@@ -43,7 +43,7 @@ Map<String, Widget Function(BuildContext context)> routesExercicios =
 Map<String, Widget Function(BuildContext context)> routes = {
   "principal": (context) => TelaLogin(),
   "boas-vindas": (context) => TelaBoasVindas(),
-  "aviso-tr": (context) => TelaInstrucoesTreinamento(),
+  "aviso-tr": (context) => InstrucoesExercicio(),
   "exemplo-tr": (context) => TelaTreinamentoExemplo(),
   ...routesExercicios,
   "resultados": (context) => Resultados(),

@@ -217,7 +217,7 @@ class _STelaLogin extends State<TelaLogin> {
             child: Container(
               width: tamanhoRelativoL(200, context),
               height: tamanhoRelativoL(200, context),
-              child: Image.asset("assets/images/Logo_02.jpg"),
+              child: Image.asset("assets/images/Logo_Transparent.png"),
             ),
           ),
           Column(

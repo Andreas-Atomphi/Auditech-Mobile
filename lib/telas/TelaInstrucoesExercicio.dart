@@ -1,19 +1,19 @@
 import 'package:auditech_mobile/mainData.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
-import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dart';
 import 'package:flutter/material.dart';
 
 import 'CustomComponents/TelaBoasVindas/components.dart';
 import 'Telas.dart';
 
-class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
+class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
   //Argumentos da clase
   String irpara;
   String appbartext;
   Map fase;
 
   //Chamando o construtor da classe
-  _TreinamentoInstrucoesState();
+  _SInstrucoesExercicio();
 
   @override
   void initState() {
@@ -132,20 +132,20 @@ class _TreinamentoInstrucoesState extends State<TelaInstrucoesTreinamento> {
   }
 }
 
-class TelaInstrucoesTreinamento extends StatefulWidget {
+class InstrucoesExercicio extends StatefulWidget {
   //Argumentos da classe
   final String appbartext;
   final String irpara;
   final Map fase;
 
   //Chama o construtor da classe
-  TelaInstrucoesTreinamento([
+  InstrucoesExercicio([
     this.appbartext = "Exemplo", //Texto da Appbar
     this.irpara = "treinamento-exemplo", //define qual tela que deve ir
     this.fase,
   ]);
 
-  State<TelaInstrucoesTreinamento> createState() {
-    return _TreinamentoInstrucoesState();
+  _SInstrucoesExercicio createState() {
+    return _SInstrucoesExercicio();
   }
 }

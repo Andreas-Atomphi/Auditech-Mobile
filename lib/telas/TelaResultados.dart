@@ -23,6 +23,8 @@ class _SResultados extends State {
       appBar: CAppBar(
         "Resultados",
         centralizar: true,
+        backButton: true,
+        pressBack: () => _backXTimes(2),
       ),
       //Rolável
       body: SingleChildScrollView(

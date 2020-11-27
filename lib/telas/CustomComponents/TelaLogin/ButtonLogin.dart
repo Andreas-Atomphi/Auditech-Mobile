@@ -1,3 +1,4 @@
+import 'package:auditech_mobile/mainData.dart';
 import 'package:flutter/material.dart';
 
 class ButtonLogin extends StatelessWidget {
@@ -23,7 +24,7 @@ class ButtonLogin extends StatelessWidget {
                 child: Text(
                   texto,
                   style: TextStyle(
-                    color: Colors.lightBlue[300],
+                    color: Colors.accents[7],
                     decoration: TextDecoration.underline,
                   ),
                 ),
@@ -43,7 +44,7 @@ class ButtonLogin extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                color: Colors.lightBlue[300],
+                color: Colors.accents[7].subRGB(50),
               ),
             ),
           );

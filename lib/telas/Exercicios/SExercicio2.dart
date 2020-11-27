@@ -1,49 +1,45 @@
 import 'package:auditech_mobile/mainData.dart';
-import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/components.dart';
-import 'package:auditech_mobile/telas/Treinamentos/StateTreinamentoBase.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dart';
 import 'package:flutter/material.dart';
-import 'treinamentos.dart';
+import 'telasDeExercicio.dart';
 
-class STreinamento1 extends STreinamentoBase {
+class SExercicio2 extends SExercicioBase {
   List<dynamic> selecoes;
 
   @override
-  void iniciarExercicio() {
-    definirRequisitos(3, exercicios["Ex1"], true);
+  void iniciarExercicio() async {
+    definirRequisitos(3, exercicios["Ex2"], true);
   }
 
   @override
   Widget build(BuildContext context) {
     selecoes = [
-      {
-        "texto": "Tom longo",
-        "método": podeAvancar("L"),
-      },
+      {"texto": "Tom fino", "método": podeAvancar("F")},
       "s1",
-      {
-        "texto": "Tom curto",
-        "método": podeAvancar("C"),
-      },
+      {"texto": "Tom grosso", "método": podeAvancar("G")},
     ];
     return myPopScope(
       context: context,
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: stbAppBar(context, texto: "Exercicio 1"),
+        appBar: stbAppBar(context, texto: "Exercicio 2"),
         body: Stack(
-          children: <Widget>[
+          children: [
             Column(
               children: [
-                Spacer(flex: 1),
-                textInstruct("Pressione tom longo ou tom curto após ouvir"),
-                Spacer(flex: 1),
+                Spacer(
+                  flex: 1,
+                ),
+                textInstruct("Pressione tom fino ou tom grosso após ouvir"),
+                Spacer(
+                  flex: 1,
+                ),
                 VisorDeRespostas(
                   respostasDadasL,
                   direcao: VisorDirecao.HORIZONTAL,
                 ),
                 Container(
                   color: secondary,
-                  margin: EdgeInsets.zero,
                   padding: EdgeInsets.all(5),
                   child: Row(
                     children: [
@@ -57,7 +53,7 @@ class STreinamento1 extends STreinamentoBase {
                       ),
                     ]..removeWhere((w) => w == null),
                   ),
-                )
+                ),
               ]..removeWhere((w) => w == null),
             ),
             if (sequencia == 0) jmpBtn(),

@@ -1,14 +1,14 @@
-import 'treinamentos.dart';
+import 'telasDeExercicio.dart';
 import 'package:flutter/material.dart';
 import 'package:auditech_mobile/mainData.dart';
-import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dart';
 
-class STreinamento6 extends STreinamentoBase {
+class SExercicio5 extends SExercicioBase {
   List<dynamic> selecoes;
 
   @override
   void iniciarExercicio() {
-    definirRequisitos(1, exercicios["Ex6"], true);
+    definirRequisitos(1, exercicios["Ex5"], true);
   }
 
   @override
@@ -18,17 +18,23 @@ class STreinamento6 extends STreinamentoBase {
       //Lista de Widgets
       [
         "s1",
-        {"nome": "Grito", "método": podeAvancar("G")},
+        {"nome": "Vento", "método": podeAvancar("V")},
         "s1",
-        {"nome": "Passo", "método": podeAvancar("P")},
+        {"nome": "Água", "método": podeAvancar("A")},
         "s1",
       ],
       "s1",
       [
         "s1",
-        {"nome": "Palma", "método": podeAvancar("P")},
+        {"nome": "Ondas do mar", "método": podeAvancar("OM")},
         "s1",
-        {"nome": "Risada", "método": podeAvancar("R")},
+        {"nome": "Trovão", "método": podeAvancar("T")},
+        "s1",
+      ],
+      "s1",
+      [
+        "s1",
+        {"nome": "Chuva com trovão", "método": podeAvancar("CT")},
         "s1",
       ],
       "s1",
@@ -38,9 +44,10 @@ class STreinamento6 extends STreinamentoBase {
       context: context,
       home: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: stbAppBar(context, texto: "Exercicio 6"),
+        appBar: stbAppBar(context, texto: "Exercicio 5"),
         body: Stack(
           children: [
+            if (sequencia == 0) jmpBtn(),
             Column(
               children: [
                 Spacer(
@@ -49,9 +56,9 @@ class STreinamento6 extends STreinamentoBase {
                 (sequencia > 0)
                     ? (sequencia < 4)
                         ? textInstruct(
-                            "Escute com atenção e repita os sons do corpo humano que você ouvir na orelha direita")
+                            "Escute com atenção e repita os sons da natureza que você ouvir na orelha direita")
                         : textInstruct(
-                            "Escute com atenção e repita os sons do corpo humano que você ouvir na orelha esquerda")
+                            "Escute com atenção e repita os sons da natureza que você ouvir na orelha esquerda")
                     : textInstruct("Preste atenção na explicação."),
                 Spacer(
                   flex: 1,

@@ -1,5 +1,5 @@
 export 'TelaLogin.dart';
 export 'TelaBoasVindas.dart';
-export 'Treinamentos/treinamentos.dart';
-export 'TelaTreinamentoInstrucoes.dart';
+export 'Exercicios/telasDeExercicio.dart';
+export 'TelaInstrucoesExercicio.dart';
 export 'TelaResultados.dart';

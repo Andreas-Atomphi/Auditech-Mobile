@@ -1,10 +1,10 @@
 import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:auditech_mobile/mainData.dart';
-import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/components.dart';
-import 'treinamentos.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dart';
+import 'telasDeExercicio.dart';
 
-class STreinamento9 extends STreinamentoBase {
+class SExercicio9 extends SExercicioBase {
   void iniciarExercicio() {
     definirRequisitos(2, exercicios["Ex9"], true);
   }

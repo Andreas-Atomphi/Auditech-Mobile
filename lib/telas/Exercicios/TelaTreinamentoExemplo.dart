@@ -1,10 +1,11 @@
 import 'package:auditech_mobile/mainData.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
-import 'package:auditech_mobile/telas/CustomComponents/TelaTreinamento/components.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dart';
+import 'package:auditech_mobile/telas/Exercicios/telasDeExercicio.dart';
 import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 
-class _STreinamento extends STreinamentoBase {
+class _STreinamento extends SExercicioBase {
   @override
   Widget build(BuildContext context) {
     void _backPress() {
@@ -58,7 +59,7 @@ class _STreinamento extends STreinamentoBase {
 }
 
 class TelaTreinamentoExemplo extends StatefulWidget {
-  STreinamentoBase createState() {
+  SExercicioBase createState() {
     return _STreinamento();
   }
 }
