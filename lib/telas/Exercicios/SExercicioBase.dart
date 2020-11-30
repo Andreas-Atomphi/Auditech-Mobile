@@ -12,8 +12,6 @@ import 'package:sprintf/sprintf.dart';
 
 import '../Telas.dart';
 
-int faseId;
-
 // * Cria uma String no modelo de respostas para a API
 String gerarStringRespostas(int qtdRespostas) {
   switch (qtdRespostas) {
@@ -58,6 +56,8 @@ extension StringList on List<String> {
 abstract class SExercicioBase extends State<ExercicioCentral>
     with Diagnosticable {
   //Variáveis principais
+  int exercicioId;
+  int faseId;
   Playback playBack;
   int numRPS = 3;
   List<String> sons = List.generate(1, (i) => "");
@@ -69,6 +69,8 @@ abstract class SExercicioBase extends State<ExercicioCentral>
   String respostasDadas;
   final TreinamentoFase paraEnviar = TreinamentoFase();
 
+  SExercicioBase(this.faseId, this.exercicioId);
+
   @override
   @mustCallSuper
   void initState() {
@@ -77,7 +79,8 @@ abstract class SExercicioBase extends State<ExercicioCentral>
     //String dtExec = DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now());
     //Atribui a data de execução
     paraEnviar.dataExecucao = DateTime.now();
-    paraEnviar.id = faseId;
+    paraEnviar.faseIdFase = faseId;
+    paraEnviar.exercicioIdExercicio = exercicioId;
     print(paraEnviar.toJson);
 
     // Instancia playBack com um método pra respostas e áudio
@@ -403,6 +406,20 @@ abstract class SExercicioBase extends State<ExercicioCentral>
     return WillPopScope(
       onWillPop: () => voltar(context),
       child: home,
+    );
+  }
+
+  @protected
+  Widget mainRouteBuild();
+
+  @override
+  Widget build(BuildContext context) {
+    return myPopScope(
+      context: context,
+      home: Scaffold(
+        appBar: stbAppBar(context, texto: "Exercicio $exercicioId"),
+        body: mainRouteBuild(),
+      ),
     );
   }
 }

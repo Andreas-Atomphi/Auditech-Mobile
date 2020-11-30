@@ -1,10 +1,11 @@
 import 'telasDeExercicio.dart';
 import 'package:flutter/material.dart';
-import 'package:auditech_mobile/mainData.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dart';
 
 class SExercicio6 extends SExercicioBase {
   List<dynamic> selecoes;
+
+  SExercicio6(int faseId, int exercicioId) : super(faseId, exercicioId);
 
   @override
   void iniciarExercicio() {
@@ -12,7 +13,7 @@ class SExercicio6 extends SExercicioBase {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget mainRouteBuild() {
     selecoes = [
       "s1",
       //Lista de Widgets
@@ -34,39 +35,32 @@ class SExercicio6 extends SExercicioBase {
       "s1",
     ];
 
-    return myPopScope(
-      context: context,
-      home: Scaffold(
-        backgroundColor: backgroundColor,
-        appBar: stbAppBar(context, texto: "Exercicio 6"),
-        body: Stack(
+    return Stack(
+      children: [
+        Column(
           children: [
-            Column(
-              children: [
-                Spacer(
-                  flex: 1,
-                ),
-                (sequencia > 0)
-                    ? (sequencia < 4)
-                        ? textInstruct(
-                            "Escute com atenção e repita os sons do corpo humano que você ouvir na orelha direita")
-                        : textInstruct(
-                            "Escute com atenção e repita os sons do corpo humano que você ouvir na orelha esquerda")
-                    : textInstruct("Preste atenção na explicação."),
-                Spacer(
-                  flex: 1,
-                ),
-                VisorDeRespostas(
-                  respostasDadasL,
-                  direcao: VisorDirecao.HORIZONTAL,
-                ),
-                addDynamicComponents(selecoes),
-              ],
+            Spacer(
+              flex: 1,
             ),
-            if (sequencia == 0) jmpBtn(),
+            (sequencia > 0)
+                ? (sequencia < 4)
+                    ? textInstruct(
+                        "Escute com atenção e repita os sons do corpo humano que você ouvir na orelha direita")
+                    : textInstruct(
+                        "Escute com atenção e repita os sons do corpo humano que você ouvir na orelha esquerda")
+                : textInstruct("Preste atenção na explicação."),
+            Spacer(
+              flex: 1,
+            ),
+            VisorDeRespostas(
+              respostasDadasL,
+              direcao: VisorDirecao.HORIZONTAL,
+            ),
+            addDynamicComponents(selecoes),
           ],
         ),
-      ),
+        if (sequencia == 0) jmpBtn(),
+      ],
     );
   }
 }

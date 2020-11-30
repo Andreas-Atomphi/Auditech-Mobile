@@ -34,7 +34,7 @@ Map<String, Widget Function(BuildContext context)> routesExercicios =
   10,
   (i) => {
     "treinamento-$i": (context) => ExercicioCentral(
-          i,
+          exercicio: i + 1,
         ),
   },
 );
@@ -44,7 +44,6 @@ Map<String, Widget Function(BuildContext context)> routes = {
   "principal": (context) => TelaLogin(),
   "boas-vindas": (context) => TelaBoasVindas(),
   "aviso-tr": (context) => InstrucoesExercicio(),
-  "exemplo-tr": (context) => TelaTreinamentoExemplo(),
   ...routesExercicios,
   "resultados": (context) => Resultados(),
 };

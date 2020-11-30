@@ -1,32 +1,23 @@
-import 'dart:convert';
+import 'package:auditech_mobile/telas/CustomComponents/Global/ApiClasses.dart';
 import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:auditech_mobile/mainData.dart';
 import '../components.dart';
 
 class _SAbaTreinamento extends State<AbaTreinamento> {
-  Map<String, dynamic> fase;
-  Map<String, Map<String, dynamic>> faseJson;
+  Fase mainFase;
+  Exercicio mainExercicio;
   Map<String, DateTime> data;
   @override
   void initState() {
     super.initState();
-    fase = widget.fase;
-    faseJson = {
-      "fase": jsonDecode(fase['fase']),
-      "exercicio": jsonDecode(fase['exercicio']),
-    };
-    DateFormat dataPadrao = DateFormat(r'MM/dd/yyyy HH:mm:ss');
+    mainFase = widget.fase;
+    mainExercicio = widget.exercicio;
     data = {
-      'inicio': dataPadrao.parse(faseJson['fase']['dataInicio']),
-      'fim': dataPadrao.parse(faseJson['fase']['dataFinal']),
+      'inicio': mainFase.dataInicio,
+      'fim': mainFase.dataFinal,
       'atual': DateTime.now(),
     };
-
-    print(faseJson);
-
-    print(faseJson["fase"]['exercicioIdExercicio']);
 
     print(data);
     print(
@@ -42,13 +33,17 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
   }
 
   Widget build(BuildContext context) {
-    irParaTreino(String appbartext,
-        [String numtreino = "exemplo-tr", jsonFase]) async {
+    irParaTreino(
+      String appbartext, [
+      String numtreino = "exemplo-tr",
+      Fase mainFase,
+      Exercicio mainExercicio,
+    ]) async {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              InstrucoesExercicio(appbartext, numtreino, jsonFase),
+          builder: (context) => InstrucoesExercicio(
+              appbartext, numtreino, mainFase, mainExercicio),
         ),
       );
     }
@@ -70,10 +65,11 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
             () => irParaTreino(
               exercicio,
               e,
-              faseJson,
+              mainFase,
+              mainExercicio,
             ),
-            ((fase != null) &&
-                (faseJson['fase']['exercicioIdExercicio'] == exercicioNum) &&
+            ((mainFase != null) &&
+                (mainExercicio.idExercicio == exercicioNum) &&
                 (data['atual'].compareTo(
                           data['inicio'],
                         ) >=
@@ -100,9 +96,9 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
 }
 
 class AbaTreinamento extends StatefulWidget {
-  final Map<String, dynamic> fase;
-
-  AbaTreinamento({this.fase});
+  final Fase fase;
+  final Exercicio exercicio;
+  AbaTreinamento({this.fase, this.exercicio});
 
   State<AbaTreinamento> createState() {
     return _SAbaTreinamento();

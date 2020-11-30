@@ -5,54 +5,48 @@ import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dar
 import 'telasDeExercicio.dart';
 
 class SExercicio10 extends SExercicioBase {
+  SExercicio10(int faseId, int exercicioId) : super(faseId, exercicioId);
+
   void iniciarExercicio() {
     definirRequisitos(2, exercicios["Ex10"], true);
   }
 
   @override
-  Widget build(BuildContext context) {
-    return myPopScope(
-      context: context,
-      home: Scaffold(
-        backgroundColor: backgroundColor,
-        appBar: stbAppBar(context, texto: "Exercicio 10"),
-        body: Stack(
+  Widget mainRouteBuild() {
+    return Stack(
+      children: [
+        Column(
           children: [
-            Column(
-              children: [
-                Spacer(
-                  flex: 1,
-                ),
-                (sequencia > 0)
-                    ? textInstruct(
-                        "Repita apenas os números que você ouvir na orelha esquerda")
-                    : textInstruct("Preste atenção na explicação."),
-                Spacer(
-                  flex: 1,
-                ),
-                VisorDeRespostas(
-                  respostasDadasL,
-                  direcao: VisorDirecao.HORIZONTAL,
-                ),
-                TecladoNumerico(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  aoPressionar:
-                      (sequencia > 0 || sons[sequencia].contains("Aviso"))
-                          ? (arr <= sequencia - 1)
-                              ? (String txt) => responder(txt)
-                              : null
-                          : null,
-                  textColor: Colors.white,
-                  backgroundColor: secondary,
-                  buttonsColor: corDeDestaque,
-                ),
-              ],
+            Spacer(
+              flex: 1,
             ),
-            if (sequencia == 0) jmpBtn(),
+            (sequencia > 0)
+                ? textInstruct(
+                    "Repita apenas os números que você ouvir na orelha esquerda")
+                : textInstruct("Preste atenção na explicação."),
+            Spacer(
+              flex: 1,
+            ),
+            VisorDeRespostas(
+              respostasDadasL,
+              direcao: VisorDirecao.HORIZONTAL,
+            ),
+            TecladoNumerico(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.5,
+              aoPressionar: (sequencia > 0 || sons[sequencia].contains("Aviso"))
+                  ? (arr <= sequencia - 1)
+                      ? (String txt) => responder(txt)
+                      : null
+                  : null,
+              textColor: Colors.white,
+              backgroundColor: secondary,
+              buttonsColor: corDeDestaque,
+            ),
           ],
         ),
-      ),
+        if (sequencia == 0) jmpBtn(),
+      ],
     );
   }
 }

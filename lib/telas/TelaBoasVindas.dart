@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:auditech_mobile/mainData.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Global/ApiClasses.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +11,9 @@ import 'CustomComponents/TelaBoasVindas/components.dart';
 
 class _TelaBoasVindasState extends State<TelaBoasVindas>
     with SingleTickerProviderStateMixin {
-  String usuario;
+  Usuario usuario;
+  Fase localFase;
+  Exercicio localExercicio;
   TabController controller;
   Widget _wait = Container(
     width: double.infinity,
@@ -21,7 +24,15 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
       size: 50.0,
     ),
   );
-  Map<String, String> localFase = {};
+
+  @override
+  void initState() {
+    super.initState();
+    usuario = widget.usuario;
+    //  Carrega os dados do usuário
+    baixarDados();
+    controller = TabController(length: 3, vsync: this);
+  }
 
   void baixarDados() async {
     _wait = Container(
@@ -34,19 +45,19 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
       ),
     );
     bool estaConectado = await conectado;
-    print(estaConectado);
+    print(usuario.id);
 
     await conectado.whenComplete(
       () async {
         print("teste");
         if (estaConectado) {
           usuario = widget.usuario;
-          Map localUsuario = jsonDecode(usuario);
-          int idUsuario = localUsuario["idUsuario"];
 
           http.Response fase;
           http.Response exercicio;
-          Future<http.Response> faseFuture = getFase(idUsuario);
+
+          String faseString, exercicioString;
+          Future<http.Response> faseFuture = getFase(usuario.id);
           faseFuture.then(
             (value) {
               fase = value;
@@ -57,7 +68,8 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
             () {
               setState(
                 () {
-                  localFase['fase'] = fase.body;
+                  faseString = fase.body;
+                  localFase = Fase.fromJson(jsonDecode(faseString));
                 },
               );
               print(localFase);
@@ -65,7 +77,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
           );
 
           Future<http.Response> exercicioFuture =
-              getExercicio(jsonDecode(fase.body)['exercicioIdExercicio']);
+              getExercicio(jsonDecode(faseString)['exercicioIdExercicio']);
           exercicioFuture.then(
             (value) {
               exercicio = value;
@@ -77,16 +89,18 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
             () {
               setState(
                 () {
-                  localFase['exercicio'] = exercicio.body;
+                  exercicioString = exercicio.body;
+                  localExercicio =
+                      Exercicio.fromJson(jsonDecode(exercicioString));
                   _wait = null;
                 },
               );
-              print(localFase);
+              print(localExercicio);
             },
           );
           List<String> faseBody = [
-            localFase['fase'],
-            localFase['exercicio'],
+            faseString,
+            exercicioString,
           ];
           widget.dados.setStringList(
             'fase',
@@ -95,25 +109,19 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
         } else if (widget.dados.containsKey("fase") && !estaConectado) {
           setState(() {
             List<String> dados = widget.dados.getStringList("fase");
-            localFase['fase'] = dados[0];
-            localFase['exercicio'] = dados[1];
+            localFase = Fase.fromJson(jsonDecode(dados[0]));
+            localExercicio = Exercicio.fromJson(jsonDecode(dados[1]));
             _wait = null;
           });
         }
       },
     );
+    print(localFase);
   }
+
+  List<Widget> widgetTabs;
 
   int firstBuild = 0;
-
-  @override
-  void initState() {
-    super.initState();
-
-    //  Carrega os dados do usuário
-    baixarDados();
-    controller = TabController(length: 3, vsync: this);
-  }
 
   @override
   void dispose() {
@@ -161,6 +169,15 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
     String cla = 'STreinamento$idExercicio';
     print();
     */
+
+    widgetTabs = [
+      AbaBoasVindas(),
+      AbaTreinamento(
+        fase: localFase,
+        exercicio: localExercicio,
+      ),
+      AbaEstatisticas(),
+    ];
 
     return WillPopScope(
       onWillPop: () {
@@ -228,11 +245,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
           children: [
             TabBarView(
               controller: controller,
-              children: [
-                AbaBoasVindas(),
-                AbaTreinamento(fase: localFase),
-                AbaEstatisticas(),
-              ],
+              children: [...widgetTabs],
             ),
             Align(
               alignment: Alignment(0.85, 0.85),
@@ -246,7 +259,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
 }
 
 class TelaBoasVindas extends StatefulWidget {
-  final String usuario;
+  final Usuario usuario;
   final SharedPreferences dados;
   TelaBoasVindas({this.usuario, this.dados});
   State<TelaBoasVindas> createState() {

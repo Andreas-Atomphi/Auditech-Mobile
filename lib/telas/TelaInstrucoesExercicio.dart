@@ -1,4 +1,5 @@
 import 'package:auditech_mobile/mainData.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Global/ApiClasses.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,8 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
   //Argumentos da clase
   String irpara;
   String appbartext;
-  Map fase;
+  Fase fase;
+  Exercicio mainExercicio;
 
   //Chamando o construtor da classe
   _SInstrucoesExercicio();
@@ -21,6 +23,7 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
     irpara = widget.irpara;
     appbartext = widget.appbartext;
     fase = widget.fase;
+    mainExercicio = widget.exercicio;
   }
 
   @override
@@ -33,22 +36,29 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
     print("fase: ");
     print(fase);
     //Método que será chamado quando o botão ir para o exercício for pressionado
-    void irParaTreino([String treinamento]) {
-      faseId = fase["fase"]["idFase"];
+    void irParaTreino(int ex, int fase) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: routes[treinamento],
+          builder: (context) => ExercicioCentral(
+            exercicio: ex,
+            idFase: fase,
+          ),
         ),
       );
     }
 
     // Retorna os componentes para texto
     TextSpan formatRules(String str) {
+      print("executando formatRules");
+      print("${mainExercicio.toJson}");
+      print(str);
       String text = str.substring(
         str.indexOf(RegExp(r'\".*\"')) + 1,
         str.indexOf(RegExp(r'\"\}')),
       );
+
+      print("primeiro passo");
 
       String size = str.substring(
         str.indexOf(RegExp(r'\:\s.*[0-9]')) + 1,
@@ -98,7 +108,7 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
                       text: WidgetSpan(
                         child: RichText(
                           text: formatRules(
-                              "${widget.fase['exercicio']['descricaoExercicio']}"),
+                              "${mainExercicio.descricaoExercicio}"),
                         ),
                       ),
                     ),
@@ -119,7 +129,10 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 color: corDeDestaque,
-                onPressed: () => irParaTreino(irpara),
+                onPressed: () => irParaTreino(
+                  mainExercicio.idExercicio,
+                  fase.idFase,
+                ),
               ),
             ),
             Spacer(
@@ -136,13 +149,15 @@ class InstrucoesExercicio extends StatefulWidget {
   //Argumentos da classe
   final String appbartext;
   final String irpara;
-  final Map fase;
+  final Fase fase;
+  final Exercicio exercicio;
 
   //Chama o construtor da classe
   InstrucoesExercicio([
     this.appbartext = "Exemplo", //Texto da Appbar
     this.irpara = "treinamento-exemplo", //define qual tela que deve ir
     this.fase,
+    this.exercicio,
   ]);
 
   _SInstrucoesExercicio createState() {

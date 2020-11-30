@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:auditech_mobile/telas/CustomComponents/Global/ApiClasses.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +105,7 @@ class _STelaLogin extends State<TelaLogin> {
       context,
       MaterialPageRoute(
         builder: (context) => TelaBoasVindas(
-          usuario: usuario.body,
+          usuario: Usuario.fromJson(jsonDecode(usuario.body)),
           dados: dados,
         ),
       ),
@@ -149,23 +150,27 @@ class _STelaLogin extends State<TelaLogin> {
       }
     }();
 
+    Future<void> checkAndEnter(log, snh) async {
+      var val;
+      val = await usuarioExiste(log, snh);
+      await usuarioExiste(log, snh).whenComplete(
+        () {
+          usrExiste = val;
+          if (usrExiste['bool'] == false)
+            setState(() {});
+          else if (usrExiste['bool'] != null) if (usrExiste['bool'] == true) {
+            entrar(usrExiste['usr'], context: context);
+          }
+        },
+      );
+    }
+
     var keyboard = MediaQuery.of(context).viewInsets.bottom;
     isKeyboardOn = keyboard > 0;
 
     FormLogin form = FormLogin(
       actionWhenSubmit: (String log, String snh) async {
-        var val;
-        val = await usuarioExiste(log, snh);
-        await usuarioExiste(log, snh).whenComplete(
-          () {
-            usrExiste = val;
-            if (usrExiste['bool'] == false)
-              setState(() {});
-            else if (usrExiste['bool'] != null) if (usrExiste['bool'] == true) {
-              entrar(usrExiste['usr'], context: context);
-            }
-          },
-        );
+        checkAndEnter(log, snh);
       },
     );
 
@@ -212,6 +217,12 @@ class _STelaLogin extends State<TelaLogin> {
       backgroundColor: Color.fromRGBO(22, 71, 85, 1),
       body: Stack(
         children: [
+          ButtonLogin(
+            "Entrar teste",
+            () => checkAndEnter("21354687900", "20060530"),
+            false,
+            alignment: Alignment(-1, -1),
+          ),
           Align(
             alignment: Alignment(0, -0.75),
             child: Container(
