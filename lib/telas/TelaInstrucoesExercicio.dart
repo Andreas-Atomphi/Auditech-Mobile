@@ -23,7 +23,7 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
     irpara = widget.irpara;
     appbartext = widget.appbartext;
     fase = widget.fase;
-    mainExercicio = widget.exercicio;
+    mainExercicio = fase.exercicio;
   }
 
   @override
@@ -36,13 +36,12 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
     print("fase: ");
     print(fase);
     //Método que será chamado quando o botão ir para o exercício for pressionado
-    void irParaTreino(int ex, int fase) {
+    void irParaTreino(Fase fase) {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ExercicioCentral(
-            exercicio: ex,
-            idFase: fase,
+            fase: fase,
           ),
         ),
       );
@@ -130,8 +129,7 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
                 ),
                 color: corDeDestaque,
                 onPressed: () => irParaTreino(
-                  mainExercicio.idExercicio,
-                  fase.idFase,
+                  fase,
                 ),
               ),
             ),

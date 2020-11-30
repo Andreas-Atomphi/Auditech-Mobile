@@ -1,3 +1,5 @@
+import 'package:auditech_mobile/telas/CustomComponents/Global/ApiClasses.dart';
+
 import 'telasDeExercicio.dart';
 import 'package:flutter/material.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dart';
@@ -5,7 +7,7 @@ import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dar
 class SExercicio8 extends SExercicioBase {
   List<dynamic> selecoes;
 
-  SExercicio8(int faseId, int exercicioId) : super(faseId, exercicioId);
+  SExercicio8(Fase fase) : super(fase);
 
   @override
   void iniciarExercicio() {

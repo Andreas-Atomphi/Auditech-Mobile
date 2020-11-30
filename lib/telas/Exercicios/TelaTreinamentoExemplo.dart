@@ -1,4 +1,5 @@
 import 'package:auditech_mobile/mainData.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Global/ApiClasses.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dart';
 import 'package:auditech_mobile/telas/Exercicios/telasDeExercicio.dart';
@@ -6,7 +7,7 @@ import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 
 class _STreinamento extends SExercicioBase {
-  _STreinamento(int faseId, int exercicioId) : super(faseId, exercicioId);
+  _STreinamento(Fase fase) : super(fase);
 
   @override
   Widget mainRouteBuild() {

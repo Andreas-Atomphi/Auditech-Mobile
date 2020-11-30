@@ -13,7 +13,6 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
     with SingleTickerProviderStateMixin {
   Usuario usuario;
   Fase localFase;
-  Exercicio localExercicio;
   TabController controller;
   Widget _wait = Container(
     width: double.infinity,
@@ -90,12 +89,12 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
               setState(
                 () {
                   exercicioString = exercicio.body;
-                  localExercicio =
+                  localFase.exercicio =
                       Exercicio.fromJson(jsonDecode(exercicioString));
                   _wait = null;
                 },
               );
-              print(localExercicio);
+              print(localFase.exercicio);
             },
           );
           List<String> faseBody = [
@@ -110,7 +109,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
           setState(() {
             List<String> dados = widget.dados.getStringList("fase");
             localFase = Fase.fromJson(jsonDecode(dados[0]));
-            localExercicio = Exercicio.fromJson(jsonDecode(dados[1]));
+            localFase.exercicio = Exercicio.fromJson(jsonDecode(dados[1]));
             _wait = null;
           });
         }
@@ -174,7 +173,6 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
       AbaBoasVindas(),
       AbaTreinamento(
         fase: localFase,
-        exercicio: localExercicio,
       ),
       AbaEstatisticas(),
     ];

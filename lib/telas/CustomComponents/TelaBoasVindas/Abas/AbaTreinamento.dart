@@ -12,7 +12,7 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
   void initState() {
     super.initState();
     mainFase = widget.fase;
-    mainExercicio = widget.exercicio;
+    mainExercicio = mainFase.exercicio;
     data = {
       'inicio': mainFase.dataInicio,
       'fim': mainFase.dataFinal,
@@ -97,8 +97,7 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
 
 class AbaTreinamento extends StatefulWidget {
   final Fase fase;
-  final Exercicio exercicio;
-  AbaTreinamento({this.fase, this.exercicio});
+  AbaTreinamento({this.fase});
 
   State<AbaTreinamento> createState() {
     return _SAbaTreinamento();

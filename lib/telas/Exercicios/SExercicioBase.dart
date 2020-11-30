@@ -56,8 +56,7 @@ extension StringList on List<String> {
 abstract class SExercicioBase extends State<ExercicioCentral>
     with Diagnosticable {
   //Variáveis principais
-  int exercicioId;
-  int faseId;
+  Fase fase;
   Playback playBack;
   int numRPS = 3;
   List<String> sons = List.generate(1, (i) => "");
@@ -69,7 +68,7 @@ abstract class SExercicioBase extends State<ExercicioCentral>
   String respostasDadas;
   final TreinamentoFase paraEnviar = TreinamentoFase();
 
-  SExercicioBase(this.faseId, this.exercicioId);
+  SExercicioBase(this.fase);
 
   @override
   @mustCallSuper
@@ -79,8 +78,8 @@ abstract class SExercicioBase extends State<ExercicioCentral>
     //String dtExec = DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now());
     //Atribui a data de execução
     paraEnviar.dataExecucao = DateTime.now();
-    paraEnviar.faseIdFase = faseId;
-    paraEnviar.exercicioIdExercicio = exercicioId;
+    paraEnviar.fase = fase;
+    paraEnviar.exercicio = fase.exercicio;
     print(paraEnviar.toJson);
 
     // Instancia playBack com um método pra respostas e áudio
@@ -417,7 +416,8 @@ abstract class SExercicioBase extends State<ExercicioCentral>
     return myPopScope(
       context: context,
       home: Scaffold(
-        appBar: stbAppBar(context, texto: "Exercicio $exercicioId"),
+        appBar: stbAppBar(context,
+            texto: "Exercicio ${fase.exercicio.idExercicio}"),
         body: mainRouteBuild(),
       ),
     );

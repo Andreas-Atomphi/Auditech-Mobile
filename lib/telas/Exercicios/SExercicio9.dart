@@ -1,3 +1,4 @@
+import 'package:auditech_mobile/telas/CustomComponents/Global/ApiClasses.dart';
 import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:auditech_mobile/mainData.dart';
@@ -5,7 +6,7 @@ import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dar
 import 'telasDeExercicio.dart';
 
 class SExercicio9 extends SExercicioBase {
-  SExercicio9(int faseId, int exercicioId) : super(faseId, exercicioId);
+  SExercicio9(Fase fase) : super(fase);
 
   void iniciarExercicio() {
     definirRequisitos(2, exercicios["Ex9"], true);

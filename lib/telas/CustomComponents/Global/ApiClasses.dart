@@ -11,28 +11,29 @@ abstract class ApiClass {
 }
 
 class TreinamentoFase extends ApiClass {
-  int faseIdFase, exercicioIdExercicio;
+  Fase fase;
+  Exercicio exercicio;
   String respostasDadas;
   DateTime dataExecucao;
 
   TreinamentoFase({
-    this.faseIdFase,
-    this.exercicioIdExercicio,
+    this.fase,
+    this.exercicio,
     this.respostasDadas,
     this.dataExecucao,
   });
 
   TreinamentoFase.fromJson(Map<String, dynamic> obj)
-      : faseIdFase = obj["faseIdFase"],
-        exercicioIdExercicio = obj["exercicioIdExercicio"],
+      : fase = Fase(idFase: obj["faseIdFase"]),
+        exercicio = Exercicio(idExercicio: obj["exercicioIdExercicio"]),
         respostasDadas = obj["respostaTreino"],
         dataExecucao = DateTime.parse(
           obj["dataExecucao"],
         );
 
   Map<String, dynamic> get toJson => <String, dynamic>{
-        "faseIdFase": faseIdFase,
-        "exercicioIdExercicio": exercicioIdExercicio,
+        "faseIdFase": fase.idFase,
+        "exercicioIdExercicio": exercicio.idExercicio,
         "respostaTreino": respostasDadas,
         "dataExecucao": _dateFormat(dataExecucao),
       };
@@ -72,30 +73,30 @@ class Fase extends ApiClass {
       numDias,
       qtdeTreinoDia,
       intervaloTreinoHora,
-      exercicioIdExercicio,
       tratamentoIdTratamento;
+  Exercicio exercicio;
   double pesoTreino, pesoDesafio;
   DateTime dataInicio, dataFinal;
 
-  Fase(
+  Fase({
     this.idFase,
     this.numDias,
     this.qtdeTreinoDia,
     this.intervaloTreinoHora,
-    this.exercicioIdExercicio,
+    this.exercicio,
     this.tratamentoIdTratamento,
     this.pesoDesafio,
     this.pesoTreino,
     this.dataInicio,
     this.dataFinal,
-  );
+  });
 
   Fase.fromJson(Map<String, dynamic> json)
       : idFase = json["idFase"],
         numDias = json["numDias"],
         qtdeTreinoDia = json["qtdeTreinoDia"],
         intervaloTreinoHora = json["intervaloTreinoHora"],
-        exercicioIdExercicio = json["exercicioIdExercicio"],
+        exercicio = Exercicio(idExercicio: json["exercicioIdExercicio"]),
         tratamentoIdTratamento = json["tratamentoIdTratamento"],
         pesoDesafio = json["pesoDesafio"],
         pesoTreino = json["pesoTreino"],
@@ -108,7 +109,7 @@ class Fase extends ApiClass {
         "numDias": numDias,
         "qtdeTreinoDia": qtdeTreinoDia,
         "intervaloTreinoHora": intervaloTreinoHora,
-        "exercicioIdExercicio": exercicioIdExercicio,
+        "exercicioIdExercicio": exercicio.idExercicio,
         "tratamentoIdTratamento": tratamentoIdTratamento,
         "pesoDesafio": pesoDesafio,
         "pesoTreino": pesoTreino,
@@ -120,13 +121,13 @@ class Fase extends ApiClass {
 class Exercicio extends ApiClass {
   int idExercicio, midiaIdMidia;
   String descricaoExercicio, padraoRespExercicio, nomeExercicio;
-  Exercicio(
+  Exercicio({
     this.idExercicio,
     this.midiaIdMidia,
     this.nomeExercicio,
     this.descricaoExercicio,
     this.padraoRespExercicio,
-  );
+  });
 
   Exercicio.fromJson(Map<String, dynamic> json)
       : idExercicio = json["idExercicio"],
