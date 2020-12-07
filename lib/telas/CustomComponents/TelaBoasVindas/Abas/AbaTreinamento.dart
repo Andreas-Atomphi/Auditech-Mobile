@@ -19,13 +19,13 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
       'atual': DateTime.now(),
     };
 
-    print(data);
-    print(
+    logPrint(data);
+    logPrint(
       data['atual'].compareTo(
         data['inicio'],
       ),
     );
-    print(
+    logPrint(
       data['atual'].compareTo(
         data['fim'],
       ),

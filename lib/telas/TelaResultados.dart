@@ -19,7 +19,6 @@ class _SResultados extends State {
     }
 
     return Scaffold(
-      backgroundColor: backgroundColor,
       appBar: CAppBar(
         "Resultados",
         centralizar: true,

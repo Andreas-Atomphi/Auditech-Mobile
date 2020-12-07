@@ -1,4 +1,8 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:auditech_mobile/telas/TelaLogin.dart';
+import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,10 +22,22 @@ class MainApp extends StatelessWidget with PortraitModeMixin {
       SystemUiOverlayStyle.light,
     );
 
+    corDeDestaque = (themeMode == ThemeMode.light)
+        ? Color.fromRGBO(255, 152, 0, 1)
+        : Colors.orange;
+    bool conectou;
+    Future<bool> _asyncCall = Future.delayed(
+      Duration(seconds: 5),
+      () {
+        return conectado;
+      },
+    );
+    () async {
+      conectou = await _asyncCall;
+    }();
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
-
         if (!currentFocus.hasPrimaryFocus &&
             currentFocus.focusedChild != null) {
           FocusManager.instance.primaryFocus.unfocus();
@@ -33,21 +49,24 @@ class MainApp extends StatelessWidget with PortraitModeMixin {
         initialRoute: "principal",
         routes: routes,
         home: TelaLogin(),
-        themeMode: ThemeMode.light,
+        themeMode: themeMode,
+        // * Tema escuro
         darkTheme: ThemeData(
           iconTheme: IconThemeData(
             color: Colors.white,
           ),
-          primaryColor: primary.subRGB(255),
-          accentColor: secondary.subRGB(255),
-          backgroundColor: backgroundColor,
+          primaryColor: primary.subRGB(20),
+          accentColor:
+              secondary.subRGB(150).sumRGB(30).withBlue(50).withGreen(40),
+          backgroundColor: backgroundColor.subRGB(150),
           brightness: Brightness.dark,
           primaryTextTheme: TextTheme(
             bodyText1: TextStyle(
               color: Colors.white,
             ),
           ),
-          scaffoldBackgroundColor: backgroundColor,
+          buttonColor: primary.subRGB(90).withBlue(130).withGreen(120),
+          scaffoldBackgroundColor: backgroundColor.subRGB(150),
           appBarTheme: AppBarTheme(
             brightness: Brightness.dark,
             centerTitle: true,
@@ -68,15 +87,17 @@ class MainApp extends StatelessWidget with PortraitModeMixin {
             labelColor: Colors.white,
           ),
           floatingActionButtonTheme: FloatingActionButtonThemeData(
-            backgroundColor: secondary,
+            backgroundColor: Theme.of(context).accentColor,
           ),
         ),
+        // * Tema claro
         theme: ThemeData(
           iconTheme: IconThemeData(
             color: Colors.white,
           ),
           primaryColor: primary,
           accentColor: secondary,
+          buttonColor: primary,
           backgroundColor: backgroundColor,
           brightness: Brightness.light,
           fontFamily: "OpenSans",
@@ -106,7 +127,7 @@ class MainApp extends StatelessWidget with PortraitModeMixin {
             labelColor: Colors.white,
           ),
           floatingActionButtonTheme: FloatingActionButtonThemeData(
-            backgroundColor: secondary,
+            backgroundColor: Theme.of(context).accentColor,
           ),
         ),
       ),

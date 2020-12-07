@@ -12,8 +12,14 @@ Brightness theme = Brightness.light;
 Color primary = Color.fromRGBO(0, 200, 190, 1); //Variável para a cor global
 Color secondary =
     Color.fromRGBO(0, 150, 160, 1); // Variável para cor secundária
-Color corDeDestaque =
-    Color.fromRGBO(255, 152, 0, 1); // Variável para cor de destaque do app
+Color corDeDestaque;
+ThemeMode themeMode = ThemeMode.system;
+
+bool log = false;
+
+void logPrint(dynamic toPrint) {
+  if (log) print(toPrint);
+}
 
 extension MapAddAll on Map<String, String> {
   Map<String, String> generate(
@@ -37,6 +43,7 @@ Map<String, String> routesExercicios = <String, String>{}.generate(
 );
 
 Map<String, Widget Function(BuildContext context)> routes = {
+  "sem-conexao": (context) => TelaSemConexao(),
   "principal": (context) => TelaLogin(),
   "boas-vindas": (context) => TelaBoasVindas(),
   "aviso-tr": (context) => InstrucoesExercicio(),
@@ -144,13 +151,29 @@ void _enableRotation() {
 
 Future<bool> get conectado async {
   bool toReturn;
-  ConnectivityResult coneccao = await Connectivity().checkConnectivity();
-  if (coneccao == ConnectivityResult.mobile ||
-      coneccao == ConnectivityResult.wifi) {
-    toReturn = true;
-  } else if (coneccao == ConnectivityResult.none) {
-    toReturn = false;
-  }
+  await Connectivity().checkConnectivity().then((value) {
+    if (value == ConnectivityResult.mobile ||
+        value == ConnectivityResult.wifi) {
+      toReturn = true;
+    } else if (value == ConnectivityResult.none) {
+      toReturn = false;
+    }
+  });
+
+  return toReturn;
+}
+
+bool get syncConectado {
+  bool toReturn;
+  Connectivity().checkConnectivity().then((value) {
+    if (value == ConnectivityResult.mobile ||
+        value == ConnectivityResult.wifi) {
+      toReturn = true;
+    } else if (value == ConnectivityResult.none) {
+      toReturn = false;
+    }
+  });
+
   return toReturn;
 }
 

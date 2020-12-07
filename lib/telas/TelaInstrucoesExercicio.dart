@@ -33,8 +33,8 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
       Navigator.pop(context);
     }
 
-    print("fase: ");
-    print(fase);
+    logPrint("fase: ");
+    logPrint(fase);
     //Método que será chamado quando o botão ir para o exercício for pressionado
     void irParaTreino(Fase fase) {
       Navigator.push(
@@ -49,15 +49,15 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
 
     // Retorna os componentes para texto
     TextSpan formatRules(String str) {
-      print("executando formatRules");
-      print("${mainExercicio.toJson}");
-      print(str);
+      logPrint("executando formatRules");
+      logPrint("${mainExercicio.toJson}");
+      logPrint(str);
       String text = str.substring(
         str.indexOf(RegExp(r'\".*\"')) + 1,
         str.indexOf(RegExp(r'\"\}')),
       );
 
-      print("primeiro passo");
+      logPrint("primeiro passo");
 
       String size = str.substring(
         str.indexOf(RegExp(r'\:\s.*[0-9]')) + 1,
@@ -83,7 +83,6 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
     return WillPopScope(
       onWillPop: () => _backPress(),
       child: Scaffold(
-        backgroundColor: backgroundColor, //define a cor de fundo
         appBar: CAppBar(
           //Chama o componente CAppBar (para dúvidas: Ctrl+Click no nome da classe)
           appbartext, //Texto da appbar
@@ -114,7 +113,6 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
                   ],
                 ),
                 corDeDestaque,
-                secondary,
                 Colors.white),
             Spacer(
               flex: 1,

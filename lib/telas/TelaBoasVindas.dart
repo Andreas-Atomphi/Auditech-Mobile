@@ -44,11 +44,11 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
       ),
     );
     bool estaConectado = await conectado;
-    print(usuario.id);
+    logPrint(usuario.id);
 
     await conectado.whenComplete(
       () async {
-        print("teste");
+        logPrint("teste");
         if (estaConectado) {
           usuario = widget.usuario;
 
@@ -71,7 +71,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
                   localFase = Fase.fromJson(jsonDecode(faseString));
                 },
               );
-              print(localFase);
+              logPrint(localFase);
             },
           );
 
@@ -80,7 +80,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
           exercicioFuture.then(
             (value) {
               exercicio = value;
-              print(exercicio.body);
+              logPrint(exercicio.body);
             },
           );
 
@@ -94,7 +94,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
                   _wait = null;
                 },
               );
-              print(localFase.exercicio);
+              logPrint(localFase.exercicio);
             },
           );
           List<String> faseBody = [
@@ -115,7 +115,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
         }
       },
     );
-    print(localFase);
+    logPrint(localFase);
   }
 
   List<Widget> widgetTabs;
@@ -134,7 +134,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
       () async {
         await widget.dados.clear().whenComplete(
           () {
-            print("limpo");
+            logPrint("limpo");
             Navigator.pop(context);
             Navigator.pop(context);
           },
@@ -166,7 +166,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
     /*
     int idExercicio = 1;
     String cla = 'STreinamento$idExercicio';
-    print();
+    logPrint();
     */
 
     widgetTabs = [
@@ -215,8 +215,8 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
                 }
               : null,
         ),
-        backgroundColor: backgroundColor,
         drawer: DrawerWelcome(
+          nome: usuario.nome,
           mapDados: [
             {"texto": "Configurações", "metodo": () => null},
             {"texto": "Sobre DPAC", "metodo": () => null},

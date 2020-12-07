@@ -24,7 +24,7 @@ class ButtonLogin extends StatelessWidget {
                 child: Text(
                   texto,
                   style: TextStyle(
-                    color: Colors.accents[7],
+                    color: Theme.of(context).buttonColor,
                     decoration: TextDecoration.underline,
                   ),
                 ),
@@ -44,7 +44,7 @@ class ButtonLogin extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                color: Colors.accents[7].subRGB(50),
+                color: Theme.of(context).buttonColor,
               ),
             ),
           );

@@ -80,7 +80,7 @@ abstract class SExercicioBase extends State<ExercicioCentral>
     paraEnviar.dataExecucao = DateTime.now();
     paraEnviar.fase = fase;
     paraEnviar.exercicio = fase.exercicio;
-    print(paraEnviar.toJson);
+    logPrint(paraEnviar.toJson);
 
     // Instancia playBack com um método pra respostas e áudio
     instanciarPlayback();
@@ -139,7 +139,7 @@ abstract class SExercicioBase extends State<ExercicioCentral>
       throw e;
     }
 
-    print("quantidades de som nesse exercícios: ${sons.length}");
+    logPrint("quantidades de som nesse exercícios: ${sons.length}");
   }
 
   // Um getter dos assets
@@ -183,8 +183,8 @@ abstract class SExercicioBase extends State<ExercicioCentral>
           respostas++;
           arr = respostas ~/ numRPS;
           subarr = respostas % numRPS;
-          print(respostasDadasL);
-          print(subarr);
+          logPrint(respostasDadasL);
+          logPrint(subarr);
         }
       },
     );
@@ -308,7 +308,7 @@ abstract class SExercicioBase extends State<ExercicioCentral>
     return Container(
       width: w,
       height: h * 0.5,
-      color: secondary,
+      color: Theme.of(context).accentColor,
       child: Column(
         children: [
           ...respostas.map(
@@ -366,12 +366,12 @@ abstract class SExercicioBase extends State<ExercicioCentral>
     paraEnviar.respostasDadas =
         paraEnviar.respostasDadas.replaceAll(RegExp(r'\|\|'), '|');
     var enviar = paraEnviar.toJson;
-    print(enviar["respostaTreino"]);
+    logPrint(enviar["respostaTreino"]);
     var jsonParaEnviar = json.encode(enviar);
-    print(jsonParaEnviar);
+    logPrint(jsonParaEnviar);
     var respostaServidor = postResposta(enviar);
     respostaServidor.then((value) {
-      print(value.body);
+      logPrint(value.body);
     });
     await respostaServidor.whenComplete(() {
       irParaResultados(context);

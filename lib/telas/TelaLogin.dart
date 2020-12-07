@@ -23,6 +23,8 @@ class _STelaLogin extends State<TelaLogin> {
   // * Variável para saber se o teclado está na tela ou não.
   bool isKeyboardOn;
 
+  bool _wait = true;
+
   // Formata o cpf
   String cpfFormat(String str) {
     if (str == null) return null;
@@ -61,7 +63,7 @@ class _STelaLogin extends State<TelaLogin> {
       "usr": null,
     };
     if ((log != null && snh != null) && (log.length >= 11 && snh.length >= 8)) {
-      print("$log $snh");
+      logPrint("$log $snh");
       final String dataTeste = formatoData.parse("2006/05/30").toString();
       //Formata os valores da TextField
       String dataOficial =
@@ -78,17 +80,17 @@ class _STelaLogin extends State<TelaLogin> {
         "dataNascimento": dataOficial,
       };
 
-      print(corpo['dataNascimento']);
-      print(corpo['cpf']);
+      logPrint(corpo['dataNascimento']);
+      logPrint(corpo['cpf']);
 
       // Executa a requisição
       http.Response existe =
           await getUsuario(corpo['cpf'], corpo['dataNascimento']);
 
-      print(existe.body);
+      logPrint(existe.body);
 
       if (existe.statusCode == 200) {
-        print("200 Ok!");
+        logPrint("200 Ok!");
         // Checa se o usuário existe e se é um paciente
         if (jsonDecode(existe.body)["idTipoUsuario"] == 2) {
           toReturn['bool'] = true;
@@ -119,7 +121,7 @@ class _STelaLogin extends State<TelaLogin> {
     if (!dados.containsKey('firstAccess'))
       dados.setBool('firstAccess', false);
     else {
-      print("checa os dados");
+      logPrint("checa os dados");
       if (dados.containsKey('log')) if (dados.containsKey('anv')) {
         if (await conectado) return true;
       }
@@ -135,18 +137,35 @@ class _STelaLogin extends State<TelaLogin> {
 
   Widget build(BuildContext context) {
     () async {
-      if (firstBuild) if (await haveData()) {
-        usuarioExiste(
-          dados.getString('log'),
-          dados.getString('anv'),
-        ).then(
-          (value) {
-            usrExiste['bool'] = value;
-            if (usrExiste['bool'] != null) if (usrExiste['bool'] == true) {
-              entrar(usrExiste['usr'], context: context);
-            }
-          },
-        );
+      if (firstBuild) {
+        if (!await conectado) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: routes["sem-conexao"],
+            ),
+          );
+        } else {
+          setState(
+            () {
+              _wait = false;
+            },
+          );
+        }
+
+        if (await haveData()) {
+          usuarioExiste(
+            dados.getString('log'),
+            dados.getString('anv'),
+          ).then(
+            (value) {
+              usrExiste['bool'] = value;
+              if (usrExiste['bool'] != null) if (usrExiste['bool'] == true) {
+                entrar(usrExiste['usr'], context: context);
+              }
+            },
+          );
+        }
       }
     }();
 
@@ -200,9 +219,9 @@ class _STelaLogin extends State<TelaLogin> {
     Size screen = MediaQuery.of(context).size;
     Container loginContainer = Container(
       padding: EdgeInsets.only(top: 30, bottom: 30),
-      color: secondary,
       height: (isKeyboardOn) ? (screen.height * 0.483) : (screen.height * 0.45),
       width: screen.width,
+      color: Theme.of(context).accentColor,
       child: form.setMyComponents(
         [
           ...defaultForm,
@@ -214,43 +233,48 @@ class _STelaLogin extends State<TelaLogin> {
 
     return Scaffold(
       appBar: CAppBar("Login"),
-      backgroundColor: Color.fromRGBO(22, 71, 85, 1),
       body: Stack(
         children: [
-          ButtonLogin(
-            "Entrar teste",
-            () => checkAndEnter("21354687900", "20060530"),
-            false,
-            alignment: Alignment(-1, -1),
-          ),
-          Align(
-            alignment: Alignment(0, -0.75),
-            child: Container(
-              width: tamanhoRelativoL(200, context),
-              height: tamanhoRelativoL(200, context),
-              child: Image.asset("assets/images/Logo_Transparent.png"),
+          if (_wait)
+            Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height)
+          else ...[
+            ButtonLogin(
+              "Entrar teste",
+              () => checkAndEnter("21354687900", "20060530"),
+              false,
+              alignment: Alignment(-1, -1),
             ),
-          ),
-          Column(
-            children: [
-              Spacer(
-                flex: 1,
+            Align(
+              alignment: Alignment(0, -0.75),
+              child: Container(
+                width: tamanhoRelativoL(200, context),
+                height: tamanhoRelativoL(200, context),
+                child: Image.asset("assets/images/Logo_Transparent.png"),
               ),
-              loginContainer,
-              if (isKeyboardOn)
+            ),
+            Column(
+              children: [
                 Spacer(
                   flex: 1,
                 ),
-            ],
-          ),
-          Container(
-            child: Text(
-              "desenvolvido por: H.A.W.Ga.M",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white),
+                loginContainer,
+                if (isKeyboardOn)
+                  Spacer(
+                    flex: 1,
+                  ),
+              ],
             ),
-            alignment: Alignment(-0.95, 0.99),
-          ),
+            Container(
+              child: Text(
+                "desenvolvido por: H.A.W.Ga.M",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white),
+              ),
+              alignment: Alignment(-0.95, 0.99),
+            ),
+          ],
         ],
       ),
     );

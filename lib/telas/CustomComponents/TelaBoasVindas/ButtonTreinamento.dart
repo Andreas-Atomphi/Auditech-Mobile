@@ -30,7 +30,9 @@ class ButtonTreinamento extends StatelessWidget {
             fontSize: 17,
           ),
         ),
-        color: (_ativado && aoPressionar != null) ? corDeDestaque : secondary,
+        color: (_ativado && aoPressionar != null)
+            ? corDeDestaque
+            : Theme.of(context).scaffoldBackgroundColor,
       ),
     );
   }

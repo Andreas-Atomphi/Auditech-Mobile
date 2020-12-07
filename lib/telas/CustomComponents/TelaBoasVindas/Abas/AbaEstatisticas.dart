@@ -50,30 +50,6 @@ class AbaEstatisticas extends StatelessWidget {
             "d": <double>[5, 5, 4],
             "t": "Exercício 3"
           },
-          {
-            "d": <double>[7, 4, 3],
-            "t": "Exercício 4"
-          },
-          {
-            "d": <double>[7, 3, 4],
-            "t": "Exercício 5"
-          },
-          {
-            "d": <double>[2, 7, 5],
-            "t": "Exercício 6"
-          },
-          {
-            "d": <double>[2, 7, 5],
-            "t": "Exercício 7"
-          },
-          {
-            "d": <double>[2, 7, 5],
-            "t": "Exercício 8"
-          },
-          {
-            "d": <double>[2, 7, 5],
-            "t": "Exercício 9"
-          },
         ] ^
         graf;
 

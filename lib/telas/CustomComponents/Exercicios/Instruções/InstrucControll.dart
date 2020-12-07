@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class InstrucControll extends StatelessWidget {
   final Widget visor;
-  final Color btnColors, bgColor, textColor;
+  final Color btnColors, textColor;
 
-  InstrucControll(this.visor, this.btnColors, this.bgColor, this.textColor);
+  InstrucControll(this.visor, this.btnColors, this.textColor);
 
   Widget build(BuildContext context) {
     return Container(
-      color: bgColor,
+      color: Theme.of(context).accentColor,
       padding: EdgeInsets.all(10),
       child: Column(
         children: [

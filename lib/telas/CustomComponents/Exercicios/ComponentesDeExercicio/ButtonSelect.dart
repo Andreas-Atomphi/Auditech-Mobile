@@ -1,3 +1,4 @@
+import 'package:auditech_mobile/mainData.dart';
 import 'package:flutter/material.dart';
 
 class SelectButton extends StatelessWidget {
@@ -13,7 +14,6 @@ class SelectButton extends StatelessWidget {
     this.aoPressionar, {
     this.cor = const <String, Color>{
       "texto": Colors.white,
-      "fundo": Colors.orange,
     },
   });
 
@@ -25,8 +25,12 @@ class SelectButton extends StatelessWidget {
       child: RaisedButton(
         child: Text(texto),
         onPressed: aoPressionar,
-        color: (aoPressionar == null) ? Colors.cyan[800] : cor["fundo"],
-        textColor: (aoPressionar == null) ? Colors.cyan[600] : cor["texto"],
+        color: (aoPressionar == null)
+            ? Theme.of(context).accentColor
+            : corDeDestaque,
+        textColor: (aoPressionar == null)
+            ? Theme.of(context).primaryColor
+            : cor["texto"],
         elevation: 0.0,
       ),
     );
