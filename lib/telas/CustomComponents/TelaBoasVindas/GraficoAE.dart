@@ -30,7 +30,8 @@ class GraficoAE extends Container {
             centerText: titulo,
             chartValuesOptions: ChartValuesOptions(
               showChartValuesInPercentage: true,
-              showChartValuesOutside: true,
+              chartValueBackgroundColor: Colors.purple,
+              chartValueStyle: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         );

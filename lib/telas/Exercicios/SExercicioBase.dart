@@ -8,6 +8,7 @@ import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.d
 import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:sprintf/sprintf.dart';
 
 import '../Telas.dart';
@@ -362,11 +363,14 @@ abstract class SExercicioBase extends State<ExercicioCentral>
 
   //Auto-descritivo
   void enviarRespostas() async {
+    log = true;
     paraEnviar.respostasDadas = sprintf(respostasDadas, respostasDadasL);
     paraEnviar.respostasDadas =
         paraEnviar.respostasDadas.replaceAll(RegExp(r'\|\|'), '|');
     var enviar = paraEnviar.toJson;
     logPrint(enviar["respostaTreino"]);
+    enviar.remove('resultadoTreino');
+    enviar.remove('idTreinamentoFase');
     var jsonParaEnviar = json.encode(enviar);
     logPrint(jsonParaEnviar);
     var respostaServidor = postResposta(enviar);
@@ -374,16 +378,24 @@ abstract class SExercicioBase extends State<ExercicioCentral>
       logPrint(value.body);
     });
     await respostaServidor.whenComplete(() {
-      irParaResultados(context);
+      getTreinamentoFase(paraEnviar.fase.idFase).then((value) {
+        List mapData = jsonDecode(value.body);
+        List<TreinamentoFase> treinamentos = [
+          ...mapData.map((e) => TreinamentoFase.fromJson(e)),
+        ];
+        irParaResultados(context, treinamentos);
+      });
     });
+    log = false;
   }
 
   // Auto-descritivo
-  void irParaResultados(BuildContext context) {
+  void irParaResultados(BuildContext context, List<TreinamentoFase> data) {
     playBack.dispose();
     Navigator.of(context).push(
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => Resultados(),
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            Resultados(data),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           var begin = Offset(1.0, 0.0);
           var end = Offset.zero;

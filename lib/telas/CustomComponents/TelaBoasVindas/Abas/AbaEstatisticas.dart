@@ -1,6 +1,7 @@
 //import 'package:fl_animated_linechart/common/dates.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:pie_chart/src/legend.dart';
 import 'package:auditech_mobile/mainData.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Global/ApiClasses.dart';
 import '../components.dart';
@@ -121,20 +122,30 @@ class AbaEstatisticas extends StatelessWidget {
               ),
             ),
           ),
-          Center(
-            child: PieChart(
-              dataMap: {
-                "Acertos": 0,
-                "Erros/Não respondeu": 0,
-              },
-              legendOptions: LegendOptions(
-                showLegendsInRow: true,
-                legendPosition: LegendPosition.top,
-                legendTextStyle: TextStyle(color: Colors.white, fontSize: 15),
+          Row(
+            children: [
+              Spacer(
+                flex: 1,
               ),
-              colorList: grafColor,
-              chartRadius: 0,
-            ),
+              Legend(
+                title: "Acertos",
+                legendShape: BoxShape.circle,
+                color: grafColor[0],
+                style: TextStyle(fontSize: 17),
+              ),
+              Spacer(
+                flex: 1,
+              ),
+              Legend(
+                title: "Erros/Falta de resposta",
+                legendShape: BoxShape.circle,
+                color: grafColor[1],
+                style: TextStyle(fontSize: 17),
+              ),
+              Spacer(
+                flex: 1,
+              ),
+            ],
           ),
           GridView.extent(
             shrinkWrap: true,

@@ -1,10 +1,19 @@
 import 'package:auditech_mobile/mainData.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Global/ApiClasses.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-class _SResultados extends State {
+class _SResultados extends State<Resultados> {
+  List<TreinamentoFase> data;
+  @override
+  void initState() {
+    super.initState();
+    data = widget.treinamentos;
+  }
+
   Widget build(BuildContext context) {
+    assert(data != null);
     List<Color> graf = [
       //cores dos gráficos
       Colors.red[400],
@@ -16,6 +25,10 @@ class _SResultados extends State {
       for (int i = 0; i < x; i++) {
         Navigator.pop(context);
       }
+    }
+
+    double treinamento([int numr = 1]) {
+      return data[data.length - numr].resultadoTreino.toDouble();
     }
 
     return Scaffold(
@@ -54,9 +67,8 @@ class _SResultados extends State {
                   height: tamanhoRelativoL(500.0, context),
                   child: PieChart(
                     dataMap: {
-                      "Acertos": 5,
-                      "Erros": 4,
-                      "Não respondeu": 1,
+                      "Acertos": treinamento(),
+                      "Erros/Não respondeu": 100 - treinamento(),
                     },
                     legendOptions: LegendOptions(
                       legendTextStyle: TextStyle(
@@ -66,7 +78,6 @@ class _SResultados extends State {
                     colorList: [
                       graf[1],
                       graf[0],
-                      graf[2],
                     ],
                   ),
                 ),
@@ -90,9 +101,8 @@ class _SResultados extends State {
                   height: tamanhoRelativoL(150.0, context),
                   child: PieChart(
                     dataMap: {
-                      "Acertos": 3,
-                      "Erros": 5,
-                      "Não respondeu": 0,
+                      "Acertos": treinamento(2),
+                      "Erros/Não respondeu": 100 - treinamento(2),
                     },
                     legendOptions: LegendOptions(
                       legendTextStyle:
@@ -116,9 +126,8 @@ class _SResultados extends State {
                   height: tamanhoRelativoL(150, context),
                   child: PieChart(
                     dataMap: {
-                      "Acertos": 2,
-                      "Erros": 7,
-                      "Não respondeu": 0,
+                      "Acertos": treinamento(3),
+                      "Erros": 100 - treinamento(3),
                     },
                     legendOptions: LegendOptions(
                       legendTextStyle:
@@ -183,6 +192,10 @@ class _SResultados extends State {
 }
 
 class Resultados extends StatefulWidget {
+  final List<TreinamentoFase> treinamentos;
+
+  Resultados([this.treinamentos]);
+
   State createState() {
     return _SResultados();
   }
