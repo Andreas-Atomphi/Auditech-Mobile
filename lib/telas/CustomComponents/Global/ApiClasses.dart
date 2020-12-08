@@ -11,12 +11,15 @@ abstract class ApiClass {
 }
 
 class TreinamentoFase extends ApiClass {
+  int id;
+  num resultadoTreino;
   Fase fase;
   Exercicio exercicio;
   String respostasDadas;
   DateTime dataExecucao;
 
   TreinamentoFase({
+    this.id,
     this.fase,
     this.exercicio,
     this.respostasDadas,
@@ -24,18 +27,57 @@ class TreinamentoFase extends ApiClass {
   });
 
   TreinamentoFase.fromJson(Map<String, dynamic> obj)
-      : fase = Fase(idFase: obj["faseIdFase"]),
+      : id = obj["idTreinamentoFase"],
+        fase = Fase(idFase: obj["faseIdFase"]),
         exercicio = Exercicio(idExercicio: obj["exercicioIdExercicio"]),
+        resultadoTreino = obj["resultadoTreino"],
         respostasDadas = obj["respostaTreino"],
-        dataExecucao = DateTime.parse(
+        dataExecucao = DateFormat("MM/dd/yyyy HH:mm:ss").parse(
           obj["dataExecucao"],
         );
 
   Map<String, dynamic> get toJson => <String, dynamic>{
+        "idTreinamentoFase": id,
         "faseIdFase": fase.idFase,
         "exercicioIdExercicio": exercicio.idExercicio,
         "respostaTreino": respostasDadas,
         "dataExecucao": _dateFormat(dataExecucao),
+        "resultadoTreino": resultadoTreino,
+      };
+}
+
+class ResultadoFase extends ApiClass {
+  int id, qtdResultadoFase;
+  double resultado, erros, naoRespondido;
+  Fase fase;
+  DateTime dtTermino;
+
+  ResultadoFase({
+    this.id,
+    this.qtdResultadoFase,
+    this.resultado,
+    this.erros,
+    this.naoRespondido,
+    this.dtTermino,
+  });
+
+  ResultadoFase.fromJson(Map<String, dynamic> obj)
+      : id = obj["idResultadoFase"],
+        fase = Fase(idFase: obj["faseIdFase"]),
+        qtdResultadoFase = obj["qtdeResultadoFase"],
+        resultado = obj["resultadoFase"],
+        erros = obj["resultadoErros"],
+        naoRespondido = obj["resultadoNR"],
+        dtTermino = DateFormat("MM/dd/yyyy HH:mm:ss").parse(obj["dataTermino"]);
+
+  Map<String, dynamic> get toJson => <String, dynamic>{
+        "idResultadoFase": id,
+        "qtdResultadoFase": qtdResultadoFase,
+        "resultadoFase": resultado,
+        "resultadoErros": erros,
+        "resultadoNR": naoRespondido,
+        "dataTermino": _dateFormat(dtTermino),
+        "faseIdFase": fase.idFase,
       };
 }
 

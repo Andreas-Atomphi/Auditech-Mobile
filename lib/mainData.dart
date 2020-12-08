@@ -95,6 +95,24 @@ Future<http.Response> getUsuario(String login, String senha) {
   );
 }
 
+Future<http.Response> getResultadoFase(int fase) {
+  return http.get(
+    "http://hawgamtech.somee.com/AuditechAPI/resultadofases/fase/$fase",
+    headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    },
+  );
+}
+
+Future<http.Response> getTreinamentoFase(int fase) {
+  return http.get(
+    "http://hawgamtech.somee.com/AuditechAPI/treinamentofases/fase/$fase",
+    headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    },
+  );
+}
+
 Future<http.Response> postResposta(Map<String, dynamic> resposta) {
   return http.post(
     Uri.parse(

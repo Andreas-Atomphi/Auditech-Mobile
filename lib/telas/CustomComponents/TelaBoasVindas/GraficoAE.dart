@@ -28,6 +28,10 @@ class GraficoAE extends Container {
             ),
             colorList: cores,
             centerText: titulo,
+            chartValuesOptions: ChartValuesOptions(
+              showChartValuesInPercentage: true,
+              showChartValuesOutside: true,
+            ),
           ),
         );
 }

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:auditech_mobile/mainData.dart';
+import 'package:auditech_mobile/telas/CustomComponents/Global/ApiClasses.dart';
 import '../components.dart';
 
 //Adiciona uma função para um operador ^ na List<Map>
@@ -20,6 +21,10 @@ extension ListMap on List<Map> {
 }
 
 class AbaEstatisticas extends StatelessWidget {
+  final List<TreinamentoFase> treinamentos;
+
+  AbaEstatisticas({this.treinamentos});
+
   Widget build(BuildContext context) {
     double graficoG = tamanhoRelativoL(500.0, context);
     double graficoP = tamanhoRelativoL(150.0, context);
@@ -37,18 +42,31 @@ class AbaEstatisticas extends StatelessWidget {
       "c": grafColor,
     };
 
+    double treinamento(int tr) {
+      return treinamentos[treinamentos.length - tr].resultadoTreino.toDouble();
+    }
+
+    double media([int max = 3]) {
+      double toReturn = 0;
+      for (int i = 1; i <= max; i++) {
+        toReturn += treinamento(i);
+      }
+      toReturn /= max;
+      return toReturn;
+    }
+
     List<Map<String, dynamic>> graficosAnteriores = [
           {
-            "d": <double>[7, 5, 2],
-            "t": "Exercício 1"
+            "d": <double>[treinamento(1), 100.0 - treinamento(1), 0.0],
+            "t": "Última tentativa"
           },
           {
-            "d": <double>[7, 3, 4],
-            "t": "Exercício 2"
+            "d": <double>[treinamento(2), 100.0 - treinamento(2), 0.0],
+            "t": "Penúltima tentativa"
           },
           {
-            "d": <double>[5, 5, 4],
-            "t": "Exercício 3"
+            "d": <double>[treinamento(3), 100 - treinamento(3), 0.0],
+            "t": "Ante-penúltima tentativa"
           },
         ] ^
         graf;
@@ -74,10 +92,12 @@ class AbaEstatisticas extends StatelessWidget {
             height: graficoG,
             child: PieChart(
               dataMap: {
-                "Ganhando": 5,
-                "Perdendo": 6,
-                //"Parado": 3,
+                "Ganhando": media(),
+                "Perdendo": 100 - media(),
               },
+              chartValuesOptions: ChartValuesOptions(
+                showChartValuesInPercentage: true,
+              ),
               legendOptions: LegendOptions(
                 legendPosition: LegendPosition.top,
                 showLegendsInRow: true,
@@ -86,7 +106,6 @@ class AbaEstatisticas extends StatelessWidget {
               colorList: [
                 grafColor[0],
                 grafColor[1],
-                Colors.deepOrangeAccent,
               ],
             ),
           ),
@@ -104,7 +123,10 @@ class AbaEstatisticas extends StatelessWidget {
           ),
           Center(
             child: PieChart(
-              dataMap: {"Acertos": 0, "Erros": 0, "Não respondeu": 0},
+              dataMap: {
+                "Acertos": 0,
+                "Erros/Não respondeu": 0,
+              },
               legendOptions: LegendOptions(
                 showLegendsInRow: true,
                 legendPosition: LegendPosition.top,
@@ -128,7 +150,6 @@ class AbaEstatisticas extends StatelessWidget {
                   height: graf['h'],
                   dados: graf['d'],
                   cores: graf['c'],
-                  titulo: graf['t'],
                 ),
               ),
             ],

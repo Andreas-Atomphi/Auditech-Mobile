@@ -13,6 +13,8 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
     with SingleTickerProviderStateMixin {
   Usuario usuario;
   Fase localFase;
+  ResultadoFase resultFase;
+  List<TreinamentoFase> treinFase;
   TabController controller;
   Widget _wait = Container(
     width: double.infinity,
@@ -54,6 +56,8 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
 
           http.Response fase;
           http.Response exercicio;
+          http.Response resultadoFase;
+          http.Response treinamentofase;
 
           String faseString, exercicioString;
           Future<http.Response> faseFuture = getFase(usuario.id);
@@ -62,41 +66,66 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
               fase = value;
             },
           );
-
-          await faseFuture.whenComplete(
-            () {
+          //  * Cria uma corrente de gets
+          faseFuture.then(
+            (value) {
               setState(
                 () {
                   faseString = fase.body;
                   localFase = Fase.fromJson(jsonDecode(faseString));
+                  //  * Puxa o exercício
+                  Future<http.Response> exercicioFuture = getExercicio(
+                      jsonDecode(faseString)['exercicioIdExercicio']);
+                  exercicioFuture.then(
+                    (value) {
+                      exercicio = value;
+                      logPrint(exercicio.body);
+                      exercicioString = exercicio.body;
+                      localFase.exercicio =
+                          Exercicio.fromJson(jsonDecode(exercicioString));
+
+                      logPrint(localFase.exercicio);
+
+                      //  * Puxa um resultado fase de acordo com a fase do usuário
+                      Future<http.Response> resultadoFaseFuture =
+                          getResultadoFase(localFase.idFase);
+                      resultadoFaseFuture.then(
+                        (value) {
+                          resultadoFase = value;
+
+                          resultFase = ResultadoFase.fromJson(
+                            jsonDecode(resultadoFase.body),
+                          );
+
+                          // * Puxa um treinamentoFase de acordo com a fase do usuário
+                          Future<http.Response> tFFuture =
+                              getTreinamentoFase(localFase.idFase);
+
+                          tFFuture.then(
+                            (value) {
+                              treinamentofase = value;
+                              treinFase = <TreinamentoFase>[
+                                ...(jsonDecode(treinamentofase.body) as List)
+                                    .map(
+                                  (e) => TreinamentoFase.fromJson(e),
+                                ),
+                              ];
+                              logPrint(treinFase);
+                              setState(() {
+                                _wait = null;
+                              });
+                            },
+                          );
+                        },
+                      );
+                    },
+                  );
                 },
               );
               logPrint(localFase);
             },
           );
 
-          Future<http.Response> exercicioFuture =
-              getExercicio(jsonDecode(faseString)['exercicioIdExercicio']);
-          exercicioFuture.then(
-            (value) {
-              exercicio = value;
-              logPrint(exercicio.body);
-            },
-          );
-
-          await exercicioFuture.whenComplete(
-            () {
-              setState(
-                () {
-                  exercicioString = exercicio.body;
-                  localFase.exercicio =
-                      Exercicio.fromJson(jsonDecode(exercicioString));
-                  _wait = null;
-                },
-              );
-              logPrint(localFase.exercicio);
-            },
-          );
           List<String> faseBody = [
             faseString,
             exercicioString,
@@ -174,7 +203,9 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
       AbaTreinamento(
         fase: localFase,
       ),
-      AbaEstatisticas(),
+      AbaEstatisticas(
+        treinamentos: treinFase,
+      ),
     ];
 
     return WillPopScope(

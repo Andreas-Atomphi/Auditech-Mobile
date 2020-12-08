@@ -11,7 +11,7 @@ class DrawerWelcome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Ink(
-        color: Color.fromRGBO(0, 150, 140, 1),
+        color: Theme.of(context).accentColor,
         child: ListView(
           children: <Widget>[
             Container(
