@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity/connectivity.dart';
 
@@ -168,17 +169,30 @@ void _enableRotation() {
 }
 
 Future<bool> get conectado async {
-  bool toReturn;
-  await Connectivity().checkConnectivity().then((value) {
-    if (value == ConnectivityResult.mobile ||
-        value == ConnectivityResult.wifi) {
-      toReturn = true;
-    } else if (value == ConnectivityResult.none) {
-      toReturn = false;
-    }
-  });
+  bool toReturn = false;
+  Connectivity().checkConnectivity().then(
+    (value) {
+      toReturn = (value == ConnectivityResult.mobile ||
+          value == ConnectivityResult.wifi);
+    },
+  );
 
   return toReturn;
+}
+
+void catchConnectException(BuildContext context, http.Response value) {
+  conectado.then(
+    (bool subvalue) {
+      if (!subvalue) {
+        Navigator.of(context).pop();
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: routes["sem-conexao"]));
+      } else {
+        Fluttertoast.showToast(
+            msg: "Erro: ${value.statusCode} ${value.reasonPhrase}");
+      }
+    },
+  );
 }
 
 bool get syncConectado {

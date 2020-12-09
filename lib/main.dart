@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:auditech_mobile/telas/TelaLogin.dart';
 import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,16 +22,7 @@ class MainApp extends StatelessWidget with PortraitModeMixin {
     corDeDestaque = (themeMode == ThemeMode.light)
         ? Color.fromRGBO(255, 152, 0, 1)
         : Colors.orange;
-    bool conectou;
-    Future<bool> _asyncCall = Future.delayed(
-      Duration(seconds: 5),
-      () {
-        return conectado;
-      },
-    );
-    () async {
-      conectou = await _asyncCall;
-    }();
+    () async {}();
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);

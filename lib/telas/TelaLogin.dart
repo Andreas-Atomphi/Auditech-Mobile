@@ -89,13 +89,15 @@ class _STelaLogin extends State<TelaLogin> {
 
       logPrint(existe.body);
 
-      if (existe.statusCode == 200) {
+      if (existe.statusCode > 199 && existe.statusCode < 200) {
         logPrint("200 Ok!");
         // Checa se o usuário existe e se é um paciente
         if (jsonDecode(existe.body)["idTipoUsuario"] == 2) {
           toReturn['bool'] = true;
           toReturn['usr'] = existe;
         }
+      } else {
+        catchConnectException(context, existe);
       }
     }
     return toReturn;
@@ -103,15 +105,16 @@ class _STelaLogin extends State<TelaLogin> {
 
   //  Passa para a próxima tela
   void entrar(http.Response usuario, {BuildContext context}) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TelaBoasVindas(
-          usuario: Usuario.fromJson(jsonDecode(usuario.body)),
-          dados: dados,
+    if (usuario.statusCode > 199 && usuario.statusCode < 300)
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TelaBoasVindas(
+            usuario: Usuario.fromJson(jsonDecode(usuario.body)),
+            dados: dados,
+          ),
         ),
-      ),
-    );
+      );
   }
 
   bool firstBuild = true;
@@ -240,12 +243,6 @@ class _STelaLogin extends State<TelaLogin> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height)
           else ...[
-            ButtonLogin(
-              "Entrar teste",
-              () => checkAndEnter("21354687900", "20060530"),
-              false,
-              alignment: Alignment(-1, -1),
-            ),
             Align(
               alignment: Alignment(0, -0.75),
               child: Container(

@@ -8,7 +8,6 @@ import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.d
 import 'package:auditech_mobile/telas/CustomComponents/Exercicios/components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:sprintf/sprintf.dart';
 
 import '../Telas.dart';
@@ -363,7 +362,6 @@ abstract class SExercicioBase extends State<ExercicioCentral>
 
   //Auto-descritivo
   void enviarRespostas() async {
-    log = true;
     paraEnviar.respostasDadas = sprintf(respostasDadas, respostasDadasL);
     paraEnviar.respostasDadas =
         paraEnviar.respostasDadas.replaceAll(RegExp(r'\|\|'), '|');
@@ -377,16 +375,23 @@ abstract class SExercicioBase extends State<ExercicioCentral>
     respostaServidor.then((value) {
       logPrint(value.body);
     });
-    await respostaServidor.whenComplete(() {
-      getTreinamentoFase(paraEnviar.fase.idFase).then((value) {
-        List mapData = jsonDecode(value.body);
-        List<TreinamentoFase> treinamentos = [
-          ...mapData.map((e) => TreinamentoFase.fromJson(e)),
-        ];
-        irParaResultados(context, treinamentos);
-      });
-    });
-    log = false;
+    respostaServidor.then(
+      (value) {
+        if (value.statusCode >= 200 && value.statusCode < 300) {
+          getTreinamentoFase(paraEnviar.fase.idFase).then(
+            (value) {
+              List mapData = jsonDecode(value.body);
+              List<TreinamentoFase> treinamentos = [
+                ...mapData.map((e) => TreinamentoFase.fromJson(e)),
+              ];
+              irParaResultados(context, treinamentos);
+            },
+          );
+        } else {
+          catchConnectException(context, value);
+        }
+      },
+    );
   }
 
   // Auto-descritivo
