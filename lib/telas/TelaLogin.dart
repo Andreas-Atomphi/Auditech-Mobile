@@ -64,15 +64,24 @@ class _STelaLogin extends State<TelaLogin> {
     };
     if ((log != null && snh != null) && (log.length >= 11 && snh.length >= 8)) {
       logPrint("$log $snh");
-      final String dataTeste = formatoData.parse("2006/05/30").toString();
+      String dataTeste;
+      try {
+        dataTeste = formatoData.parse("2006/05/30").toString();
+      } catch (FormatException) {
+        setState(() {});
+      }
       //Formata os valores da TextField
-      String dataOficial =
-          formatoData.parse(dtFormat(snh)).toString().substring(
-                0,
-                dataTeste.indexOf(
-                  RegExp(r'\s[0-9]'),
-                ),
-              );
+      String dataOficial;
+      try {
+        dataOficial = formatoData.parse(dtFormat(snh)).toString().substring(
+              0,
+              dataTeste.indexOf(
+                RegExp(r'\s[0-9]'),
+              ),
+            );
+      } catch (FormatException) {
+        setState(() {});
+      }
 
       //  Corpo para envio
       final Map<String, dynamic> corpo = <String, dynamic>{
@@ -89,7 +98,7 @@ class _STelaLogin extends State<TelaLogin> {
 
       logPrint(existe.body);
 
-      if (existe.statusCode > 199 && existe.statusCode < 200) {
+      if (existe.statusCode > 199 && existe.statusCode < 300) {
         logPrint("200 Ok!");
         // Checa se o usuário existe e se é um paciente
         if (jsonDecode(existe.body)["idTipoUsuario"] == 2) {
@@ -105,6 +114,7 @@ class _STelaLogin extends State<TelaLogin> {
 
   //  Passa para a próxima tela
   void entrar(http.Response usuario, {BuildContext context}) {
+    if (usuario == null) return;
     if (usuario.statusCode > 199 && usuario.statusCode < 300)
       Navigator.push(
         context,
@@ -139,9 +149,9 @@ class _STelaLogin extends State<TelaLogin> {
   }
 
   Widget build(BuildContext context) {
-    () async {
-      if (firstBuild) {
-        if (!await conectado) {
+    conectado.then(
+      (value) {
+        if (!value) {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -155,32 +165,35 @@ class _STelaLogin extends State<TelaLogin> {
             },
           );
         }
-
-        if (await haveData()) {
-          usuarioExiste(
-            dados.getString('log'),
-            dados.getString('anv'),
-          ).then(
-            (value) {
-              usrExiste['bool'] = value;
-              if (usrExiste['bool'] != null) if (usrExiste['bool'] == true) {
-                entrar(usrExiste['usr'], context: context);
-              }
-            },
-          );
-        }
-      }
-    }();
+      },
+    );
+    if (firstBuild) {
+      haveData().then(
+        (value) {
+          if (value) {
+            usuarioExiste(
+              dados.getString('log'),
+              dados.getString('anv'),
+            ).then(
+              (value) {
+                usrExiste['bool'] = value;
+                if (usrExiste['bool'] != null) if (usrExiste['bool'] == true) {
+                  entrar(usrExiste['usr'], context: context);
+                }
+              },
+            );
+          }
+        },
+      );
+    }
 
     Future<void> checkAndEnter(log, snh) async {
-      var val;
-      val = await usuarioExiste(log, snh);
-      await usuarioExiste(log, snh).whenComplete(
-        () {
-          usrExiste = val;
-          if (usrExiste['bool'] == false)
+      usuarioExiste(log, snh).then(
+        (value) {
+          usrExiste = value;
+          if (!usrExiste['bool'] && usrExiste['bool'] == null)
             setState(() {});
-          else if (usrExiste['bool'] != null) if (usrExiste['bool'] == true) {
+          else {
             entrar(usrExiste['usr'], context: context);
           }
         },

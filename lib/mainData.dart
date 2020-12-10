@@ -8,6 +8,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity/connectivity.dart';
 
+extension MaterialAppExt on MaterialApp {
+  set appLog(bool value) {
+    log = value;
+  }
+}
+
 Color backgroundColor = Color.fromARGB(255, 0, 90, 100);
 Brightness theme = Brightness.light;
 Color primary = Color.fromRGBO(0, 200, 190, 1); //Variável para a cor global
@@ -170,10 +176,10 @@ void _enableRotation() {
 
 Future<bool> get conectado async {
   bool toReturn = false;
-  Connectivity().checkConnectivity().then(
+  await Connectivity().checkConnectivity().then(
     (value) {
-      toReturn = (value == ConnectivityResult.mobile ||
-          value == ConnectivityResult.wifi);
+      if (value == ConnectivityResult.mobile ||
+          value == ConnectivityResult.wifi) toReturn = true;
     },
   );
 

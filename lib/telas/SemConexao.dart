@@ -52,34 +52,36 @@ class _STelaSemConexao extends State<TelaSemConexao> {
             ),
           ),
           Align(
-              alignment: Alignment(0, 0.2),
-              child: (_wait != null)
-                  ? _wait
-                  : FlatButton(
-                      color: Theme.of(context).buttonColor,
-                      onPressed: () {
-                        wait();
+            alignment: Alignment(0, 0.2),
+            child: (_wait != null)
+                ? _wait
+                : FlatButton(
+                    color: Theme.of(context).buttonColor,
+                    onPressed: () {
+                      wait();
 
-                        conectado.then(
-                          (value) {
-                            if (value) {
-                              Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: routes["principal"]),
-                              );
-                            } else {
-                              setState(() {
-                                _wait = null;
-                              });
-                            }
-                          },
-                        );
-                      },
-                      child: Text(
-                        "Tentar de novo",
-                      ),
-                    )),
+                      conectado.then(
+                        (value) {
+                          logPrint(value);
+                          if (value) {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: routes["principal"]),
+                            );
+                          } else {
+                            setState(() {
+                              _wait = null;
+                            });
+                          }
+                        },
+                      );
+                    },
+                    child: Text(
+                      "Tentar de novo",
+                    ),
+                  ),
+          ),
         ],
       ),
     );
