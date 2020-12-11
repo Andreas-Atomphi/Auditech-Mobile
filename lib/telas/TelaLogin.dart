@@ -92,9 +92,14 @@ class _STelaLogin extends State<TelaLogin> {
       logPrint(corpo['dataNascimento']);
       logPrint(corpo['cpf']);
 
+      http.Response existe;
+
       // Executa a requisição
-      http.Response existe =
-          await getUsuario(corpo['cpf'], corpo['dataNascimento']);
+      await getUsuario(corpo['cpf'], corpo['dataNascimento']).then(
+        (value) {
+          existe = value;
+        },
+      );
 
       logPrint(existe.body);
 

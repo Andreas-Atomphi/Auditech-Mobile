@@ -32,22 +32,26 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
     );
   }
 
-  Widget build(BuildContext context) {
-    irParaTreino(
-      String appbartext, [
-      String numtreino = "exemplo-tr",
-      Fase mainFase,
-      Exercicio mainExercicio,
-    ]) async {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => InstrucoesExercicio(
-              appbartext, numtreino, mainFase, mainExercicio),
+  Future irParaTreino(
+    String appbartext, [
+    String numtreino = "exemplo-tr",
+    Fase mainFase,
+    Exercicio mainExercicio,
+    BuildContext context,
+  ]) async {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => InstrucoesExercicio(
+          appbartext,
+          numtreino,
+          mainFase,
+          mainExercicio,
         ),
-      );
-    }
+      ),
+    );
+  }
 
+  Widget build(BuildContext context) {
     List model = ["Exercício ", "treinamento-"];
     List<ButtonTreinamento> buttons = [
       //Adiciona os componentes de forma dinâmica através das chaves de routesExercicios
@@ -67,6 +71,7 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
               e,
               mainFase,
               mainExercicio,
+              context,
             ),
             ((mainFase != null) &&
                 (mainExercicio.idExercicio == exercicioNum) &&

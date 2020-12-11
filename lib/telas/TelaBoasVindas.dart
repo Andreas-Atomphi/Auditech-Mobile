@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'CustomComponents/TelaBoasVindas/components.dart';
+import 'Telas.dart';
 
 class _TelaBoasVindasState extends State<TelaBoasVindas>
     with SingleTickerProviderStateMixin {
@@ -45,22 +46,20 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
         size: 50.0,
       ),
     );
-    bool estaConectado = await conectado;
-    logPrint(usuario.id);
 
-    await conectado.whenComplete(
-      () async {
-        logPrint("teste");
+    conectado.then(
+      (estaConectado) async {
         if (estaConectado) {
-          usuario = widget.usuario;
-
+          if (usuario == null) usuario = widget.usuario;
+          if (globalUsuario == null) globalUsuario = widget.usuario;
+          print(globalUsuario);
           http.Response fase;
           http.Response exercicio;
           http.Response resultadoFase;
           http.Response treinamentofase;
 
           String faseString, exercicioString;
-          Future<http.Response> faseFuture = getFase(usuario.id);
+          Future<http.Response> faseFuture = getFase(usuario?.id);
           faseFuture.then(
             (value) {
               fase = value;
@@ -151,6 +150,32 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
 
   int firstBuild = 0;
 
+  Future irParaTreino(
+    String appbartext, [
+    String numtreino = "exemplo-tr",
+    Fase mainFase,
+    Exercicio mainExercicio,
+    BuildContext context,
+  ]) async {
+    return Navigator.of(context)
+        .push(
+      MaterialPageRoute(
+        builder: (context) => InstrucoesExercicio(
+          appbartext,
+          numtreino,
+          mainFase,
+          mainExercicio,
+        ),
+      ),
+    )
+        .then(
+      (value) {
+        if (value?.runtimeType == (List<TreinamentoFase>().runtimeType))
+          baixarDados();
+      },
+    );
+  }
+
   @override
   void dispose() {
     controller.dispose();
@@ -161,6 +186,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
   Widget build(BuildContext context) {
     void sair() {
       () async {
+        globalUsuario = null;
         await widget.dados.clear().whenComplete(
           () {
             logPrint("limpo");
@@ -191,12 +217,6 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
         "text": "Estatísticas",
       },
     ];
-
-    /*
-    int idExercicio = 1;
-    String cla = 'STreinamento$idExercicio';
-    logPrint();
-    */
 
     widgetTabs = [
       AbaBoasVindas(),
@@ -290,8 +310,9 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
 class TelaBoasVindas extends StatefulWidget {
   final Usuario usuario;
   final SharedPreferences dados;
+  final _TelaBoasVindasState state = _TelaBoasVindasState();
   TelaBoasVindas({this.usuario, this.dados});
-  State<TelaBoasVindas> createState() {
-    return _TelaBoasVindasState();
+  _TelaBoasVindasState createState() {
+    return state;
   }
 }

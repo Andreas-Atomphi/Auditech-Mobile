@@ -65,9 +65,9 @@ class ResultadoFase extends ApiClass {
       : id = obj["idResultadoFase"],
         fase = Fase(idFase: obj["faseIdFase"]),
         qtdResultadoFase = obj["qtdeResultadoFase"],
-        resultado = obj["resultadoFase"],
-        erros = obj["resultadoErros"],
-        naoRespondido = obj["resultadoNR"],
+        resultado = obj["resultadoFase"].toDouble(),
+        erros = obj["resultadoErros"].toDouble(),
+        naoRespondido = obj["resultadoNR"].toDouble(),
         dtTermino = DateFormat("MM/dd/yyyy HH:mm:ss").parse(obj["dataTermino"]);
 
   Map<String, dynamic> get toJson => <String, dynamic>{

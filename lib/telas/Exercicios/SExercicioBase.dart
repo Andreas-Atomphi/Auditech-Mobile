@@ -175,8 +175,9 @@ abstract class SExercicioBase extends State<ExercicioCentral>
     setState(
       () {
         if (sequencia <= respostasDadasL.length) {
-          respostasDadasL[sequencia - 1] +=
-              (subarr < numRPS - 1) ? "$resp-" : resp;
+          if (subarr <= numRPS - 1)
+            respostasDadasL[sequencia - 1] +=
+                (subarr < numRPS - 1) ? "$resp-" : resp;
         }
 
         if (sequencia <= respostasDadasL.length) {

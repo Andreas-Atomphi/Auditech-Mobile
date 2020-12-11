@@ -8,11 +8,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity/connectivity.dart';
 
+import 'telas/CustomComponents/Global/ApiClasses.dart';
+
 extension MaterialAppExt on MaterialApp {
   set appLog(bool value) {
     log = value;
   }
 }
+
+Usuario globalUsuario;
 
 Color backgroundColor = Color.fromARGB(255, 0, 90, 100);
 Brightness theme = Brightness.light;

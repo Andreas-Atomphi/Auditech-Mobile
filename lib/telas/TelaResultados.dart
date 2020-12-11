@@ -1,11 +1,13 @@
 import 'package:auditech_mobile/mainData.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Global/ApiClasses.dart';
 import 'package:auditech_mobile/telas/CustomComponents/Global/globalComponents.dart';
+import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 class _SResultados extends State<Resultados> {
   List<TreinamentoFase> data;
+  Usuario usuario;
   @override
   void initState() {
     super.initState();
@@ -23,7 +25,7 @@ class _SResultados extends State<Resultados> {
 
     void _backXTimes(int x) {
       for (int i = 0; i < x; i++) {
-        Navigator.pop(context);
+        Navigator.pop(context, data);
       }
     }
 
@@ -158,7 +160,17 @@ class _SResultados extends State<Resultados> {
                   flex: 1,
                 ),
                 FlatButton(
-                    onPressed: () => _backXTimes(3),
+                    onPressed: () {
+                      _backXTimes(3);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TelaBoasVindas(
+                            usuario: globalUsuario,
+                          ),
+                        ),
+                      );
+                    },
                     child: Text(
                       "Voltar a tela principal",
                       style: TextStyle(color: Colors.white),
@@ -193,7 +205,6 @@ class _SResultados extends State<Resultados> {
 
 class Resultados extends StatefulWidget {
   final List<TreinamentoFase> treinamentos;
-
   Resultados([this.treinamentos]);
 
   State createState() {
