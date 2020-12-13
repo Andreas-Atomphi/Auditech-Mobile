@@ -85,6 +85,7 @@ class Usuario extends ApiClass {
   int id, tipoUsuario;
   String nome, cpf;
   DateTime dataNascimento;
+  Fase fase;
 
   Usuario(
     this.id,
@@ -92,6 +93,7 @@ class Usuario extends ApiClass {
     this.nome,
     this.cpf,
     this.dataNascimento,
+    this.fase,
   );
 
   Usuario.fromJson(Map<String, dynamic> obj)

@@ -16,8 +16,6 @@ extension MaterialAppExt on MaterialApp {
   }
 }
 
-Usuario globalUsuario;
-
 Color backgroundColor = Color.fromARGB(255, 0, 90, 100);
 Brightness theme = Brightness.light;
 Color primary = Color.fromRGBO(0, 200, 190, 1); //Variável para a cor global
@@ -59,7 +57,7 @@ Map<String, Widget Function(BuildContext context)> routes = {
   "boas-vindas": (context) => TelaBoasVindas(),
   "aviso-tr": (context) => InstrucoesExercicio(),
   "exercicioCentral": (context) => ExercicioCentral(),
-  "resultados": (context) => Resultados(),
+  "resultados": (context) => TelaResultados(),
 };
 
 /*
@@ -190,7 +188,7 @@ Future<bool> get conectado async {
   return toReturn;
 }
 
-void catchConnectException(BuildContext context, http.Response value) {
+void whenCatchConnectException(BuildContext context, http.Response value) {
   conectado.then(
     (bool subvalue) {
       if (!subvalue) {

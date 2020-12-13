@@ -58,7 +58,6 @@ class SExercicio1 extends SExercicioBase {
             )
           ]..removeWhere((w) => w == null),
         ),
-        if (sequencia == 0) jmpBtn(),
       ],
     );
   }

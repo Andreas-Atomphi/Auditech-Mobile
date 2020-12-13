@@ -5,12 +5,13 @@ import 'package:auditech_mobile/telas/Telas.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-class _SResultados extends State<Resultados> {
+class _STelaResultados extends State<TelaResultados> {
   List<TreinamentoFase> data;
   Usuario usuario;
   @override
   void initState() {
     super.initState();
+    usuario = widget.usr;
     data = widget.treinamentos;
   }
 
@@ -166,7 +167,7 @@ class _SResultados extends State<Resultados> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => TelaBoasVindas(
-                            usuario: globalUsuario,
+                            usuario: usuario,
                           ),
                         ),
                       );
@@ -203,11 +204,12 @@ class _SResultados extends State<Resultados> {
   }
 }
 
-class Resultados extends StatefulWidget {
+class TelaResultados extends StatefulWidget {
   final List<TreinamentoFase> treinamentos;
-  Resultados([this.treinamentos]);
+  final Usuario usr;
+  TelaResultados([this.treinamentos, this.usr]);
 
   State createState() {
-    return _SResultados();
+    return _STelaResultados();
   }
 }

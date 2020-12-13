@@ -46,7 +46,6 @@ class SExercicio9 extends SExercicioBase {
             ),
           ],
         ),
-        if (sequencia == 0) jmpBtn(),
       ],
     );
   }

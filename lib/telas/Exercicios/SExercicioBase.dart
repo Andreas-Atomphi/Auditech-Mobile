@@ -373,9 +373,6 @@ abstract class SExercicioBase extends State<ExercicioCentral>
     var jsonParaEnviar = json.encode(enviar);
     logPrint(jsonParaEnviar);
     var respostaServidor = postResposta(enviar);
-    respostaServidor.then((value) {
-      logPrint(value.body);
-    });
     respostaServidor.then(
       (value) {
         if (value.statusCode >= 200 && value.statusCode < 300) {
@@ -385,23 +382,24 @@ abstract class SExercicioBase extends State<ExercicioCentral>
               List<TreinamentoFase> treinamentos = [
                 ...mapData.map((e) => TreinamentoFase.fromJson(e)),
               ];
-              irParaResultados(context, treinamentos);
+              irParaResultados(context, treinamentos, widget.usr);
             },
           );
         } else {
-          catchConnectException(context, value);
+          whenCatchConnectException(context, value);
         }
       },
     );
   }
 
   // Auto-descritivo
-  void irParaResultados(BuildContext context, List<TreinamentoFase> data) {
+  void irParaResultados(
+      BuildContext context, List<TreinamentoFase> data, Usuario usuario) {
     playBack.dispose();
     Navigator.of(context).push(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            Resultados(data),
+            TelaResultados(data, usuario),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           var begin = Offset(1.0, 0.0);
           var end = Offset.zero;
@@ -436,7 +434,19 @@ abstract class SExercicioBase extends State<ExercicioCentral>
       home: Scaffold(
         appBar: stbAppBar(context,
             texto: "Exercicio ${fase.exercicio.idExercicio}"),
-        body: mainRouteBuild(),
+        body: Stack(
+          children: [
+            mainRouteBuild(),
+            if (sequencia == 0) ...[
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Color.fromRGBO(0, 0, 0, 0.7),
+              ),
+              jmpBtn(),
+            ],
+          ],
+        ),
       ),
     );
   }

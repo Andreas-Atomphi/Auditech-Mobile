@@ -11,8 +11,10 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
   //Argumentos da clase
   String irpara;
   String appbartext;
+  Usuario usuario;
   Fase fase;
   Exercicio mainExercicio;
+  List<TreinamentoFase> treinFase;
 
   //Chamando o construtor da classe
   _SInstrucoesExercicio();
@@ -22,28 +24,39 @@ class _SInstrucoesExercicio extends State<InstrucoesExercicio> {
     super.initState();
     irpara = widget.irpara;
     appbartext = widget.appbartext;
+    usuario = widget.usuario;
     fase = widget.fase;
-    mainExercicio = fase.exercicio;
+    mainExercicio = widget.exercicio;
   }
 
   @override
   Widget build(BuildContext context) {
     //Método que será chamado quando o botão voltar for pressionado
     _backPress() {
-      Navigator.pop(context);
+      if (treinFase != null &&
+          treinFase.runtimeType == List<TreinamentoFase>().runtimeType)
+        Navigator.pop(context, treinFase);
+      else
+        Navigator.pop(context);
     }
 
-    logPrint("fase: ");
-    logPrint(fase);
+    logPrint("usuario: ");
+    logPrint(usuario);
     //Método que será chamado quando o botão ir para o exercício for pressionado
-    void irParaTreino(Fase fase) {
+    void irParaTreino(Fase usuario) {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ExercicioCentral(
-            fase: fase,
+            fase: widget.fase,
+            usr: widget.usuario,
           ),
         ),
+      ).then(
+        (value) {
+          if (value.runtimeType == List<TreinamentoFase>().runtimeType)
+            treinFase = value;
+        },
       );
     }
 
@@ -145,14 +158,16 @@ class InstrucoesExercicio extends StatefulWidget {
   //Argumentos da classe
   final String appbartext;
   final String irpara;
-  final Fase fase;
+  final Usuario usuario;
   final Exercicio exercicio;
+  final Fase fase;
 
   //Chama o construtor da classe
   InstrucoesExercicio([
     this.appbartext = "Exemplo", //Texto da Appbar
     this.irpara = "treinamento-exemplo", //define qual tela que deve ir
     this.fase,
+    this.usuario,
     this.exercicio,
   ]);
 

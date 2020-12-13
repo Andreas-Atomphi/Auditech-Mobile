@@ -111,7 +111,7 @@ class _STelaLogin extends State<TelaLogin> {
           toReturn['usr'] = existe;
         }
       } else {
-        catchConnectException(context, existe);
+        whenCatchConnectException(context, existe);
       }
     }
     return toReturn;

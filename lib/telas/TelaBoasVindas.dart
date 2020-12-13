@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'CustomComponents/TelaBoasVindas/components.dart';
 import 'Telas.dart';
 
-class _TelaBoasVindasState extends State<TelaBoasVindas>
+class _STelaBoasVindas extends State<TelaBoasVindas>
     with SingleTickerProviderStateMixin {
   Usuario usuario;
   Fase localFase;
@@ -51,8 +51,6 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
       (estaConectado) async {
         if (estaConectado) {
           if (usuario == null) usuario = widget.usuario;
-          if (globalUsuario == null) globalUsuario = widget.usuario;
-          print(globalUsuario);
           http.Response fase;
           http.Response exercicio;
           http.Response resultadoFase;
@@ -150,32 +148,6 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
 
   int firstBuild = 0;
 
-  Future irParaTreino(
-    String appbartext, [
-    String numtreino = "exemplo-tr",
-    Fase mainFase,
-    Exercicio mainExercicio,
-    BuildContext context,
-  ]) async {
-    return Navigator.of(context)
-        .push(
-      MaterialPageRoute(
-        builder: (context) => InstrucoesExercicio(
-          appbartext,
-          numtreino,
-          mainFase,
-          mainExercicio,
-        ),
-      ),
-    )
-        .then(
-      (value) {
-        if (value?.runtimeType == (List<TreinamentoFase>().runtimeType))
-          baixarDados();
-      },
-    );
-  }
-
   @override
   void dispose() {
     controller.dispose();
@@ -186,7 +158,6 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
   Widget build(BuildContext context) {
     void sair() {
       () async {
-        globalUsuario = null;
         await widget.dados.clear().whenComplete(
           () {
             logPrint("limpo");
@@ -221,6 +192,7 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
     widgetTabs = [
       AbaBoasVindas(),
       AbaTreinamento(
+        usr: usuario,
         fase: localFase,
       ),
       AbaEstatisticas(
@@ -310,9 +282,8 @@ class _TelaBoasVindasState extends State<TelaBoasVindas>
 class TelaBoasVindas extends StatefulWidget {
   final Usuario usuario;
   final SharedPreferences dados;
-  final _TelaBoasVindasState state = _TelaBoasVindasState();
   TelaBoasVindas({this.usuario, this.dados});
-  _TelaBoasVindasState createState() {
-    return state;
+  _STelaBoasVindas createState() {
+    return _STelaBoasVindas();
   }
 }

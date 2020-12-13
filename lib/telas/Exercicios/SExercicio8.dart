@@ -67,7 +67,6 @@ class SExercicio8 extends SExercicioBase {
             addDynamicComponents(selecoes),
           ],
         ),
-        if (sequencia == 0) jmpBtn(),
       ],
     );
   }

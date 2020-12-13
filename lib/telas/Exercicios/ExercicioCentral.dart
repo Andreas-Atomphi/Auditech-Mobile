@@ -6,7 +6,8 @@ import 'telasDeExercicio.dart';
 
 class ExercicioCentral extends StatefulWidget {
   final Fase fase;
-  ExercicioCentral({this.fase});
+  final Usuario usr;
+  ExercicioCentral({this.fase, this.usr});
   SExercicioBase createState() {
     return <SExercicioBase>[
       SExercicio1(fase),

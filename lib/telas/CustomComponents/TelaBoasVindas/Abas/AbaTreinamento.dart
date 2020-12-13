@@ -32,25 +32,6 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
     );
   }
 
-  Future irParaTreino(
-    String appbartext, [
-    String numtreino = "exemplo-tr",
-    Fase mainFase,
-    Exercicio mainExercicio,
-    BuildContext context,
-  ]) async {
-    return Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => InstrucoesExercicio(
-          appbartext,
-          numtreino,
-          mainFase,
-          mainExercicio,
-        ),
-      ),
-    );
-  }
-
   Widget build(BuildContext context) {
     List model = ["Exercício ", "treinamento-"];
     List<ButtonTreinamento> buttons = [
@@ -66,10 +47,11 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
             //Concatena model com o último dígito da chave (treinamento-n)
             exercicio,
             //Adiciona o método para ButtonTreinamento
-            () => irParaTreino(
+            () => widget.irParaTreino(
               exercicio,
               e,
               mainFase,
+              widget.usr,
               mainExercicio,
               context,
             ),
@@ -102,7 +84,43 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
 
 class AbaTreinamento extends StatefulWidget {
   final Fase fase;
-  AbaTreinamento({this.fase});
+  final Usuario usr;
+  AbaTreinamento({this.fase, this.usr});
+
+  Future irParaTreino(
+    String appbartext, [
+    String numtreino = "exemplo-tr",
+    Fase mainFase,
+    Usuario usuario,
+    Exercicio mainExercicio,
+    BuildContext context,
+  ]) async {
+    return Navigator.of(context)
+        .push(
+      MaterialPageRoute(
+        builder: (context) => InstrucoesExercicio(
+          appbartext,
+          numtreino,
+          mainFase,
+          usuario,
+          mainExercicio,
+        ),
+      ),
+    )
+        .then(
+      (value) {
+        if (value.runtimeType == List<TreinamentoFase>().runtimeType)
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TelaBoasVindas(
+                usuario: usuario,
+              ),
+            ),
+          );
+      },
+    );
+  }
 
   State<AbaTreinamento> createState() {
     return _SAbaTreinamento();
