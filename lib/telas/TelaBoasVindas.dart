@@ -60,64 +60,63 @@ class _STelaBoasVindas extends State<TelaBoasVindas>
           faseFuture.then(
             (value) {
               fase = value;
-            },
-          );
-          //  * Cria uma corrente de gets
-          faseFuture.then(
-            (value) {
-              setState(
-                () {
-                  faseString = fase.body;
-                  localFase = Fase.fromJson(jsonDecode(faseString));
-                  //  * Puxa o exercício
-                  Future<http.Response> exercicioFuture = getExercicio(localFase.exercicio.idExercicio);
-                  exercicioFuture.then(
-                    (value) {
-                      exercicio = value;
-                      logPrint(exercicio.body);
-                      exercicioString = exercicio.body;
-                      localFase.exercicio =
-                          Exercicio.fromJson(jsonDecode(exercicioString));
+              faseString = fase.body;
+              if (fase.body !=
+                  "Fase para o Usuário ID: ${usuario.id} não encontrado") {
+                localFase = Fase.fromJson(jsonDecode(faseString));
+                //  * Puxa o exercício
+                Future<http.Response> exercicioFuture =
+                    getExercicio(localFase.exercicio.idExercicio);
+                exercicioFuture.then(
+                  (value) {
+                    exercicio = value;
+                    logPrint(exercicio.body);
+                    exercicioString = exercicio.body;
+                    localFase.exercicio =
+                        Exercicio.fromJson(jsonDecode(exercicioString));
 
-                      logPrint(localFase.exercicio.toJson);
+                    logPrint(localFase.exercicio.toJson);
 
-                      //  * Puxa um resultado fase de acordo com a fase do usuário
-                      Future<http.Response> resultadoFaseFuture =
-                          getResultadoFase(localFase.idFase);
-                      resultadoFaseFuture.then(
-                        (value) {
-                          resultadoFase = value;
+                    //  * Puxa um resultado fase de acordo com a fase do usuário
+                    Future<http.Response> resultadoFaseFuture =
+                        getResultadoFase(localFase.idFase);
+                    resultadoFaseFuture.then(
+                      (value) {
+                        resultadoFase = value;
 
-                          resultFase = ResultadoFase.fromJson(
-                            jsonDecode(resultadoFase.body),
-                          );
+                        resultFase = ResultadoFase.fromJson(
+                          jsonDecode(resultadoFase.body),
+                        );
 
-                          // * Puxa um treinamentoFase de acordo com a fase do usuário
-                          Future<http.Response> tFFuture =
-                              getTreinamentoFase(localFase.idFase);
+                        // * Puxa um treinamentoFase de acordo com a fase do usuário
+                        Future<http.Response> tFFuture =
+                            getTreinamentoFase(localFase.idFase);
 
-                          tFFuture.then(
-                            (value) {
-                              treinamentofase = value;
-                              treinFase = <TreinamentoFase>[
-                                ...(jsonDecode(treinamentofase.body) as List)
-                                    .map(
-                                  (e) => TreinamentoFase.fromJson(e),
-                                ),
-                              ];
-                              logPrint([...treinFase.map((e) => e.toJson)]);
-                              setState(() {
-                                _wait = null;
-                              });
-                            },
-                          );
-                        },
-                      );
-                    },
-                  );
-                },
-              );
-              logPrint(localFase.toJson);
+                        tFFuture.then(
+                          (value) {
+                            treinamentofase = value;
+                            treinFase = <TreinamentoFase>[
+                              ...(jsonDecode(treinamentofase.body) as List).map(
+                                (e) => TreinamentoFase.fromJson(e),
+                              ),
+                            ];
+                            logPrint([...treinFase.map((e) => e.toJson)]);
+                            setState(() {
+                              _wait = null;
+                            });
+                          },
+                        );
+                      },
+                    );
+                  },
+                );
+                logPrint(localFase.toJson);
+              } else {
+                logPrint("não há fase");
+                setState(() {
+                  _wait = null;
+                });
+              }
             },
           );
         }

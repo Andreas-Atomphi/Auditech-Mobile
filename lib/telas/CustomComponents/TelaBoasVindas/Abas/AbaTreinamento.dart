@@ -12,24 +12,12 @@ class _SAbaTreinamento extends State<AbaTreinamento> {
   void initState() {
     super.initState();
     mainFase = widget.fase;
-    mainExercicio = mainFase.exercicio;
+    mainExercicio = mainFase?.exercicio;
     data = {
-      'inicio': mainFase.dataInicio,
-      'fim': mainFase.dataFinal,
+      'inicio': mainFase?.dataInicio,
+      'fim': mainFase?.dataFinal,
       'atual': DateTime.now(),
     };
-
-    logPrint(data);
-    logPrint(
-      data['atual'].compareTo(
-        data['inicio'],
-      ),
-    );
-    logPrint(
-      data['atual'].compareTo(
-        data['fim'],
-      ),
-    );
   }
 
   Widget build(BuildContext context) {

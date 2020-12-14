@@ -45,33 +45,54 @@ class AbaEstatisticas extends StatelessWidget {
     };
 
     double treinamento(int tr) {
-      return treinamentos[treinamentos.length - tr].resultadoTreino.toDouble();
-    }
-
-    double media([int max = 3]) {
-      double toReturn = 0;
-      for (int i = 1; i <= max; i++) {
-        toReturn += treinamento(i);
+      var toReturn;
+      if (treinamentos != null) {
+        if (treinamentos[treinamentos.length - tr] != null)
+        {
+          if (treinamentos != [] && treinamentos.length > 0) {
+          toReturn = treinamentos[treinamentos.length - tr]
+              ?.resultadoTreino
+              ?.toDouble();
+        }
+        }
+        
       }
-      toReturn /= max;
       return toReturn;
     }
 
-    List<Map<String, dynamic>> graficosAnteriores = [
-          {
-            "d": <double>[treinamento(1), 100.0 - treinamento(1), 0.0],
-            "t": "Última tentativa"
-          },
-          {
-            "d": <double>[treinamento(2), 100.0 - treinamento(2), 0.0],
-            "t": "Penúltima tentativa"
-          },
-          {
-            "d": <double>[treinamento(3), 100 - treinamento(3), 0.0],
-            "t": "Ante-penúltima tentativa"
-          },
-        ] ^
-        graf;
+    double media([int max = 3]) {
+      if (treinamentos != null) {
+        double toReturn = 0;
+        for (int i = 0; i < max; i++) {
+          toReturn += treinamento(i);
+        }
+        toReturn /= max;
+        return toReturn;
+      }
+      return 0;
+    }
+
+    List<Map<String, dynamic>> graficosAnteriores;
+    if (treinamentos != null) {
+      if (treinamentos.length > 0) {
+        logPrint("nãoNulo");
+        List<String> tentativas = [
+          "Última tentativa",
+          "Penúltima tentativa",
+          "Ante-penúltima tentativa",
+        ];
+        for (int i = 0; i < treinamentos.length; i++) {
+          if (treinamento(i) != null)
+            graficosAnteriores.add(
+              {
+                "d": <double>[treinamento(i), 100.0 - treinamento(1), 0.0],
+                "t": tentativas[i],
+              },
+            );
+        }
+        graficosAnteriores ^= graf;
+      }
+    }
 
     double space = 30;
     return SingleChildScrollView(
@@ -82,7 +103,7 @@ class AbaEstatisticas extends StatelessWidget {
           ),
           Center(
             child: Text(
-              "Estatística Global",
+              "Sua média",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -92,24 +113,31 @@ class AbaEstatisticas extends StatelessWidget {
           Container(
             width: graficoG,
             height: graficoG,
-            child: PieChart(
-              dataMap: {
-                "Ganhando": media(),
-                "Perdendo": 100 - media(),
-              },
-              chartValuesOptions: ChartValuesOptions(
-                showChartValuesInPercentage: true,
-              ),
-              legendOptions: LegendOptions(
-                legendPosition: LegendPosition.top,
-                showLegendsInRow: true,
-                legendTextStyle: TextStyle(color: Colors.white),
-              ),
-              colorList: [
-                grafColor[0],
-                grafColor[1],
-              ],
-            ),
+            child: (graficosAnteriores != null)
+                ? PieChart(
+                    dataMap: {
+                      "Ganhando": media(),
+                      "Perdendo": 100 - media(),
+                    },
+                    chartValuesOptions: ChartValuesOptions(
+                      showChartValuesInPercentage: true,
+                    ),
+                    legendOptions: LegendOptions(
+                      legendPosition: LegendPosition.top,
+                      showLegendsInRow: true,
+                      legendTextStyle: TextStyle(color: Colors.white),
+                    ),
+                    colorList: [
+                      grafColor[0],
+                      grafColor[1],
+                    ],
+                  )
+                : Text(
+                    "Aqui ficará a média dos seus exercícios",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
           ),
           SizedBox(
             height: 20,
@@ -148,24 +176,30 @@ class AbaEstatisticas extends StatelessWidget {
               ),
             ],
           ),
-          GridView.extent(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.all(space),
-            maxCrossAxisExtent: 200,
-            crossAxisSpacing: space,
-            mainAxisSpacing: space,
-            children: [
-              ...graficosAnteriores.map(
-                (graf) => GraficoAE(
-                  width: graf['w'],
-                  height: graf['h'],
-                  dados: graf['d'],
-                  cores: graf['c'],
-                ),
-              ),
-            ],
-          ),
+          if (graficosAnteriores != null)
+            GridView.extent(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.all(space),
+              maxCrossAxisExtent: 200,
+              crossAxisSpacing: space,
+              mainAxisSpacing: space,
+              children: [
+                ...graficosAnteriores.map(
+                  (graf) => GraficoAE(
+                    width: graf['w'],
+                    height: graf['h'],
+                    dados: graf['d'],
+                    cores: graf['c'],
+                  ),
+                )
+              ],
+            ),
+          if (graficosAnteriores == null)
+            Text(
+              "Suas tentativas serão exibidas aqui",
+              style: TextStyle(fontSize: 20),
+            ),
         ],
       ),
     );
