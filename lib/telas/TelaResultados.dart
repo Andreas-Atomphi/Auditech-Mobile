@@ -49,15 +49,6 @@ class _STelaResultados extends State<TelaResultados> {
               //Espaçamento entre o texto e a AppBar
               height: 50,
             ),
-            Text(
-              //Muda de acordo com os resultados
-              "Você está: Progredindo/Estagnado/Regredindo",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                backgroundColor: Colors.yellow[900],
-              ),
-            ),
             Row(
               // O Gráfico principal fica aqui
               children: [

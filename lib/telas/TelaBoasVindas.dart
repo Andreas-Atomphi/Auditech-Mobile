@@ -8,7 +8,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'CustomComponents/TelaBoasVindas/components.dart';
-import 'Telas.dart';
 
 class _STelaBoasVindas extends State<TelaBoasVindas>
     with SingleTickerProviderStateMixin {
@@ -71,8 +70,7 @@ class _STelaBoasVindas extends State<TelaBoasVindas>
                   faseString = fase.body;
                   localFase = Fase.fromJson(jsonDecode(faseString));
                   //  * Puxa o exercício
-                  Future<http.Response> exercicioFuture = getExercicio(
-                      jsonDecode(faseString)['exercicioIdExercicio']);
+                  Future<http.Response> exercicioFuture = getExercicio(localFase.exercicio.idExercicio);
                   exercicioFuture.then(
                     (value) {
                       exercicio = value;
@@ -81,7 +79,7 @@ class _STelaBoasVindas extends State<TelaBoasVindas>
                       localFase.exercicio =
                           Exercicio.fromJson(jsonDecode(exercicioString));
 
-                      logPrint(localFase.exercicio);
+                      logPrint(localFase.exercicio.toJson);
 
                       //  * Puxa um resultado fase de acordo com a fase do usuário
                       Future<http.Response> resultadoFaseFuture =
@@ -107,7 +105,7 @@ class _STelaBoasVindas extends State<TelaBoasVindas>
                                   (e) => TreinamentoFase.fromJson(e),
                                 ),
                               ];
-                              logPrint(treinFase);
+                              logPrint([...treinFase.map((e) => e.toJson)]);
                               setState(() {
                                 _wait = null;
                               });
@@ -119,29 +117,12 @@ class _STelaBoasVindas extends State<TelaBoasVindas>
                   );
                 },
               );
-              logPrint(localFase);
+              logPrint(localFase.toJson);
             },
           );
-
-          List<String> faseBody = [
-            faseString,
-            exercicioString,
-          ];
-          widget.dados.setStringList(
-            'fase',
-            faseBody,
-          );
-        } else if (widget.dados.containsKey("fase") && !estaConectado) {
-          setState(() {
-            List<String> dados = widget.dados.getStringList("fase");
-            localFase = Fase.fromJson(jsonDecode(dados[0]));
-            localFase.exercicio = Exercicio.fromJson(jsonDecode(dados[1]));
-            _wait = null;
-          });
         }
       },
     );
-    logPrint(localFase);
   }
 
   List<Widget> widgetTabs;
@@ -157,15 +138,8 @@ class _STelaBoasVindas extends State<TelaBoasVindas>
   @override
   Widget build(BuildContext context) {
     void sair() {
-      () async {
-        await widget.dados.clear().whenComplete(
-          () {
-            logPrint("limpo");
-            Navigator.pop(context);
-            Navigator.pop(context);
-          },
-        );
-      }();
+      Navigator.pop(context);
+      Navigator.pop(context);
     }
 
     final List<Map<String, Object>> tabs = const [

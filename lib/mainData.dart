@@ -8,8 +8,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity/connectivity.dart';
 
-import 'telas/CustomComponents/Global/ApiClasses.dart';
-
 extension MaterialAppExt on MaterialApp {
   set appLog(bool value) {
     log = value;
@@ -24,7 +22,7 @@ Color secondary =
 Color corDeDestaque;
 ThemeMode themeMode = ThemeMode.system;
 
-bool log = false;
+bool log = true;
 
 void logPrint(dynamic toPrint) {
   if (log) print(toPrint);
